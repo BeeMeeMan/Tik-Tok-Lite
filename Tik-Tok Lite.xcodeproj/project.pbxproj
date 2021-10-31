@@ -14,6 +14,18 @@
 		4A99E209272EC4B000247B18 /* Tik_Tok_LiteTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A99E208272EC4B000247B18 /* Tik_Tok_LiteTests.swift */; };
 		4A99E213272EC4B100247B18 /* Tik_Tok_LiteUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A99E212272EC4B100247B18 /* Tik_Tok_LiteUITests.swift */; };
 		4A99E215272EC4B100247B18 /* Tik_Tok_LiteUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A99E214272EC4B100247B18 /* Tik_Tok_LiteUITestsLaunchTests.swift */; };
+		4A99E222272EC4F900247B18 /* ThreeDotsIndexView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A99E221272EC4F900247B18 /* ThreeDotsIndexView.swift */; };
+		4A99E224272EC51600247B18 /* CustomNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A99E223272EC51600247B18 /* CustomNavigationView.swift */; };
+		4A99E226272EC53500247B18 /* DownloadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A99E225272EC53500247B18 /* DownloadView.swift */; };
+		4A99E228272EE76F00247B18 /* PlayListsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A99E227272EE76F00247B18 /* PlayListsView.swift */; };
+		4A99E22A272EE78800247B18 /* PublicationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A99E229272EE78800247B18 /* PublicationsView.swift */; };
+		4A99E22C272EE79C00247B18 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A99E22B272EE79C00247B18 /* SettingsView.swift */; };
+		4A99E22E272EE7E200247B18 /* IntroTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A99E22D272EE7E200247B18 /* IntroTabView.swift */; };
+		4A99E230272EE7FF00247B18 /* PromotionTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A99E22F272EE7FF00247B18 /* PromotionTabView.swift */; };
+		4A99E232272EE81700247B18 /* LayoutTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A99E231272EE81700247B18 /* LayoutTabView.swift */; };
+		4A99E236272EE84D00247B18 /* ButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A99E235272EE84D00247B18 /* ButtonStyle.swift */; };
+		4A99E238272EE86200247B18 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A99E237272EE86200247B18 /* Colors.swift */; };
+		4A99E23A272EE87600247B18 /* NavigationBarShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A99E239272EE87600247B18 /* NavigationBarShape.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +56,18 @@
 		4A99E20E272EC4B100247B18 /* Tik-Tok LiteUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Tik-Tok LiteUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A99E212272EC4B100247B18 /* Tik_Tok_LiteUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tik_Tok_LiteUITests.swift; sourceTree = "<group>"; };
 		4A99E214272EC4B100247B18 /* Tik_Tok_LiteUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tik_Tok_LiteUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		4A99E221272EC4F900247B18 /* ThreeDotsIndexView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreeDotsIndexView.swift; sourceTree = "<group>"; };
+		4A99E223272EC51600247B18 /* CustomNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationView.swift; sourceTree = "<group>"; };
+		4A99E225272EC53500247B18 /* DownloadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadView.swift; sourceTree = "<group>"; };
+		4A99E227272EE76F00247B18 /* PlayListsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayListsView.swift; sourceTree = "<group>"; };
+		4A99E229272EE78800247B18 /* PublicationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicationsView.swift; sourceTree = "<group>"; };
+		4A99E22B272EE79C00247B18 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		4A99E22D272EE7E200247B18 /* IntroTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroTabView.swift; sourceTree = "<group>"; };
+		4A99E22F272EE7FF00247B18 /* PromotionTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromotionTabView.swift; sourceTree = "<group>"; };
+		4A99E231272EE81700247B18 /* LayoutTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutTabView.swift; sourceTree = "<group>"; };
+		4A99E235272EE84D00247B18 /* ButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStyle.swift; sourceTree = "<group>"; };
+		4A99E237272EE86200247B18 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		4A99E239272EE87600247B18 /* NavigationBarShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarShape.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +120,14 @@
 			children = (
 				4A99E1F7272EC4AF00247B18 /* Tik_Tok_LiteApp.swift */,
 				4A99E1F9272EC4AF00247B18 /* ContentView.swift */,
+				4A99E221272EC4F900247B18 /* ThreeDotsIndexView.swift */,
+				4A99E223272EC51600247B18 /* CustomNavigationView.swift */,
+				4A99E225272EC53500247B18 /* DownloadView.swift */,
+				4A99E227272EE76F00247B18 /* PlayListsView.swift */,
+				4A99E229272EE78800247B18 /* PublicationsView.swift */,
+				4A99E22B272EE79C00247B18 /* SettingsView.swift */,
+				4A99E234272EE83600247B18 /* Style */,
+				4A99E233272EE82500247B18 /* Popup */,
 				4A99E1FB272EC4B000247B18 /* Assets.xcassets */,
 				4A99E1FD272EC4B000247B18 /* Preview Content */,
 			);
@@ -125,6 +157,26 @@
 				4A99E214272EC4B100247B18 /* Tik_Tok_LiteUITestsLaunchTests.swift */,
 			);
 			path = "Tik-Tok LiteUITests";
+			sourceTree = "<group>";
+		};
+		4A99E233272EE82500247B18 /* Popup */ = {
+			isa = PBXGroup;
+			children = (
+				4A99E22F272EE7FF00247B18 /* PromotionTabView.swift */,
+				4A99E231272EE81700247B18 /* LayoutTabView.swift */,
+				4A99E22D272EE7E200247B18 /* IntroTabView.swift */,
+			);
+			name = Popup;
+			sourceTree = "<group>";
+		};
+		4A99E234272EE83600247B18 /* Style */ = {
+			isa = PBXGroup;
+			children = (
+				4A99E235272EE84D00247B18 /* ButtonStyle.swift */,
+				4A99E237272EE86200247B18 /* Colors.swift */,
+				4A99E239272EE87600247B18 /* NavigationBarShape.swift */,
+			);
+			path = Style;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -257,8 +309,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4A99E22E272EE7E200247B18 /* IntroTabView.swift in Sources */,
 				4A99E1FA272EC4AF00247B18 /* ContentView.swift in Sources */,
+				4A99E230272EE7FF00247B18 /* PromotionTabView.swift in Sources */,
 				4A99E1F8272EC4AF00247B18 /* Tik_Tok_LiteApp.swift in Sources */,
+				4A99E22C272EE79C00247B18 /* SettingsView.swift in Sources */,
+				4A99E222272EC4F900247B18 /* ThreeDotsIndexView.swift in Sources */,
+				4A99E232272EE81700247B18 /* LayoutTabView.swift in Sources */,
+				4A99E224272EC51600247B18 /* CustomNavigationView.swift in Sources */,
+				4A99E238272EE86200247B18 /* Colors.swift in Sources */,
+				4A99E22A272EE78800247B18 /* PublicationsView.swift in Sources */,
+				4A99E236272EE84D00247B18 /* ButtonStyle.swift in Sources */,
+				4A99E228272EE76F00247B18 /* PlayListsView.swift in Sources */,
+				4A99E226272EC53500247B18 /* DownloadView.swift in Sources */,
+				4A99E23A272EE87600247B18 /* NavigationBarShape.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
