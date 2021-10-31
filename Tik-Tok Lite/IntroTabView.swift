@@ -17,7 +17,7 @@ struct IntroTabView: View {
     @State private var selectedTab = 0
     @State private var arrayView = [
         LayoutTabView(image: "IntroPhone1", numberText: "Step #1", instructionText: "In the Tik-Tok application, click “Share” button on the video you like", imageOffsetX: 20, imageScale: 0.3),
-        LayoutTabView(image: "IntroPhone2", numberText: "Step #2", instructionText: "In the drop-down menu - click the \"Link\" button", imageOffsetX: 20, imageScale: 0.3),
+        LayoutTabView(image: "IntroPhone2", numberText: "Step #2", instructionText: "In the drop-down menu - click the \"Link\" button", imageOffsetX: 20, imageScale: 0.1),
         LayoutTabView(image: "IntroPhone3", numberText: "Step #3", instructionText: "Return to our application and click \"Download Clip\"", imageOffsetX: 20, imageScale: 0.3),
         
     ]

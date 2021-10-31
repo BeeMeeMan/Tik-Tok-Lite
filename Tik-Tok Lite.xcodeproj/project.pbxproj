@@ -162,8 +162,8 @@
 		4A99E233272EE82500247B18 /* Popup */ = {
 			isa = PBXGroup;
 			children = (
-				4A99E22F272EE7FF00247B18 /* PromotionTabView.swift */,
 				4A99E231272EE81700247B18 /* LayoutTabView.swift */,
+				4A99E22F272EE7FF00247B18 /* PromotionTabView.swift */,
 				4A99E22D272EE7E200247B18 /* IntroTabView.swift */,
 			);
 			name = Popup;

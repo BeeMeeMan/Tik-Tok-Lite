@@ -24,6 +24,7 @@ struct LayoutTabView: View {
         ZStack{
             VStack{
                 Spacer()
+                VStack{
             Image(image)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
@@ -34,8 +35,9 @@ struct LayoutTabView: View {
 //                            .frame(width: scale * imageScale,  alignment: .bottom)
 //                               .scaleEffect(imageScale, anchor: .center)
 ////
-                .padding(.bottom, 30)
-                
+              
+                }
+                Spacer()
        //     }
                
     //    VStack{
