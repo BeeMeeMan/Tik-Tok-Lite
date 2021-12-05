@@ -12,47 +12,57 @@ struct PlayListsView : View {
     @Environment(\.presentationMode) var PlayListPresentationMode
     
     var body: some View {
-        ZStack{
-            Color.black
-            
-            VStack{
-                Spacer()
-                Spacer()
-
-                Spacer()
-            Image("Play")
         
-                .scaleEffect(1.6, anchor: .center)
+        NavigationView{
             
-            Text("Make your first playlist")
-                    .mainTextStyle
-                    .padding(.top, 50)
-                Spacer()
-                Button(action: {
-                    
-                    
-                })  {
-                    HStack{
-                        Image(systemName: "star.fill")
-                            .frame(width: 20, height: 20, alignment: .center)
-                            .foregroundColor(.white)
-                        Text("Make playlist")
-                            .font(.system(size: 16, weight: .regular, design: .default))
-                        
-                    }
-                }
-                .roseButtonStyle()
-                // .buttonStyle(ActionButtonStyle())
-                .padding(.bottom, 50)
+            ZStack{
+                Color.black
                 
+                VStack{
+                    Spacer()
+                    Spacer()
+                    
+                    Spacer()
+                    Image("Play")
+                    
+                        .scaleEffect(1.6, anchor: .center)
+                    
+                    Text("Make your first playlist")
+                        .mainTextStyle
+                        .padding(.top, 50)
+                    Spacer()
+                    Button(action: {
+                        
+                        
+                    })  {
+                        HStack{
+                            Image(systemName: "star.fill")
+                                .frame(width: 20, height: 20, alignment: .center)
+                                .foregroundColor(.white)
+                            Text("Make playlist")
+                                .font(.system(size: 16, weight: .regular, design: .default))
+                            
+                        }
+                    }
+                    .roseButtonStyle()
+                    // .buttonStyle(ActionButtonStyle())
+                    .padding(.bottom, 50)
+                    
+                }
             }
+            .navigationBarTitleDisplayMode(.inline)
+            .navigationBarItems(trailing: Image("EditSquare")
+                                    .foregroundColor(.roseColor))
+            .navigationTitle("Playlists")
+            .font(.system(size: 16, weight: .regular, design: .default))
+            
         }
     }
     
-//    func closeView(){
-//        presentationMode.wrappedValue.dismiss()
-//
-//    }
+    //    func closeView(){
+    //        presentationMode.wrappedValue.dismiss()
+    //
+    //    }
 }
 
 //struct PlayListsView_Previews: PreviewProvider {

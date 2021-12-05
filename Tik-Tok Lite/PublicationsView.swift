@@ -9,15 +9,31 @@ import SwiftUI
 
 struct PublicationsView : View {
     var body: some View {
-        ZStack{
-            Color.black
         
-            Image("Publications")
-            .scaleEffect(2, anchor: .center)
+        NavigationView{
             
-            Text("Make your first delayed publication")
-                    .mainTextStyle
-                    .padding(.top, 50)
+            
+            ZStack{
+                Color.black
+                VStack{
+                    Spacer()
+                    Image("Publications")
+                        .scaleEffect(2, anchor: .center)
+                        .padding(.bottom, 100)
+                    
+                    Text("Make your first delayed publication")
+                        .mainTextStyle
+                        .padding(.bottom, 150)
+                }
+            }
+            
+            .navigationBarTitleDisplayMode(.inline)
+            .navigationBarItems(trailing: Image("Calendar")
+                                    .foregroundColor(.roseColor))
+            .navigationTitle("Delayed publications")
+            .font(.system(size: 16, weight: .regular, design: .default))
+            
+            
         }
     }
 }

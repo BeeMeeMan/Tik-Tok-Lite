@@ -55,12 +55,12 @@ struct LayoutTabView: View {
         
         .frame(width: UIScreen.main.bounds.width )
     }
-    
-    func moveToScreen(screen id: String,_ proxyReader: ScrollViewProxy){
-        withAnimation(.spring()) {
-            proxyReader.scrollTo(id, anchor: .top)
-        }
-    }
+//    
+//    func moveToScreen(screen id: String,_ proxyReader: ScrollViewProxy){
+//        withAnimation(.spring()) {
+//            proxyReader.scrollTo(id, anchor: .top)
+//        }
+//    }
     
 }
 

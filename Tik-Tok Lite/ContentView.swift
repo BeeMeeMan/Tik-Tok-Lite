@@ -32,22 +32,23 @@ struct ContentView: View {
         
         let appearance = UINavigationBarAppearance()
         
-       // appearance.configureWithOpaqueBackground()
+        // appearance.configureWithOpaqueBackground()
         appearance.backgroundColor = UIColor(red: 0.18, green: 0.176, blue: 0.176, alpha: 1)
         UINavigationBar.appearance().scrollEdgeAppearance = appearance
         
+        
         UITabBar.appearance().backgroundColor = UIColor(red: 0.18, green: 0.176, blue: 0.176, alpha: 1)
         UITabBar.appearance().unselectedItemTintColor = UIColor(red: 0.7, green: 0.7, blue: 0.7, alpha: 1)
-       
-            
+        
+        
     }
     
     
     @State private var showingDetail = false
     
-    
-    
     @State private var selectedTab: Tabs = .One
+    
+    // @State private var tabName = "Download"
     
     var body: some View {
         
@@ -56,84 +57,99 @@ struct ContentView: View {
             
             
             
-          NavigationView {
-                TabView(selection: $selectedTab) {
-                    
-                    DownloadView()
-                        .tabItem {
-                            
-                            Image(systemName: "arrow.down.doc")
-                            Text("Download")
-                                
-                        }
+            //   NavigationView {
+            TabView(selection: $selectedTab) {
+                
+                DownloadView()
+                
+                    .tabItem {
                         
-                        .tag(Tabs.One)
-                    
-                    PlayListsView()
-                        .tabItem {
-                            Image(systemName: "star")
-                            Text("Playlists")
-                        }
-                        .tag(Tabs.Two)
-                    
-                    PublicationsView()
-                        .tabItem {
-                            Image(systemName: "clock.arrow.circlepath")
-                            Text("Publications")
-                        }
-                        .tag(Tabs.three)
-                    
-                    SettingsView()
-                        .tabItem {
-                            Image(systemName: "gear")
-                            Text("Settings")
-                        }
-                    
-                        .tag(Tabs.four)
-                }
-                
-                
-                .accentColor(.roseColor)
-                
-                //                    .onAppear() {
-                //
-                //                    }
-               
-                
-            .navigationBarTitleDisplayMode(.inline)
-            .navigationBarItems(trailing: Image(systemName: "exclamationmark.circle.fill")
-                                    .foregroundColor(.roseColor))
-                
-                .toolbar {
-                    ToolbarItem(placement: .principal) {
-                        Text("Three")
-                            .font(.largeTitle.bold())
-                        // .accessibilityAddTraits(.isHeader)
+                        Image(systemName: "arrow.down.doc")
+                        Text("Download")
+                        
                     }
+                
+                
+                    .tag(Tabs.One)
+                
+                PlayListsView()
+                    .tabItem {
+                        Image(systemName: "star")
+                        Text("Playlists")
+                        
+                    }
+                    .tag(Tabs.Two)
+                
+                PublicationsView()
+                    .tabItem {
+                        Image(systemName: "clock.arrow.circlepath")
+                        Text("Publications")
+                    }
+                    .tag(Tabs.three)
+                
+                SettingsView()
+                    .tabItem {
+                        Image(systemName: "gear")
+                        Text("Settings")
+                    }
+                
+                    .tag(Tabs.four)
+            }
+            
+            
+            .accentColor(.roseColor)
+            
+            //                    .onAppear() {
+            //
+            //                    }
+            
+            
+            
+            
+            .toolbar {
+                ToolbarItem(placement: .principal) {
+                    Text(
+                        titleText()
+                        
+                    )
+                        .navigationTitleTextStyle
                     
-
                 }
-                .ignoresSafeArea()
                 
-
-          
-
-               
-       }
-            
-            
-            Button("Show Detail") {
-                showingDetail = true
-                
-                
-                
-            
                 
             }
-            .fullScreenCover(isPresented: $showingDetail, content: IntroTabView.init)
+            .ignoresSafeArea()
             
+            
+            
+            //      TEST PROMOTION TAB VIEW
+            //            Button("Show Detail") {
+            //
+            //                showingDetail = true
+            //
+            //             }
+            
+            .fullScreenCover(isPresented: $showingDetail, content: IntroTabView.init)
+          
         }
+        .preferredColorScheme(.dark) // white tint on status bar
         
+        
+        
+    }
+    
+    func titleText() -> String{
+        switch selectedTab {
+            
+        case .One:
+            return "Download video"
+        case .Two:
+            return "Playlists"
+        case .three:
+            return "Deferred posts"
+        case .four:
+            return "Settings"
+        }
         
     }
     

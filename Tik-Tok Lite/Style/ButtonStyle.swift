@@ -19,29 +19,11 @@ extension View {
   }
 }
 
-struct MainTextStyle: ViewModifier {
-    func body(content: Content) -> some View {
-        content
-            .font(.system(size: 16, weight: .regular, design: .default))
-            .foregroundColor(Color.white)
-            .frame(width: 275, height: 63, alignment: .center)
-            .multilineTextAlignment(.center)
-            .padding(.bottom, 20)
-    }
-}
-extension View {
-    var mainTextStyle: some View {
-        self.modifier(MainTextStyle())
-    }
-}
-
-
-
 
 struct ActionButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .frame(width: 343, height: 53, alignment: .center)
+            .frame(width: UIScreen.width * 0.92, height: 53, alignment: .center)
             .foregroundColor(.white)
            // .font(Font.body.bold())
           //  .padding(10)
@@ -62,5 +44,6 @@ struct CloseButtonStyle: ButtonStyle {
             
     }
 }
+
 
 

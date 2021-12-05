@@ -77,7 +77,7 @@ struct PromotionTabView: View {
                     }
                 })  {
                     HStack{
-                        Image("discount")
+                        Image("Discount")
                         Text("Next")
                             .font(.system(size: 16, weight: .regular, design: .default))
                         
