@@ -4,37 +4,39 @@
 import SwiftUI
 import Photos
 import AVKit
+import AVFoundation
 
-struct welcome: Codable {
-    let props: props
+
+struct Welcome: Codable {
+    let props: Props
     
-    struct video: Codable {
+    struct Video: Codable {
         let playAddr: String
         let downloadAddr: String
         let cover: String
     }
     
-    struct author: Codable {
+    struct Author: Codable {
         let nickname: String
     }
     
-    struct itemStruct: Codable {
-        let video: video
-        let author: author
+    struct ItemStruct: Codable {
+        let video: Video
+        let author: Author
         let desc, id: String
         let createTime: Int
     }
     
-    struct itemInfo: Codable {
-        let itemStruct: itemStruct
+    struct ItemInfo: Codable {
+        let itemStruct: ItemStruct
     }
     
-    struct pageProps: Codable {
-        let itemInfo: itemInfo
+    struct PageProps: Codable {
+        let itemInfo: ItemInfo
     }
     
-    struct props: Codable {
-        let pageProps: pageProps
+    struct Props: Codable {
+        let pageProps: PageProps
     }
 }
 
@@ -104,9 +106,9 @@ class TiktokDownloader {
                 
                 let data = String(json).data(using: .utf8)!
                 
-                let dot: welcome?
+                let dot: Welcome?
                 do {
-                    dot = try JSONDecoder().decode(welcome.self, from: data)
+                    dot = try JSONDecoder().decode(Welcome.self, from: data)
                 } catch {
                     completion(.failure(.JsonParseFailed))
                     return
@@ -186,7 +188,7 @@ class TiktokDownloader {
 
 
 struct Tiktok {
-    var data: welcome? = nil
+    var data: Welcome? = nil
     var fileName: String
     var coverFile: String
     var dataFile: String
@@ -198,7 +200,7 @@ struct Tiktok {
         case cover
     }
     
-    init(withFileName: String, withData: welcome? = nil) {
+    init(withFileName: String, withData: Welcome? = nil) {
         fileName = "\(withFileName).mp4"
         coverFile = "\(withFileName).jpg"
         dataFile = "\(withFileName).json"
@@ -207,7 +209,7 @@ struct Tiktok {
             let dataFileUrl = baseDocUrl.appendingPathComponent("tiktoks/data/\(dataFile)")
             let dataFile = try! String(contentsOfFile: dataFileUrl.relativePath)
             
-            data = try! JSONDecoder().decode(welcome.self, from: dataFile.data(using: .utf8)!)
+            data = try! JSONDecoder().decode(Welcome.self, from: dataFile.data(using: .utf8)!)
         } else {
             
             data = withData
@@ -235,28 +237,26 @@ struct Tiktok {
     
 }
 
-struct VImageLoader: View {
+
+
+struct TikTokVideoURL {
     
     public var withUrl: String
     private var loaded: Bool
     @State private var imgData: UIImage? = nil
-    // @State var isPresented = false
     @ObservedObject var Sheet: SheetObservable
     @State var deleted = false
     
-    var data: welcome
+    var data: Welcome
     let videoUrl: URL
     var videoPlayer: AVPlayer
     var bundleNames: [String: String]
-    
-    
-    
     @State var playerState = false
-    
+    @State var playerTime: CMTime = CMTime(seconds: 0, preferredTimescale: 0)
     public var width: CGFloat
     public var height: CGFloat
     
-    init(withUrl: String, width: CGFloat, height: CGFloat, data: welcome, withVideoUrl: URL, bundleNames: [String:String], sheet: SheetObservable) {
+    init(withUrl: String, width: CGFloat, height: CGFloat, data: Welcome, withVideoUrl: URL, bundleNames: [String:String], sheet: SheetObservable) {
         
         self.withUrl = withUrl
         self.loaded = false
@@ -267,6 +267,7 @@ struct VImageLoader: View {
         self.videoPlayer = AVPlayer(url:  videoUrl)
         self.Sheet = sheet
         self.bundleNames = bundleNames
+
     }
     
     
@@ -298,9 +299,72 @@ struct VImageLoader: View {
     
     
     
+}
+struct VImageLoader: View {
+    
+    public var withUrl: String
+    private var loaded: Bool
+    @State private var imgData: UIImage? = nil
+    @ObservedObject var Sheet: SheetObservable
+    @State var deleted = false
+    
+    var data: Welcome
+    let videoUrl: URL
+    var videoPlayer: AVPlayer
+    var bundleNames: [String: String]
+    @State var playerState = false
+    @State var playerTime: CMTime = CMTime(seconds: 0, preferredTimescale: 0)
+    public var width: CGFloat
+    public var height: CGFloat
+    
+    init(withUrl: String, width: CGFloat, height: CGFloat, data: Welcome, withVideoUrl: URL, bundleNames: [String:String], sheet: SheetObservable) {
+        
+        self.withUrl = withUrl
+        self.loaded = false
+        self.width = width
+        self.height = height
+        self.data = data
+        self.videoUrl = withVideoUrl
+        self.videoPlayer = AVPlayer(url:  videoUrl)
+        self.Sheet = sheet
+        self.bundleNames = bundleNames
+
+    }
+    
+    
+    public func openSheet() {
+        print("openSheet fired()")
+        self.Sheet.isActive = true
+    }
+    
+    public func saveToPhotos() throws {
+        PHPhotoLibrary.shared().performChanges({
+            PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: videoUrl)
+        }) { saved, error in
+            if saved {
+                let succesNotif = Notification(text: "Successfully saved to photo", title: "Info")
+                succesNotif.execute()
+            }
+            if (error != nil) {
+                let errNotif = Notification(text: "Failed to save to photo", title: "Error")
+                errNotif.execute()
+            }
+        }
+    }
+    
+    func getImage() {
+        let url = URL(string: withUrl)!
+        let data = try! Data(contentsOf: url)
+        self.imgData = UIImage(data:data)!
+    }
+    
+    
+   
+  
+  
     
     var body: some View {
-        
+
         if deleted {
             
         } else {
@@ -318,64 +382,75 @@ struct VImageLoader: View {
 //                            .bold()
 //                            .padding(.top, 10)
 //                        Spacer()
-                        VideoPlayer(player: videoPlayer)
-                        
+                ZStack{
+                       // VideoPlayer(player: videoPlayer)
+                      
+                   // VideoPlayer(player: $player)
+//                    if !playerState{
+//                        Image("PlayCircle")
+//                    }
+                
+                }
                           //.aspectRatio(contentMode: .fill)
-                    
-                            .frame(width: UIScreen.width * 0.92, height: UIScreen.height * 0.7)
-                            .clipShape(RoundedRectangle(cornerRadius: 14))
-                            .shadow(radius: 7)
-                            .onAppear() {
-                                
-                                videoPlayer.play()
-                                playerState.toggle()
-                                
-                            }
-                            .onDisappear() {
-                                videoPlayer.pause()
-                                videoPlayer.seek(to: .zero)
-                            }
-                            .onTapGesture {
-                                if playerState {
-                                    videoPlayer.pause()
-                                    playerState.toggle()
-                                } else {
-                                    videoPlayer.play()
-                                    playerState.toggle()
-                                }
-                            }
+               
+                            
+//                            .frame(width: UIScreen.width * 0.92, height: UIScreen.height * 0.7)
+//                            .clipShape(RoundedRectangle(cornerRadius: 14))
+//                            .shadow(radius: 7)
+//                            .onAppear() {
+//                                playerTime = (videoPlayer.currentItem?.asset.duration)!
+//                                videoPlayer.play()
+//                                videoPlayer.actionAtItemEnd = .none
+//                                //videoPlayer.videoGravity = .resizeAspectFill
+//                                playerState.toggle()
+//
+//                            }
+//                            .onDisappear() {
+//                                videoPlayer.pause()
+//                                videoPlayer.seek(to: .zero)
+//
+//                            }
+//                            .onTapGesture {
+//                                if playerState {
+//                                    videoPlayer.pause()
+//                                    playerState.toggle()
+//                                } else {
+//                                    videoPlayer.play()
+//                                    playerState.toggle()
+//                                }
+//                            }
                         
                         
                         
                         
 //                    })
                     .onTapGesture  {
-                        UINotificationFeedbackGenerator().notificationOccurred(.success)
-                        self.Sheet.isActive.toggle()
+                      //  UINotificationFeedbackGenerator().notificationOccurred(.success)
+                      //  self.Sheet.isActive.toggle()
                     }
-                    .contentShape(RoundedRectangle(cornerRadius:25))
-                    .contextMenu {
-                        VStack {
-                            Button(action: {
-                                try! saveToPhotos()
-                                UINotificationFeedbackGenerator().notificationOccurred(.success)
-                            }) {
-                                Label("Save to photo", systemImage: "square.and.arrow.down")
-                            }
-                            Button(action: {
-                                try! FileManager.default.removeItem(at: baseDocUrl.appendingPathComponent("tiktoks/\(bundleNames["f"]!)"))
-                                try! FileManager.default.removeItem(at: baseDocUrl.appendingPathComponent("tiktoks/data/\(bundleNames["d"]!)"))
-                                try! FileManager.default.removeItem(at: baseDocUrl.appendingPathComponent("tiktoks/covers/\(bundleNames["c"]!)"))
-                                
-                                deleted = true
-                                UINotificationFeedbackGenerator().notificationOccurred(.success)
-                            }, label: {
-                                Label("Delete", systemImage: "trash").background(Color(.red))
-                                
-                            })
-                            
-                        }
-                    }
+//                    .contentShape(RoundedRectangle(cornerRadius:25))
+//                    .contextMenu {
+//                        VStack {
+//                            Button(action: {
+//                                try! saveToPhotos()
+//                                UINotificationFeedbackGenerator().notificationOccurred(.success)
+//                            }) {
+//                                Label("Save to photo", systemImage: "square.and.arrow.down")
+//                            }
+//                            Button(action: {
+//                                try! FileManager.default.removeItem(at: baseDocUrl.appendingPathComponent("tiktoks/\(bundleNames["f"]!)"))
+//                                try! FileManager.default.removeItem(at: baseDocUrl.appendingPathComponent("tiktoks/data/\(bundleNames["d"]!)"))
+//                                try! FileManager.default.removeItem(at: baseDocUrl.appendingPathComponent("tiktoks/covers/\(bundleNames["c"]!)"))
+//
+//                                deleted = true
+//                                UINotificationFeedbackGenerator().notificationOccurred(.success)
+//                            }, label: {
+//                                Label("Delete", systemImage: "trash").background(Color(.red))
+//
+//                            })
+//
+//                        }
+//                    }
             } else {
                 Image("1")
                     .resizable()
@@ -398,10 +473,26 @@ struct VImageLoader: View {
         
     }
     
-    
-    
 }
 
 class SheetObservable: ObservableObject {
     @Published var isActive = false
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

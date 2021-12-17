@@ -1,18 +1,15 @@
 //
-//  PublicationsView.swift
+//  Tik_Tok_LiteApp.swift
 //  Tik-Tok Lite
 //
-//  Created by user206820 on 10/29/21.
+//  Created by Jenya Korsun on 10/31/21.
 //
 
 import SwiftUI
 
 struct SettingsView : View {
     
-    
-    
     let backItem = BackItem()
-    
     var menuButtons = [
         SettingsButtonView(buttonImage: "SettingsBarImage1", buttonText: "Whrite us"),
         SettingsButtonView(buttonImage: "SettingsBarImage2", buttonText: "Subscriptions"),
@@ -21,18 +18,17 @@ struct SettingsView : View {
         SettingsButtonView(buttonImage: "SettingsBarImage5", buttonText: "Promo code"),
     ]
     
-    
-    
-    
     var body: some View {
         
+        NavigationView {
             
-            NavigationView {
-                ZStack{
-                    Color.black
+            ZStack{
+                
+                Color.black
+                
                 VStack{
-                    VStack { /// 2.
-                        ///
+                    
+                    VStack {
                         
                         ForEach(menuButtons, id: \.self) { menu in
                             
@@ -40,19 +36,24 @@ struct SettingsView : View {
                                 
                                 destination:  Group {
                                     
-                                    if menu.buttonText == "Whrite us" {
+                                    switch menu.buttonText{
+                                        
+                                    case "Whrite us":
                                         
                                         PromocodeView()
                                             .frame(width: 200, height: 200, alignment: .center)
                                         
-                                    }
-                                    
-                                    if menu.buttonText == "Subscriptions" {
+                                    case "Subscriptions":
+                                        
                                         AboutUs()
-                                    }
-                                    
-                                    if menu.buttonText == "Promo code" {
+                                        
+                                    case "Promo code":
+                                        
                                         PromocodeView()
+                                        
+                                    default:
+                                        
+                                        AboutUs()
                                     }
                                     
                                 } ){
@@ -65,8 +66,7 @@ struct SettingsView : View {
                         .navigationBarTitleDisplayMode(.inline)
                         .navigationTitle("Settings")
                         .font(.system(size: 16, weight: .regular, design: .default))
-                        
-                        
+         
                     }
                     .padding(.top, 5)
                     .padding(15)
@@ -88,10 +88,7 @@ struct BackItem: View {
         
         Text("All work fine")
     }
-    //       SettingsView.bringSubviewToFront(Profile)
-    
-    
-    
+   
 }
 
 

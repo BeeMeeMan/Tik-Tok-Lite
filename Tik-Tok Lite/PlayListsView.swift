@@ -1,9 +1,10 @@
 //
-//  PlayListsView.swift
+//  Tik_Tok_LiteApp.swift
 //  Tik-Tok Lite
 //
-//  Created by user206820 on 10/29/21.
+//  Created by Jenya Korsun on 10/31/21.
 //
+
 
 import SwiftUI
 
@@ -16,21 +17,24 @@ struct PlayListsView : View {
         NavigationView{
             
             ZStack{
+                
                 Color.black
                 
                 VStack{
+                    
+                    Spacer()
                     Spacer()
                     Spacer()
                     
-                    Spacer()
                     Image("Play")
-                    
                         .scaleEffect(1.6, anchor: .center)
                     
                     Text("Make your first playlist")
                         .mainTextStyle
                         .padding(.top, 50)
+                    
                     Spacer()
+                    
                     Button(action: {
                         
                         
@@ -45,28 +49,17 @@ struct PlayListsView : View {
                         }
                     }
                     .roseButtonStyle()
-                    // .buttonStyle(ActionButtonStyle())
                     .padding(.bottom, 50)
                     
                 }
             }
             .navigationBarTitleDisplayMode(.inline)
-            .navigationBarItems(trailing: Image("EditSquare")
-                                    .foregroundColor(.roseColor))
+            .navigationBarItems(trailing: Image("EditSquare").foregroundColor(.roseColor))
             .navigationTitle("Playlists")
             .font(.system(size: 16, weight: .regular, design: .default))
             
         }
     }
     
-    //    func closeView(){
-    //        presentationMode.wrappedValue.dismiss()
-    //
-    //    }
 }
 
-//struct PlayListsView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        PlayListsView()
-//    }
-//}
