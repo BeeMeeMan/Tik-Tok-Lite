@@ -14,6 +14,9 @@ struct Tik_Tok_LiteApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView().environmentObject(showModalView)
+                .onAppear {
+                    UserDefaults.standard.set(false, forKey: "_UIConstraintBasedLayoutLogUnsatisfiable")
+                }
         }
     }
 }

@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-
+import AVKit
 extension UIScreen{
     static let width = UIScreen.main.bounds.size.width
     static let height = UIScreen.main.bounds.size.height
@@ -32,10 +32,9 @@ struct ContentView: View {
     
     // Test new modalPopUp:
     @State private var showModal = false
-    
     @State private var showingDetail = false
     @State private var selectedTab: Tabs = .One
-   
+    @EnvironmentObject var showModalView: ShowModalView
 //    @EnvironmentObject var halfSheet: HalfSheetPosition
 //    @EnvironmentObject var TikData: HalfSheetPosition
     
@@ -136,7 +135,10 @@ struct ContentView: View {
         .ignoresSafeArea()
         .fullScreenCover(isPresented: $showingDetail, content: IntroTabView.init)
         .preferredColorScheme(.dark) // white tint on status bar
-         
+        .popover(isPresented: $showModalView.isActivePlayer) {
+            PlayerView(player: AVPlayer(url: (showModalView.TikData.last?.url(forFile: .video))! ))
+           
+        }
     }
     
 //MARK: blackScreenCover effect

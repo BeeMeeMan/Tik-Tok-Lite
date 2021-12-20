@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 
 let roseColor = Color(red: 0.908, green: 0.167, blue: 0.396, opacity: 1)
+let barBackgroundGrey = Color(red: 0.18, green: 0.176, blue: 0.176)
 
 extension Color {
     

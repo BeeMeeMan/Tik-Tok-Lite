@@ -10,7 +10,8 @@
 		400CF6062760E515006CCB73 /* VideoPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 400CF6052760E515006CCB73 /* VideoPlayer.swift */; };
 		401082E12769F33200712576 /* TestPopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 401082E02769F33200712576 /* TestPopUp.swift */; };
 		401082FF276A353500712576 /* ModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 401082FE276A353500712576 /* ModalView.swift */; };
-		40954D65275CE0CB00E11CDE /* HalfSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40954D64275CE0CB00E11CDE /* HalfSheetView.swift */; };
+		409AAA78276F6D3400D5BA97 /* PListCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 409AAA77276F6D3400D5BA97 /* PListCreator.swift */; };
+		409AAA96276FC64700D5BA97 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 409AAA95276FC64700D5BA97 /* ImagePicker.swift */; };
 		4A50EAE42732E28D00622D8A /* PromocodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A50EAE32732E28D00622D8A /* PromocodeView.swift */; };
 		4A6669E2272FF48B006827F1 /* TextStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A6669E1272FF48B006827F1 /* TextStyle.swift */; };
 		4A6669E4273018EC006827F1 /* SettingsButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A6669E3273018EC006827F1 /* SettingsButtonView.swift */; };
@@ -57,7 +58,8 @@
 		400CF6052760E515006CCB73 /* VideoPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayer.swift; sourceTree = "<group>"; };
 		401082E02769F33200712576 /* TestPopUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestPopUp.swift; sourceTree = "<group>"; };
 		401082FE276A353500712576 /* ModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalView.swift; sourceTree = "<group>"; };
-		40954D64275CE0CB00E11CDE /* HalfSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HalfSheetView.swift; sourceTree = "<group>"; };
+		409AAA77276F6D3400D5BA97 /* PListCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PListCreator.swift; sourceTree = "<group>"; };
+		409AAA95276FC64700D5BA97 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		4A50EAE32732E28D00622D8A /* PromocodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromocodeView.swift; sourceTree = "<group>"; };
 		4A6669E1272FF48B006827F1 /* TextStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextStyle.swift; sourceTree = "<group>"; };
 		4A6669E3273018EC006827F1 /* SettingsButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsButtonView.swift; sourceTree = "<group>"; };
@@ -118,8 +120,8 @@
 				4A99E22B272EE79C00247B18 /* SettingsView.swift */,
 				4A99E229272EE78800247B18 /* PublicationsView.swift */,
 				4A99E227272EE76F00247B18 /* PlayListsView.swift */,
+				409AAA77276F6D3400D5BA97 /* PListCreator.swift */,
 				401082FE276A353500712576 /* ModalView.swift */,
-				40954D64275CE0CB00E11CDE /* HalfSheetView.swift */,
 				4A99E225272EC53500247B18 /* DownloadView.swift */,
 			);
 			name = Views;
@@ -160,6 +162,7 @@
 				40EB05F72768FC3300EABD73 /* Views */,
 				4ABBC2B427394F9C005B2E02 /* VideoDownloader.swift */,
 				400CF6052760E515006CCB73 /* VideoPlayer.swift */,
+				409AAA95276FC64700D5BA97 /* ImagePicker.swift */,
 				4ABBC2B627395105005B2E02 /* DownloaderNitifications.swift */,
 				4A50EAE22732E27000622D8A /* SettingMenu */,
 				4A99E234272EE83600247B18 /* Style */,
@@ -351,17 +354,18 @@
 			files = (
 				401082FF276A353500712576 /* ModalView.swift in Sources */,
 				4A6669E2272FF48B006827F1 /* TextStyle.swift in Sources */,
+				409AAA78276F6D3400D5BA97 /* PListCreator.swift in Sources */,
 				4A99E22E272EE7E200247B18 /* IntroTabView.swift in Sources */,
 				4A99E1FA272EC4AF00247B18 /* ContentView.swift in Sources */,
 				4ABBC2B527394F9C005B2E02 /* VideoDownloader.swift in Sources */,
 				401082E12769F33200712576 /* TestPopUp.swift in Sources */,
 				4A99E230272EE7FF00247B18 /* PromotionTabView.swift in Sources */,
 				4ABBC2B727395105005B2E02 /* DownloaderNitifications.swift in Sources */,
-				40954D65275CE0CB00E11CDE /* HalfSheetView.swift in Sources */,
 				4A99E1F8272EC4AF00247B18 /* Tik_Tok_LiteApp.swift in Sources */,
 				4A6669E4273018EC006827F1 /* SettingsButtonView.swift in Sources */,
 				4A99E22C272EE79C00247B18 /* SettingsView.swift in Sources */,
 				4A99E222272EC4F900247B18 /* ThreeDotsIndexView.swift in Sources */,
+				409AAA96276FC64700D5BA97 /* ImagePicker.swift in Sources */,
 				4A99E232272EE81700247B18 /* LayoutTabView.swift in Sources */,
 				4A99E238272EE86200247B18 /* Colors.swift in Sources */,
 				4A99E22A272EE78800247B18 /* PublicationsView.swift in Sources */,

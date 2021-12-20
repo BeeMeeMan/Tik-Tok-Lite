@@ -34,18 +34,17 @@ struct PlayListsView : View {
                         .padding(.top, 50)
                     
                     Spacer()
-                    
-                    Button(action: {
+                    NavigationLink(destination:
                         
+                                    PListCreator()
                         
-                    })  {
+                    ){
                         HStack{
                             Image(systemName: "star.fill")
                                 .frame(width: 20, height: 20, alignment: .center)
                                 .foregroundColor(.white)
-                            Text("Make playlist")
+                            Text("Create playlist")
                                 .font(.system(size: 16, weight: .regular, design: .default))
-                            
                         }
                     }
                     .roseButtonStyle()

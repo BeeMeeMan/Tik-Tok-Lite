@@ -71,8 +71,8 @@ struct DownloadView: View {
             }
             
             //.fullScreenCover(isPresented: $showingPromoView, content: TestPopUp.init)
-            .popover(isPresented: $showingPromoView) {
-                TestPopUp()
+            .fullScreenCover(isPresented: $showingPromoView) {
+                PromotionTabView()
                    }
             .fullScreenCover(isPresented: $showingInfoView, content: IntroTabView.init)
             
@@ -125,81 +125,7 @@ struct DownloadView: View {
     var downloadClipButton: some View {
         
         Button(action: {
-            
-            showModalView.position = ModalViewPosition.Download
-            let tiktokFolder: URL = baseDocUrl.appendingPathComponent("tiktoks")
-            let dataFolder: URL = baseDocUrl.appendingPathComponent("tiktoks/data")
-            let coverFolder: URL = baseDocUrl.appendingPathComponent("tiktoks/covers")
-            
-            do {
-                try FileManager.default.createDirectory(at: tiktokFolder, withIntermediateDirectories: true)
-                try FileManager.default.createDirectory(at: dataFolder, withIntermediateDirectories: true)
-                try FileManager.default.createDirectory(at: coverFolder, withIntermediateDirectories: true)
-            } catch {}
-            
-            let strPath = baseDocUrl.appendingPathComponent("tiktoks").relativePath
-            let content = try! FileManager.default.contentsOfDirectory(atPath: strPath)
-            let savedList = content.filter{ ["covers", "data"].contains($0) != true }.map { $0.split(separator: ".")[0] }
-          //  self.halfSheet.TikData = savedList.map { Tiktok(withFileName: String($0))  }
-            
-            UNUserNotificationCenter.current().delegate =  notifDelegate
-            UIApplication.shared.applicationIconBadgeNumber = 0
-
-            //    DispatchQueue.global(qos: .userInitiated).async {
-            
-            guard let clip = UIPasteboard.general.string else {
-                showModalView.position = ModalViewPosition.Close
-//                halfSheet.opasity = 0.0
-                let errsNotif = Notification(text: "No URL Provided", title: "Error")
-                errsNotif.execute()
-                return
-                
-            }
-            print(clip)
-            let dlr = TiktokDownloader(withUrl: clip)
-            
-            try! dlr.download() { result in
-                switch result {
-                case .success(let r):
-//                    self.halfSheet.TikData.append(r)
-//                    halfSheet.TikData.last?.vImg!.openSheet()
-                    let succesNotif = Notification(text: "Successfully downloaded", title: "Info")
-                    succesNotif.execute()
-                    update = true
-                    showModalView.position = ModalViewPosition.Player
-                    DispatchQueue.main.async {
-//                        halfSheet.position = CardPosition.top
-//                        halfSheet.opasity = 0.66
-                    }
-                case .failure(let err):
-                    showModalView.position = ModalViewPosition.Close
-                    DispatchQueue.main.async {
-//                        halfSheet.position = CardPosition.bottom
-//                        halfSheet.opasity = 0.0
-                    }
-                    switch err {
-                        
-                    case .InvalidUrlGiven:
-                        let errsNotif = Notification(text: "The url you gave is incorrect", title: "Error")
-                        errsNotif.execute()
-                        
-                    case .VideoSaveFailed, .DownloadVideoForbiden, .VideoDownloadFailed:
-                        let errsNotif = Notification(text: "Failed to download video", title: "Error")
-                        errsNotif.execute()
-                        
-                        
-                    default:
-                        let errsNotif = Notification(text: "Generic error", title: "Error")
-                        errsNotif.execute()
-                        
-                        
-                    }
-                }
-                
-            }
-            UINotificationFeedbackGenerator().notificationOccurred(.success)
-            
-            
+            showModalView.isActiveDownload = true
             
         }){
             HStack{
