@@ -14,6 +14,12 @@ extension View {
 }
 
 extension View {
+  func whiteToRoseButtonStyle() -> some View {
+      buttonStyle(WhiteToRoseButtonStyle())
+  }
+}
+
+extension View {
   func grayButtonStyle() -> some View {
       buttonStyle(ActionGrayButtonStyle())
   }
@@ -22,6 +28,12 @@ extension View {
 extension View {
   func closeButtonStyle() -> some View {
       buttonStyle(CloseButtonStyle())
+  }
+}
+
+extension View {
+  func actionButtonStyle() -> some View {
+      buttonStyle(ActionButtonStyle())
   }
 }
 
@@ -38,6 +50,16 @@ struct ActionButtonStyle: ButtonStyle {
                 configuration.isPressed ? 0.5 : 1
             ))
             .cornerRadius(10)
+    }
+}
+
+
+struct WhiteToRoseButtonStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .foregroundColor(
+                configuration.isPressed ? .roseColor : .white 
+            )
     }
 }
 

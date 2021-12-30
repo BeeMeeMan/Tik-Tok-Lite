@@ -7,11 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		400CF6062760E515006CCB73 /* VideoPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 400CF6052760E515006CCB73 /* VideoPlayer.swift */; };
+		400CF6062760E515006CCB73 /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 400CF6052760E515006CCB73 /* PlayerView.swift */; };
 		401082E12769F33200712576 /* TestPopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 401082E02769F33200712576 /* TestPopUp.swift */; };
-		401082FF276A353500712576 /* ModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 401082FE276A353500712576 /* ModalView.swift */; };
-		409AAA78276F6D3400D5BA97 /* PListCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 409AAA77276F6D3400D5BA97 /* PListCreator.swift */; };
+		40192068277902E800732FB6 /* VideoDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40192067277902E800732FB6 /* VideoDownloader.swift */; };
+		401E323B277259E100D0AFAC /* Playlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 401E323A277259E100D0AFAC /* Playlist.swift */; };
+		4067F9C82770D82200F35BB0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4067F9C72770D82200F35BB0 /* AppDelegate.swift */; };
+		4067F9CA2770D83E00F35BB0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4067F9C92770D83E00F35BB0 /* SceneDelegate.swift */; };
+		409AAA78276F6D3400D5BA97 /* PListCreatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 409AAA77276F6D3400D5BA97 /* PListCreatorView.swift */; };
 		409AAA96276FC64700D5BA97 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 409AAA95276FC64700D5BA97 /* ImagePicker.swift */; };
+		40B5E97F2773A7D0003DE438 /* PlayListVideoListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40B5E97E2773A7D0003DE438 /* PlayListVideoListView.swift */; };
+		40ED08A0277B58E4008C7294 /* DownloadAndPlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40ED089F277B58E4008C7294 /* DownloadAndPlayView.swift */; };
+		40F8D988277CF0F7009B575A /* DownloadPopUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F8D987277CF0F7009B575A /* DownloadPopUpView.swift */; };
 		4A50EAE42732E28D00622D8A /* PromocodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A50EAE32732E28D00622D8A /* PromocodeView.swift */; };
 		4A6669E2272FF48B006827F1 /* TextStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A6669E1272FF48B006827F1 /* TextStyle.swift */; };
 		4A6669E4273018EC006827F1 /* SettingsButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A6669E3273018EC006827F1 /* SettingsButtonView.swift */; };
@@ -33,7 +39,6 @@
 		4A99E236272EE84D00247B18 /* ButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A99E235272EE84D00247B18 /* ButtonStyle.swift */; };
 		4A99E238272EE86200247B18 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A99E237272EE86200247B18 /* Colors.swift */; };
 		4A99E23A272EE87600247B18 /* NavigationBarShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A99E239272EE87600247B18 /* NavigationBarShape.swift */; };
-		4ABBC2B527394F9C005B2E02 /* VideoDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABBC2B427394F9C005B2E02 /* VideoDownloader.swift */; };
 		4ABBC2B727395105005B2E02 /* DownloaderNitifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABBC2B627395105005B2E02 /* DownloaderNitifications.swift */; };
 /* End PBXBuildFile section */
 
@@ -55,11 +60,18 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		400CF6052760E515006CCB73 /* VideoPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayer.swift; sourceTree = "<group>"; };
+		400CF6052760E515006CCB73 /* PlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerView.swift; sourceTree = "<group>"; };
 		401082E02769F33200712576 /* TestPopUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestPopUp.swift; sourceTree = "<group>"; };
-		401082FE276A353500712576 /* ModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalView.swift; sourceTree = "<group>"; };
-		409AAA77276F6D3400D5BA97 /* PListCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PListCreator.swift; sourceTree = "<group>"; };
+		40192067277902E800732FB6 /* VideoDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoDownloader.swift; sourceTree = "<group>"; };
+		401E321F277210A800D0AFAC /* Tik-Tok-Lite-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Tik-Tok-Lite-Info.plist"; sourceTree = SOURCE_ROOT; };
+		401E323A277259E100D0AFAC /* Playlist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Playlist.swift; sourceTree = "<group>"; };
+		4067F9C72770D82200F35BB0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		4067F9C92770D83E00F35BB0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		409AAA77276F6D3400D5BA97 /* PListCreatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PListCreatorView.swift; sourceTree = "<group>"; };
 		409AAA95276FC64700D5BA97 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
+		40B5E97E2773A7D0003DE438 /* PlayListVideoListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayListVideoListView.swift; sourceTree = "<group>"; };
+		40ED089F277B58E4008C7294 /* DownloadAndPlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadAndPlayView.swift; sourceTree = "<group>"; };
+		40F8D987277CF0F7009B575A /* DownloadPopUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadPopUpView.swift; sourceTree = "<group>"; };
 		4A50EAE32732E28D00622D8A /* PromocodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromocodeView.swift; sourceTree = "<group>"; };
 		4A6669E1272FF48B006827F1 /* TextStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextStyle.swift; sourceTree = "<group>"; };
 		4A6669E3273018EC006827F1 /* SettingsButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsButtonView.swift; sourceTree = "<group>"; };
@@ -84,7 +96,6 @@
 		4A99E235272EE84D00247B18 /* ButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStyle.swift; sourceTree = "<group>"; };
 		4A99E237272EE86200247B18 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		4A99E239272EE87600247B18 /* NavigationBarShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarShape.swift; sourceTree = "<group>"; };
-		4ABBC2B427394F9C005B2E02 /* VideoDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoDownloader.swift; sourceTree = "<group>"; };
 		4ABBC2B627395105005B2E02 /* DownloaderNitifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloaderNitifications.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -113,16 +124,28 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4067F9C62770D7F200F35BB0 /* ModalViewExtentions */ = {
+			isa = PBXGroup;
+			children = (
+				4067F9C72770D82200F35BB0 /* AppDelegate.swift */,
+				4067F9C92770D83E00F35BB0 /* SceneDelegate.swift */,
+			);
+			name = ModalViewExtentions;
+			sourceTree = "<group>";
+		};
 		40EB05F72768FC3300EABD73 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				4067F9C62770D7F200F35BB0 /* ModalViewExtentions */,
 				4A99E1F9272EC4AF00247B18 /* ContentView.swift */,
 				4A99E22B272EE79C00247B18 /* SettingsView.swift */,
 				4A99E229272EE78800247B18 /* PublicationsView.swift */,
 				4A99E227272EE76F00247B18 /* PlayListsView.swift */,
-				409AAA77276F6D3400D5BA97 /* PListCreator.swift */,
-				401082FE276A353500712576 /* ModalView.swift */,
+				40B5E97E2773A7D0003DE438 /* PlayListVideoListView.swift */,
+				409AAA77276F6D3400D5BA97 /* PListCreatorView.swift */,
 				4A99E225272EC53500247B18 /* DownloadView.swift */,
+				40F8D987277CF0F7009B575A /* DownloadPopUpView.swift */,
+				40ED089F277B58E4008C7294 /* DownloadAndPlayView.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -158,10 +181,12 @@
 		4A99E1F6272EC4AF00247B18 /* Tik-Tok Lite */ = {
 			isa = PBXGroup;
 			children = (
+				401E321F277210A800D0AFAC /* Tik-Tok-Lite-Info.plist */,
 				4A99E1F7272EC4AF00247B18 /* Tik_Tok_LiteApp.swift */,
 				40EB05F72768FC3300EABD73 /* Views */,
-				4ABBC2B427394F9C005B2E02 /* VideoDownloader.swift */,
-				400CF6052760E515006CCB73 /* VideoPlayer.swift */,
+				40192067277902E800732FB6 /* VideoDownloader.swift */,
+				401E323A277259E100D0AFAC /* Playlist.swift */,
+				400CF6052760E515006CCB73 /* PlayerView.swift */,
 				409AAA95276FC64700D5BA97 /* ImagePicker.swift */,
 				4ABBC2B627395105005B2E02 /* DownloaderNitifications.swift */,
 				4A50EAE22732E27000622D8A /* SettingMenu */,
@@ -352,28 +377,33 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				401082FF276A353500712576 /* ModalView.swift in Sources */,
 				4A6669E2272FF48B006827F1 /* TextStyle.swift in Sources */,
-				409AAA78276F6D3400D5BA97 /* PListCreator.swift in Sources */,
+				409AAA78276F6D3400D5BA97 /* PListCreatorView.swift in Sources */,
 				4A99E22E272EE7E200247B18 /* IntroTabView.swift in Sources */,
 				4A99E1FA272EC4AF00247B18 /* ContentView.swift in Sources */,
-				4ABBC2B527394F9C005B2E02 /* VideoDownloader.swift in Sources */,
 				401082E12769F33200712576 /* TestPopUp.swift in Sources */,
 				4A99E230272EE7FF00247B18 /* PromotionTabView.swift in Sources */,
 				4ABBC2B727395105005B2E02 /* DownloaderNitifications.swift in Sources */,
+				40ED08A0277B58E4008C7294 /* DownloadAndPlayView.swift in Sources */,
 				4A99E1F8272EC4AF00247B18 /* Tik_Tok_LiteApp.swift in Sources */,
+				401E323B277259E100D0AFAC /* Playlist.swift in Sources */,
 				4A6669E4273018EC006827F1 /* SettingsButtonView.swift in Sources */,
+				40F8D988277CF0F7009B575A /* DownloadPopUpView.swift in Sources */,
 				4A99E22C272EE79C00247B18 /* SettingsView.swift in Sources */,
+				4067F9C82770D82200F35BB0 /* AppDelegate.swift in Sources */,
 				4A99E222272EC4F900247B18 /* ThreeDotsIndexView.swift in Sources */,
 				409AAA96276FC64700D5BA97 /* ImagePicker.swift in Sources */,
 				4A99E232272EE81700247B18 /* LayoutTabView.swift in Sources */,
+				40192068277902E800732FB6 /* VideoDownloader.swift in Sources */,
+				40B5E97F2773A7D0003DE438 /* PlayListVideoListView.swift in Sources */,
 				4A99E238272EE86200247B18 /* Colors.swift in Sources */,
 				4A99E22A272EE78800247B18 /* PublicationsView.swift in Sources */,
 				4A99E236272EE84D00247B18 /* ButtonStyle.swift in Sources */,
 				4A99E228272EE76F00247B18 /* PlayListsView.swift in Sources */,
+				4067F9CA2770D83E00F35BB0 /* SceneDelegate.swift in Sources */,
 				4A50EAE42732E28D00622D8A /* PromocodeView.swift in Sources */,
 				4A99E226272EC53500247B18 /* DownloadView.swift in Sources */,
-				400CF6062760E515006CCB73 /* VideoPlayer.swift in Sources */,
+				400CF6062760E515006CCB73 /* PlayerView.swift in Sources */,
 				4A99E23A272EE87600247B18 /* NavigationBarShape.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -539,6 +569,11 @@
 				DEVELOPMENT_TEAM = 6988BYCGDA;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Tik-Tok-Lite-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "";
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_KEY_NSCameraUsageDescription = "";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -572,6 +607,11 @@
 				DEVELOPMENT_TEAM = 6988BYCGDA;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Tik-Tok-Lite-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "";
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_KEY_NSCameraUsageDescription = "";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

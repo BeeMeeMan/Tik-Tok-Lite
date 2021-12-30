@@ -20,6 +20,10 @@ struct IntroTabView: View {
         
     ]
     
+    // var of first start of the app
+   
+    
+    
     
     var body: some View {
         
@@ -90,6 +94,7 @@ struct IntroTabView: View {
             }
             
         }
+      
         
         
     }

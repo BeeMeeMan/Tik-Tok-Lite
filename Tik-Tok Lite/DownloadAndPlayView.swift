@@ -9,10 +9,10 @@
 import SwiftUI
 import AVKit
 
-struct PlayerView: View {
+struct DownloadAndPlayView: View {
     
     
-    @State var player = AVPlayer(url: URL(string: "")!)
+    @State var player : AVPlayer
     @State var isplaying = false
     @State var showcontrols = false
     @State var value : Float = 0
@@ -20,6 +20,11 @@ struct PlayerView: View {
     @State private var sliderValue = 0.0
     @Environment(\.presentationMode) var presentationMode
     @State var observer: Any?
+    @State private var isSaved = false
+    
+    @EnvironmentObject var downloader: Downloader
+
+    
     var body: some View {
         
         VStack{
@@ -34,75 +39,93 @@ struct PlayerView: View {
             ZStack{
                 
                 VideoPlayer(player: $player)
+                    .frame(width: UIScreen.main.bounds.width * 0.93, height: UIScreen.main.bounds.width * 1.50)
+                    .clipShape(RoundedRectangle(cornerRadius: 14))
+                    .shadow(radius: 7)
                 
-                VStack{
-                    
-                    if self.showcontrols{
+                    .onTapGesture {
                         
-                        Spacer()
-                        Button(action: {
+                        self.showcontrols.toggle()
+                    }
+                
+                
+                if self.showcontrols{
+                    
+                    ZStack{
+
+                        VStack{
+
+                            Spacer()
+                            Button(action: {
+                                
+                                if self.isplaying{
+                                    
+                                    self.player.pause()
+                                    self.isplaying = false
+                                    
+                                }
+                                else{
+                                    
+                                    self.player.play()
+                                    self.isplaying = true
+                                    
+                                }
+                                
+                            }) {
+                                if self.isplaying{
+                                    
+                                    Image("PauseCircle")
+                                    
+                                } else {
+                                    
+                                    Image("PlayCircle")
+                                    
+                                }
+                                
+                            }
                             
-                            if self.isplaying{
-                                
-                                self.player.pause()
-                                self.isplaying = false
-                                
-                            }
-                            else{
-                                
-                                self.player.play()
-                                self.isplaying = true
-                                
-                            }
+                            Spacer()
+             
+                            Slider(
+                                value: $sliderValue,
+                                in: 0...1,
+                                onEditingChanged: { editing in
+                                    self.player.pause()
+                                    self.player.seek(to: CMTime(seconds: (self.player.currentItem?.duration.seconds)! * self.sliderValue, preferredTimescale: 1))
+                                    self.player.play()
+                                }
+                            )
                             
-                        }) {
-                            if self.isplaying{
-                                
-                                Image("PauseCircle")
-                                
-                            } else {
-                                
-                                Image("PlayCircle")
-                                
-                            }
+                                .accentColor(.roseColor)
+                                .padding(.bottom, 30)
+                                .padding(.horizontal, 20)
                             
                         }
-                        
-                        Spacer()
-                        
-                 
-                 
-                    
-                    Slider(
-                        value: $sliderValue,
-                        in: 0...1,
-                        onEditingChanged: { editing in
-                            self.player.pause()
-                            self.player.seek(to: CMTime(seconds: (self.player.currentItem?.duration.seconds)! * self.sliderValue, preferredTimescale: 1))
-                            self.player.play()
-                        }
-                    )
-                        
-                            .accentColor(.roseColor)
-                            .padding(.bottom, 30)
-                            .padding(.horizontal, 20)
-                    
                     }
                     
                 }
                 
-                
-            }
-            .frame(width: UIScreen.main.bounds.width * 0.93, height: UIScreen.main.bounds.width * 1.50)
-            .clipShape(RoundedRectangle(cornerRadius: 14))
-            .shadow(radius: 7)
-            .onTapGesture {
-                
-                self.showcontrols.toggle()
             }
             
             Button(action: {
+                isSaved = true
                 presentAlert = true
+                var newItem = self.downloader.TikDataTemp.last!
+                if downloader.plistArr.isEmpty{
+                    downloader.plistArr.append(Playlist(name:"Default"))
+                    downloader.plistArr[0].videoArr.append(newItem.fileName)
+                    savePlaylistArray(downloader.plistArr)
+                    print("Create")
+                } else {
+                    
+                    downloader.plistArr[0].videoArr.append(newItem.fileName)
+                    savePlaylistArray(downloader.plistArr)
+                    
+                }
+                
+                
+                self.downloader.TikData.append(newItem)
+                
                 
                 
             })  {
@@ -120,7 +143,7 @@ struct PlayerView: View {
             .padding(.bottom, 10)
             Button(action: {
                 
-                
+                closeVideoPlayerView()
                 
             })  {
                 HStack{
@@ -152,10 +175,10 @@ struct PlayerView: View {
         
         .background(Color.clear.edgesIgnoringSafeArea(.all))
         .onAppear {
-       
+            isSaved = false
             observer = self.player.addPeriodicTimeObserver(forInterval: CMTime(seconds: 1, preferredTimescale: 2), queue: .main) { (_) in
                 self.sliderValue = Double(self.player.currentTime().seconds / (self.player.currentItem?.duration.seconds)!)
-               print(self.sliderValue)
+                print(self.sliderValue)
                 if self.sliderValue >= 0.99{
                     self.player.seek(to: CMTime(seconds: 0, preferredTimescale: 1))
                     self.player.play()
@@ -170,33 +193,33 @@ struct PlayerView: View {
         }
         .onDisappear(){
             //player.pause()
+            if !isSaved {
+                removeTempVideo()
+                self.downloader.TikDataTemp = []
+            }
             self.player.removeTimeObserver(observer!)
             self.player.replaceCurrentItem(with: nil)
             presentationMode.wrappedValue.dismiss()
         }
     }
-}
-
-
-
-struct VideoPlayer : UIViewControllerRepresentable {
     
-    @Binding var player : AVPlayer
+   
     
-    func makeUIViewController(context: UIViewControllerRepresentableContext<VideoPlayer>) -> AVPlayerViewController {
+    func closeVideoPlayerView(){
+        presentationMode.wrappedValue.dismiss()
         
-        let controller = AVPlayerViewController()
-        controller.player = player
-        controller.showsPlaybackControls = false
-        controller.videoGravity = .resize
-        return controller
     }
     
-    func updateUIViewController(_ uiViewController: AVPlayerViewController, context: UIViewControllerRepresentableContext<VideoPlayer>) {
+    func removeTempVideo(){
+        
+        self.downloader.TikDataTemp.last!.delete()
         
         
     }
+    
+    
+    
+    
+    
 }
-
-
 

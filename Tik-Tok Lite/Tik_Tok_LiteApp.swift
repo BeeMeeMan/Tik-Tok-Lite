@@ -9,11 +9,11 @@ import SwiftUI
 
 @main
 struct Tik_Tok_LiteApp: App {
-    @StateObject var showModalView = ShowModalView()
+    @StateObject var downloader = Downloader()
     // @StateObject var halfSheet = HalfSheetPosition()
     var body: some Scene {
         WindowGroup {
-            ContentView().environmentObject(showModalView)
+            ContentView().environmentObject(downloader)
                 .onAppear {
                     UserDefaults.standard.set(false, forKey: "_UIConstraintBasedLayoutLogUnsatisfiable")
                 }

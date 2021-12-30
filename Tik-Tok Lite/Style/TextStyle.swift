@@ -13,9 +13,9 @@ struct MainTextStyle: ViewModifier {
         content
             .font(.system(size: 16, weight: .regular, design: .default))
             .foregroundColor(Color.white)
-            .frame(width: 275, height: 63, alignment: .center)
-            .multilineTextAlignment(.center)
-            .padding(.bottom, 20)
+            //.frame(width: 275, height: 63, alignment: .center)
+            //.multilineTextAlignment(.center)
+           // .padding(.bottom, 20)
     }
 }
 extension View {
@@ -31,9 +31,8 @@ struct NavigationTitleTextStyle: ViewModifier {
         content
             .font(.custom("Helvetica", size: 18).bold())
             .foregroundColor(Color.white)
-        
-            .multilineTextAlignment(.center)
-            .padding(.bottom, 5)
+          //  .multilineTextAlignment(.center)
+          //  .padding(.bottom, 5)
         
     }
 }
@@ -59,5 +58,37 @@ struct SettingsTextStyle: ViewModifier {
 extension View {
     var settingsTextStyle: some View {
         self.modifier(SettingsTextStyle())
+    }
+}
+
+
+
+// MARK: - Montserrat16 Texts style
+
+struct Montserrat16TextStyle: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .font(Font.custom("Montserrat", size: 16))
+            .foregroundColor(.white)
+    }
+}
+extension View {
+    var montserrat16TextStyle: some View {
+        self.modifier(Montserrat16TextStyle())
+    }
+}
+
+// MARK: - Montserrat12 Texts style
+
+struct Montserrat12TextStyle: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .font(Font.custom("Montserrat", size: 12))
+            .foregroundColor(.white)
+    }
+}
+extension View {
+    var montserrat12TextStyle: some View {
+        self.modifier(Montserrat12TextStyle())
     }
 }

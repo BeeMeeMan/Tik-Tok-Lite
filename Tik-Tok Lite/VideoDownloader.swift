@@ -8,7 +8,11 @@ import AVFoundation
 
 
 struct Welcome: Codable {
-    let props: Props
+    
+    let id: String
+    let createTime: String
+    let desc: String
+    let video: Video
     
     struct Video: Codable {
         let playAddr: String
@@ -16,28 +20,28 @@ struct Welcome: Codable {
         let cover: String
     }
     
-    struct Author: Codable {
-        let nickname: String
-    }
-    
-    struct ItemStruct: Codable {
-        let video: Video
-        let author: Author
-        let desc, id: String
-        let createTime: Int
-    }
-    
-    struct ItemInfo: Codable {
-        let itemStruct: ItemStruct
-    }
-    
-    struct PageProps: Codable {
-        let itemInfo: ItemInfo
-    }
-    
-    struct Props: Codable {
-        let pageProps: PageProps
-    }
+//    struct Author: Codable {
+//        let nickname: String
+//    }
+//
+//    struct ItemStruct: Codable {
+//        let video: Video
+//        let author: Author
+//        let  id: String
+//        let createTime: Int
+//    }
+//
+//    struct ItemInfo: Codable {
+//        let itemStruct: ItemStruct
+//    }
+//
+//    struct PageProps: Codable {
+//        let itemInfo: ItemInfo
+//    }
+//
+//    struct Props: Codable {
+//        let pageProps: PageProps
+//    }
 }
 
 enum downloaderErrors: Error {
@@ -64,18 +68,37 @@ class TiktokDownloader {
     }
     
     private func scrapJson(content: String) -> String? {
+    
         var json: String?
-        var jsond = content.components(separatedBy: "id=\"__NEXT_DATA__\"")
+        var jsond = content.components(separatedBy: "\"ItemModule\":")
+        //(separatedBy: "id=\"__NEXT_DATA__\"")
+       
         if jsond.indices.contains(1) {
-            jsond = jsond[1].components(separatedBy: "crossorigin=\"anonymous\">")
-            if jsond.indices.contains(1) {
-                jsond = jsond[1].components(separatedBy: "</script>")
+            
+        
+            let jsonTemp = jsond[1]
+
+            if let i = jsonTemp.firstIndex(of: "i") {
+                jsond[1] = String(jsonTemp.suffix(from: i))
+                jsond[1] = "{\"" +  jsond[1]
+                
+            }
+            
+//            jsond = jsond[1].components(separatedBy: "crossorigin=\"anonymous\">")
+//            if jsond.indices.contains(1) {
+              jsond = jsond[1].components(separatedBy: "},\"UserModule\"")
                 if jsond.indices.contains(0) {
                     json = jsond[0]
-                } else { json = nil }
-            } else { json = nil  }
-        } else { json = nil  }
+//                } else { json = nil
+//                    print("nil1") }
+            } else { json = nil
+                print("nil2") }
+        } else { json = nil
+            print("nil3")  }
+        print(json)
+
         
+       
         return json
     }
     
@@ -92,35 +115,39 @@ class TiktokDownloader {
         request.setValue("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.1.1 Safari/605.1.15", forHTTPHeaderField: "User-Agent")
         request.setValue("https://www.tiktok.com/", forHTTPHeaderField: "Referer")
         request.setValue("bytes=0-", forHTTPHeaderField: "Range")
-        
+        print(request)
         
         let dataTask = URLSession.shared.dataTask(with: request) { data, response, error in
             
             if let data = data {
                 let html = String(data: data, encoding: .utf8)!
-                
+                print("start json")
                 guard let json = self.scrapJson(content: html) else {
                     completion(.failure(.JsonScrapFailed))
+                    print("err1")
                     return
                 }
-                
+                //print(json)
                 let data = String(json).data(using: .utf8)!
-                
+               
                 let dot: Welcome?
                 do {
+                    
                     dot = try JSONDecoder().decode(Welcome.self, from: data)
                 } catch {
                     completion(.failure(.JsonParseFailed))
+                    print("err2")
                     return
                 }
                 
                 guard let dot = dot else {
                     completion(.failure(.JsonParseFailed))
+                    print("err3")
                     return
                 }
-                
-                let videoId = dot.props.pageProps.itemInfo.itemStruct.id
-                let videoCreatedTime = dot.props.pageProps.itemInfo.itemStruct.createTime
+                print("start json2")
+                let videoId = dot.id
+                let videoCreatedTime = dot.createTime
                 
                 self.dataFile = "\(videoId)-\(videoCreatedTime).json"
                 let UUU: URL = baseDocUrl.appendingPathComponent("tiktoks/data/\(self.dataFile!)")
@@ -128,11 +155,11 @@ class TiktokDownloader {
                 let jsonString = String(data: jsonData, encoding: .utf8)!
                 try! jsonString.write(to: UUU, atomically: true, encoding: .utf8)
                 
-                let dlAddr = dot.props.pageProps.itemInfo.itemStruct.video.downloadAddr
+                let dlAddr = dot.video.downloadAddr
                 request.url = URL(string: dlAddr)!
                 HTTPCookieStorage.shared.setCookie(HTTPCookie(properties: [.domain: dlAddr, .path: "/", .name: "tt_webid", .value: "6972893547414586885", .secure: "FALSE", .discard: "TRUE"])!)
                 HTTPCookieStorage.shared.setCookie(HTTPCookie(properties: [.domain: dlAddr, .path: "/", .name: "tt_webid_v2", .value: "6972893547414586885", .secure: "FALSE", .discard: "TRUE"])!)
-                
+                print("start url session")
                 let videoTask = URLSession.shared.dataTask(with: request) { data, response, error in
                     
                     if let response = response as? HTTPURLResponse {
@@ -159,7 +186,7 @@ class TiktokDownloader {
                 }
                 videoTask.resume()
                 
-                let coverAddr = dot.props.pageProps.itemInfo.itemStruct.video.cover
+                let coverAddr = dot.video.cover
                 request.url = URL(string: coverAddr)!
                 HTTPCookieStorage.shared.setCookie(HTTPCookie(properties: [.domain: coverAddr, .path: "/", .name: "tt_webid", .value: "6972893547414586885", .secure: "FALSE", .discard: "TRUE"])!)
                 HTTPCookieStorage.shared.setCookie(HTTPCookie(properties: [.domain: coverAddr, .path: "/", .name: "tt_webid_v2", .value: "6972893547414586885", .secure: "FALSE", .discard: "TRUE"])!)
@@ -193,6 +220,7 @@ struct Tiktok {
     var coverFile: String
     var dataFile: String
     var vImg: VImageLoader? = nil
+   
     
     enum fileType {
         case data
@@ -206,6 +234,7 @@ struct Tiktok {
         dataFile = "\(withFileName).json"
         
         if withData == nil {
+         
             let dataFileUrl = baseDocUrl.appendingPathComponent("tiktoks/data/\(dataFile)")
             let dataFile = try! String(contentsOfFile: dataFileUrl.relativePath)
             
@@ -233,6 +262,18 @@ struct Tiktok {
         if let data = data {
             vImg = VImageLoader(withUrl: url(forFile: .cover).relativeString , width: 160, height: 160, data: data, withVideoUrl: url(forFile: .video), bundleNames: ["f": fileName, "d": dataFile, "c": coverFile], sheet: SheetObservable())
         }
+    }
+    
+    public func delete(){
+        
+        do {
+            try FileManager.default.removeItem(at: self.url(forFile: .video))
+            try FileManager.default.removeItem(at: self.url(forFile: .data))
+            try FileManager.default.removeItem(at: self.url(forFile: .cover))
+        } catch {
+            print("Could not delete file: \(error)")
+        }
+        
     }
     
 }
@@ -362,115 +403,69 @@ struct VImageLoader: View {
    
   
   
-    
+   
     var body: some View {
 
-        if deleted {
-            
-        } else {
-            if imgData != nil {
-//                Image(uiImage: imgData!)
-//                    .resizable()
-//                    .aspectRatio(contentMode: .fill)
-//                    .frame(width: UIScreen.width, height: UIScreen.height)
-//                    .clipShape(RoundedRectangle(cornerRadius: /*@START_MENU_TOKEN@*/25.0/*@END_MENU_TOKEN@*/))
-//                    .shadow(radius: 7)
-//                    .sheet(isPresented: $Sheet.isActive, content: {
-//                    Text(data.props.pageProps.itemInfo.itemStruct.author.nickname)
-//
-//                            .font(.title)
-//                            .bold()
-//                            .padding(.top, 10)
-//                        Spacer()
-                ZStack{
-                       // VideoPlayer(player: videoPlayer)
-                      
-                   // VideoPlayer(player: $player)
-//                    if !playerState{
-//                        Image("PlayCircle")
-//                    }
+            ZStack{
+
+                Color.barBackgroundGrey
                 
-                }
-                          //.aspectRatio(contentMode: .fill)
-               
-                            
-//                            .frame(width: UIScreen.width * 0.92, height: UIScreen.height * 0.7)
-//                            .clipShape(RoundedRectangle(cornerRadius: 14))
-//                            .shadow(radius: 7)
-//                            .onAppear() {
-//                                playerTime = (videoPlayer.currentItem?.asset.duration)!
-//                                videoPlayer.play()
-//                                videoPlayer.actionAtItemEnd = .none
-//                                //videoPlayer.videoGravity = .resizeAspectFill
-//                                playerState.toggle()
-//
-//                            }
-//                            .onDisappear() {
-//                                videoPlayer.pause()
-//                                videoPlayer.seek(to: .zero)
-//
-//                            }
-//                            .onTapGesture {
-//                                if playerState {
-//                                    videoPlayer.pause()
-//                                    playerState.toggle()
-//                                } else {
-//                                    videoPlayer.play()
-//                                    playerState.toggle()
-//                                }
-//                            }
+                HStack{
+                    
+               if imgData != nil {
+                            Image(uiImage: imgData!)
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .frame(width: 109, height: 148)
+                                .clipShape(RoundedRectangle(cornerRadius: 15))
+                                .shadow(radius: 7)
+                   
+                    } else {
                         
-                        
-                        
-                        
-//                    })
-                    .onTapGesture  {
-                      //  UINotificationFeedbackGenerator().notificationOccurred(.success)
-                      //  self.Sheet.isActive.toggle()
+                    ZStack{
+                        RoundedRectangle(cornerRadius: 10)
+                            .fill(Color.barBackgroundGrey)
+                            .frame(width: 130, height: 130)
+                            .shadow(color: Color.white, radius: 2)
+                        Image("CirclePhoto")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 130, height: 130)
                     }
-//                    .contentShape(RoundedRectangle(cornerRadius:25))
-//                    .contextMenu {
-//                        VStack {
-//                            Button(action: {
-//                                try! saveToPhotos()
-//                                UINotificationFeedbackGenerator().notificationOccurred(.success)
-//                            }) {
-//                                Label("Save to photo", systemImage: "square.and.arrow.down")
-//                            }
-//                            Button(action: {
-//                                try! FileManager.default.removeItem(at: baseDocUrl.appendingPathComponent("tiktoks/\(bundleNames["f"]!)"))
-//                                try! FileManager.default.removeItem(at: baseDocUrl.appendingPathComponent("tiktoks/data/\(bundleNames["d"]!)"))
-//                                try! FileManager.default.removeItem(at: baseDocUrl.appendingPathComponent("tiktoks/covers/\(bundleNames["c"]!)"))
-//
-//                                deleted = true
-//                                UINotificationFeedbackGenerator().notificationOccurred(.success)
-//                            }, label: {
-//                                Label("Delete", systemImage: "trash").background(Color(.red))
-//
-//                            })
-//
-//                        }
-//                    }
-            } else {
-                Image("1")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .frame(width: size, height: size)
-                    .clipShape(RoundedRectangle(cornerRadius: /*@START_MENU_TOKEN@*/25.0/*@END_MENU_TOKEN@*/))
-                    .shadow(radius: 7)
-                    .onAppear {
-                        if imgData == nil {
-                            DispatchQueue.global(qos: .userInitiated).async {
-                                self.getImage()
-                            }
+                    .padding(.horizontal, 10)
+                    }
+                   
+                    VStack(alignment: .leading){
+                        
+                        if let name = self.data.desc {
+                        Text("\(name)")
+                                .font(Font.custom("Montserrat", size: 12.0))
+                            .padding(.top, 10)
+                            //.frame(maxWidth: .infinity, alignment: .leading)
                         }
+                      
+                        Spacer()
+                             
                     }
+                    Spacer()
+                }
+                
             }
-        }
+            .clipShape( RoundedRectangle(cornerRadius: 10))
+            .frame(maxWidth: .infinity)
+            .frame(height: 150)
+            .padding(.horizontal, 10)
+            .padding(.top, 5)
+            
+            .onAppear {
+                if imgData == nil {
+                    DispatchQueue.global(qos: .userInitiated).async {
+                        self.getImage()
+                    }
+                }
+            }
         
-        
-        
-        
+
     }
     
 }
