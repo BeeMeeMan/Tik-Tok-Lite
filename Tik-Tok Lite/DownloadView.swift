@@ -10,27 +10,6 @@ import SwiftUI
 import AVKit
 import AVFoundation
 
-class Downloader: ObservableObject {
-    
-    @Published var isActiveDownload = false
-    @Published var isActivePlayer = false
-    @Published var isDownloadedSucsess = false
-    @Published var TikDataTemp: Array<Tiktok> = []
-    @Published var TikData: Array<Tiktok> = []
-    @Published var plistArr: Array<Playlist> = []
-    
-    init(){
-        let defaults = UserDefaults.standard
-        if let plistArr = defaults.object(forKey: "plistArr") as? Data {
-            let decoder = JSONDecoder()
-            if let loadedPlistArr = try? decoder.decode(Array<Playlist>.self, from: plistArr) {
-                self.plistArr = loadedPlistArr
-            }
-        }
-        
-    }
-}
-
 
 
 var size: CGFloat = 160
@@ -42,21 +21,14 @@ struct DownloadView: View {
     @EnvironmentObject var downloader: Downloader
     @State private var showingPromoView = false
     @State var showingInfoView = false
-    // @State var update = false
     @StateObject var notifDelegate = NotificationDelegate()
-    //    @EnvironmentObject var halfSheet: HalfSheetPosition
-    //    @EnvironmentObject var TikData: HalfSheetPosition
-    
-    // Show download animation
-    //@State private var showModalPopUpView = false
+    @Binding var showDownloadPopUpView: Bool
     
     //New modalView:
     @Environment(\.viewController) private var viewControllerHolder: UIViewController?
     
     
     @State var showingPlayerView = false
-    
-    //@State var player = AVPlayer(url: URL(string: "https://www.rmp-streaming.com/media/big-buck-bunny-360p.mp4")!)
     
     var body: some View {
         
@@ -122,7 +94,7 @@ struct DownloadView: View {
         }
         
         .onAppear() {
-            
+            DispatchQueue.global(qos: .userInitiated).async {
             print("Appear")
             let tiktokFolder: URL = baseDocUrl.appendingPathComponent("tiktoks")
             let dataFolder: URL = baseDocUrl.appendingPathComponent("tiktoks/data")
@@ -136,22 +108,20 @@ struct DownloadView: View {
             
             let strPath = baseDocUrl.appendingPathComponent("tiktoks").relativePath
             let content = try! FileManager.default.contentsOfDirectory(atPath: strPath)
-            print(content)
+           // print(content)
             let savedList = content.filter{ ["covers", "data"].contains($0) != true }.map { $0.split(separator: ".")[0] }
-            print(savedList)
-            downloader.TikData = savedList.map { Tiktok(withFileName: String($0))  }
-            print(downloader.TikData)
-            
-            UNUserNotificationCenter.current().delegate =  notifDelegate
-            UIApplication.shared.applicationIconBadgeNumber = 0
-            
-            //            if downloader.isDownloadedSucsess{
-            //
-            //                player = AVPlayer(url: (downloader.TikDataTemp.last?.url(forFile: .video))! )
-            //                showingPlayerView = true
-            //
-            //               // downloader.isDownloadedSucsess = false
-            //            }
+           // print(savedList)
+                DispatchQueue.main.async {
+                     downloader.TikData = savedList.map { Tiktok(withFileName: String($0))  }
+                    // print(downloader.TikData)
+                     
+                     UNUserNotificationCenter.current().delegate =  notifDelegate
+                     UIApplication.shared.applicationIconBadgeNumber = 0
+                     
+                }
+           
+          
+        }
         }
     }
     
@@ -202,13 +172,12 @@ struct DownloadView: View {
         
         Button(action: {
             withAnimation(.easeInOut) {
-                self.viewControllerHolder?.present(style: .overCurrentContext, transitionStyle: .crossDissolve) {
-                    DownloadPopUpView().environmentObject(self.downloader)
-                        .transition(.move(edge: .bottom))
+                showDownloadPopUpView = true
+//                        .transition(.move(edge: .bottom))
                     
                 }
                 
-            }
+            
             
             
         }){
@@ -222,12 +191,13 @@ struct DownloadView: View {
             }
         }
         .roseButtonStyle()
-        
         .padding(.bottom, 50)
-        
+        .fullScreenCover(isPresented:  $showDownloadPopUpView) {
+            DownloadPopUpView().environmentObject(self.downloader)
+        }
+    
     }
-    
-    
+        
     
     //    struct ModalPopUpView: View {
     //

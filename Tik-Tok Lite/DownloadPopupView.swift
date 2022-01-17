@@ -15,9 +15,9 @@ struct DownloadPopUpView: View {
             @State private var value = 0.0
     
             @State var showingPlayerView = false
-  
             
-            @Environment(\.viewController) private var viewControllerHolder: UIViewController?
+            @Environment(\.presentationMode) var presentationMode
+           // @Environment(\.viewController) private var viewControllerHolder: UIViewController?
             
     
             var isWithPlayer: Bool = true
@@ -26,12 +26,11 @@ struct DownloadPopUpView: View {
             var body: some View {
               
                     ZStack{
-                        Color.barBackgroundGrey
-                            .opacity(0.1)
+                        Color.black
+                            .opacity(0.3)
                             .onTapGesture {
                                 withAnimation(.easeInOut) {
-                                 
-                                self.viewControllerHolder?.dismiss(animated: true, completion: nil)
+                                    closeView()
                                 }
                             }
                         VStack{
@@ -68,9 +67,10 @@ struct DownloadPopUpView: View {
                         
                     }
                   
-                    
+                   .background(BackgroundCleanerView())
               
             }
+           
     
     func downloadVideo(_ isWithPlayer: Bool){
     
@@ -80,7 +80,8 @@ struct DownloadPopUpView: View {
             let errsNotif = Notification(text: "No URL Provided", title: "Error")
             errsNotif.execute()
             DispatchQueue.main.async {
-            self.viewControllerHolder?.dismiss(animated: true, completion: nil)
+                closeView()
+        //    self.viewControllerHolder?.dismiss(animated: true, completion: nil)
             }
             return
             
@@ -112,8 +113,8 @@ struct DownloadPopUpView: View {
                             self.downloader.TikData.append(newItem)
          
                     }
-                    
-                    self.viewControllerHolder?.dismiss(animated: true, completion: nil)
+                    closeView()
+                   // self.viewControllerHolder?.dismiss(animated: true, completion: nil)
      //               } else {
       //                  self.viewControllerHolder?.dismiss(animated: true, completion: nil)
       //              }
@@ -123,7 +124,8 @@ struct DownloadPopUpView: View {
             case .failure(let err):
              //   showModalView.isActive = false
                 DispatchQueue.main.async {
-                self.viewControllerHolder?.dismiss(animated: true, completion: nil)
+                    closeView()
+//                self.viewControllerHolder?.dismiss(animated: true, completion: nil)
                 }
                 switch err {
                     
@@ -150,7 +152,13 @@ struct DownloadPopUpView: View {
  
         
     }
-                
+              
+    
+    
+    func closeView(){
+        
+        presentationMode.wrappedValue.dismiss()
+    }
         }
     
 

@@ -73,8 +73,8 @@ struct TestPopUp: View {
     
     
 
-struct TestPopUp_Previews: PreviewProvider {
-    static var previews: some View {
-       DownloadView()
-    }
-}
+//struct TestPopUp_Previews: PreviewProvider {
+//    static var previews: some View {
+//       DownloadView()
+//    }
+//}

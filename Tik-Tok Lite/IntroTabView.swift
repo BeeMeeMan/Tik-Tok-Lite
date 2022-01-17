@@ -28,8 +28,8 @@ struct IntroTabView: View {
     var body: some View {
         
         
-        ZStack { // 1
-            Color.black.ignoresSafeArea() // 2
+//        ZStack { // 1
+//            Color.black.ignoresSafeArea() // 2
             
             VStack {
                 HStack(){
@@ -92,8 +92,8 @@ struct IntroTabView: View {
                 
                 
             }
-            
-        }
+           
+      //  }
       
         
         

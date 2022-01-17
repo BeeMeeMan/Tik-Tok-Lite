@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		40036FB42794420D0010E14E /* Downloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40036FB32794420D0010E14E /* Downloader.swift */; };
+		40036FB62794543C0010E14E /* DownloadFromPlaylistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40036FB52794543C0010E14E /* DownloadFromPlaylistView.swift */; };
+		40036FB827945F7D0010E14E /* BackgroundCleanerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40036FB727945F7C0010E14E /* BackgroundCleanerView.swift */; };
 		400CF6062760E515006CCB73 /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 400CF6052760E515006CCB73 /* PlayerView.swift */; };
 		401082E12769F33200712576 /* TestPopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 401082E02769F33200712576 /* TestPopUp.swift */; };
 		40192068277902E800732FB6 /* VideoDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40192067277902E800732FB6 /* VideoDownloader.swift */; };
@@ -60,6 +63,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		40036FB32794420D0010E14E /* Downloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Downloader.swift; sourceTree = "<group>"; };
+		40036FB52794543C0010E14E /* DownloadFromPlaylistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadFromPlaylistView.swift; sourceTree = "<group>"; };
+		40036FB727945F7C0010E14E /* BackgroundCleanerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundCleanerView.swift; sourceTree = "<group>"; };
 		400CF6052760E515006CCB73 /* PlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerView.swift; sourceTree = "<group>"; };
 		401082E02769F33200712576 /* TestPopUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestPopUp.swift; sourceTree = "<group>"; };
 		40192067277902E800732FB6 /* VideoDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoDownloader.swift; sourceTree = "<group>"; };
@@ -124,9 +130,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		40036FB2279441EA0010E14E /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				40036FB32794420D0010E14E /* Downloader.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
 		4067F9C62770D7F200F35BB0 /* ModalViewExtentions */ = {
 			isa = PBXGroup;
 			children = (
+				40036FB727945F7C0010E14E /* BackgroundCleanerView.swift */,
 				4067F9C72770D82200F35BB0 /* AppDelegate.swift */,
 				4067F9C92770D83E00F35BB0 /* SceneDelegate.swift */,
 			);
@@ -141,10 +156,11 @@
 				4A99E22B272EE79C00247B18 /* SettingsView.swift */,
 				4A99E229272EE78800247B18 /* PublicationsView.swift */,
 				4A99E227272EE76F00247B18 /* PlayListsView.swift */,
-				40B5E97E2773A7D0003DE438 /* PlayListVideoListView.swift */,
 				409AAA77276F6D3400D5BA97 /* PListCreatorView.swift */,
-				4A99E225272EC53500247B18 /* DownloadView.swift */,
+				40B5E97E2773A7D0003DE438 /* PlayListVideoListView.swift */,
+				40036FB52794543C0010E14E /* DownloadFromPlaylistView.swift */,
 				40F8D987277CF0F7009B575A /* DownloadPopUpView.swift */,
+				4A99E225272EC53500247B18 /* DownloadView.swift */,
 				40ED089F277B58E4008C7294 /* DownloadAndPlayView.swift */,
 			);
 			name = Views;
@@ -189,6 +205,7 @@
 				400CF6052760E515006CCB73 /* PlayerView.swift */,
 				409AAA95276FC64700D5BA97 /* ImagePicker.swift */,
 				4ABBC2B627395105005B2E02 /* DownloaderNitifications.swift */,
+				40036FB2279441EA0010E14E /* Model */,
 				4A50EAE22732E27000622D8A /* SettingMenu */,
 				4A99E234272EE83600247B18 /* Style */,
 				4A99E233272EE82500247B18 /* Popup */,
@@ -397,11 +414,14 @@
 				40192068277902E800732FB6 /* VideoDownloader.swift in Sources */,
 				40B5E97F2773A7D0003DE438 /* PlayListVideoListView.swift in Sources */,
 				4A99E238272EE86200247B18 /* Colors.swift in Sources */,
+				40036FB42794420D0010E14E /* Downloader.swift in Sources */,
 				4A99E22A272EE78800247B18 /* PublicationsView.swift in Sources */,
 				4A99E236272EE84D00247B18 /* ButtonStyle.swift in Sources */,
 				4A99E228272EE76F00247B18 /* PlayListsView.swift in Sources */,
+				40036FB62794543C0010E14E /* DownloadFromPlaylistView.swift in Sources */,
 				4067F9CA2770D83E00F35BB0 /* SceneDelegate.swift in Sources */,
 				4A50EAE42732E28D00622D8A /* PromocodeView.swift in Sources */,
+				40036FB827945F7D0010E14E /* BackgroundCleanerView.swift in Sources */,
 				4A99E226272EC53500247B18 /* DownloadView.swift in Sources */,
 				400CF6062760E515006CCB73 /* PlayerView.swift in Sources */,
 				4A99E23A272EE87600247B18 /* NavigationBarShape.swift in Sources */,

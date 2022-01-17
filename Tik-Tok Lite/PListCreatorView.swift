@@ -153,12 +153,6 @@ struct PListCreatorView: View {
 
     }
     
-//    func loadImage(){
-//        guard let inputImage = inputImage else {return}
-//        image = Image(uiImage: inputImage)
-//    }
-//
-    
     struct ModalPopUpView: View {
         
         @Binding var showingImagePicker: Bool

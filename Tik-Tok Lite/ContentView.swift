@@ -48,9 +48,6 @@ extension UIScreen{
     static let height = UIScreen.main.bounds.size.height
     static let size = UIScreen.main.bounds.size
 }
-
-
-
 struct ContentView: View {
     
     init() {
@@ -68,8 +65,10 @@ struct ContentView: View {
     @State private var showingDetail = false
     @State private var selectedTab: Tabs = .One
     
-//    @EnvironmentObject var halfSheet: HalfSheetPosition
-//    @EnvironmentObject var TikData: HalfSheetPosition
+    @State private var showDownloadPopUpView = false
+    @State private var showDownloadFromPlaylistPopUpView = false
+    
+    @EnvironmentObject var downloader: Downloader
     
     enum Tabs: String {
         case One
@@ -84,16 +83,8 @@ struct ContentView: View {
             
             TabView(selection: $selectedTab) {
                 
-                DownloadView()
-//                Button(action: {
-//                    withAnimation(.easeInOut){
-//                        showModalView.isPresented = true
-//
-//                    }
-//
-//                }){
-//                        Text("Click me")
-//                }
+                DownloadView(showDownloadPopUpView: $showDownloadPopUpView)
+
                     .tabItem {
                         
                         Image(systemName: "arrow.down.doc")
@@ -102,7 +93,7 @@ struct ContentView: View {
                     }
                     .tag(Tabs.One)
                 
-                PlayListsView()
+                PlayListsView(showDownloadFromPlaylistPopUpView: $showDownloadFromPlaylistPopUpView)
                     .tabItem {
                         
                         Image(systemName: "star")
@@ -131,29 +122,9 @@ struct ContentView: View {
                     .tag(Tabs.four)
             }
             .accentColor(.roseColor)
-        //    blackScreenCover
-//            SlideOverCard() {
-//                ZStack{
-//                    VStack {
-//                        HStack{
-//                            Spacer()
-//                            ProgressView()
-//                                .scaleEffect(1.5)
-//                            Spacer()
-//                        }
-//                        .padding(.top, UIScreen.height * 0.2)
-//                        .padding(.bottom, 10)
-//                        Text("Clip is downloading")
-//                        Spacer()
-//
-//                    }
-//
-//                }
-//
-//            }
+
+           
             
-            
-       
                       
         }
         .toolbar {
@@ -166,6 +137,7 @@ struct ContentView: View {
         }
         .ignoresSafeArea()
         .fullScreenCover(isPresented: $showingDetail, content: IntroTabView.init)
+        
         .preferredColorScheme(.dark) // white tint on status bar
         .onAppear(){
             if !isAppAlreadyLaunchedOnce(){
@@ -219,4 +191,7 @@ struct ContentView_Previews: PreviewProvider {
         ContentView()
     }
 }
+
+
+
 

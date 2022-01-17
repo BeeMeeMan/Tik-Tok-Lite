@@ -13,11 +13,8 @@ struct PlayListsView : View {
     
     @Environment(\.presentationMode) var PlayListPresentationMode
     @EnvironmentObject var downloader: Downloader
+    @Binding var showDownloadFromPlaylistPopUpView: Bool
     
-    init(){
-       
-        
-    }
     
     var body: some View {
         
@@ -64,7 +61,7 @@ struct PlayListsView : View {
                     ScrollView {
                         LazyVStack() {
                                     ForEach(downloader.plistArr, id: \.self) { plist in
-                                        NavigationLink(destination: PlayListVideoListView(plist: plist)){
+                                        NavigationLink(destination: PlayListVideoListView(plist: plist, showDownloadFromPlaylistPopUpView: $showDownloadFromPlaylistPopUpView)){
                                             PlistRow(plist: plist)
                                         }
                                        
