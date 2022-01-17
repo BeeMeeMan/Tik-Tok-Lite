@@ -10,15 +10,14 @@ import AVKit
 
 struct DownloadPopUpView: View {
  
-            @EnvironmentObject var downloader: Downloader   
-           // @Binding var showModalPopUpView: Bool
-            @State private var value = 0.0
+            @EnvironmentObject var downloader: Downloader
     
+           // @Binding var showModalPopUpView: Bool
+            @State private var downloadLink = ""
+            @State var isLoading = false
             @State var showingPlayerView = false
             
             @Environment(\.presentationMode) var presentationMode
-           // @Environment(\.viewController) private var viewControllerHolder: UIViewController?
-            
     
             var isWithPlayer: Bool = true
             var playlist: Playlist?
@@ -35,22 +34,87 @@ struct DownloadPopUpView: View {
                             }
                         VStack{
                             Spacer()
-                                VStack {
-                                    Spacer()
+                            VStack{
+                                
+                                Spacer()
+
+                                if isLoading{
+                                    
                                     HStack{
                                         Spacer()
                                         ProgressView()
                                             .scaleEffect(1.5)
-                            
                                         Spacer()
                                     }
                                     .padding(.bottom, 10)
+                                    .onAppear(){
+                                        
+                                        downloadVideo(isWithPlayer)
+                                        
+                                    }
                                     Text("Clip is downloading")
                                     Spacer()
                                     
+                                } else {
+                                    
+                                    HStack{
+                                        Text("Add clip")
+                                            .navigationTitleTextStyle
+                                            .padding(.horizontal, 20)
+                                        Spacer()
+                                        Button(action: {
+                                            closeView()
+                                            // self.viewControllerHolder?.dismiss(animated: true, completion: nil)
+                                        }) {
+                                            Image("CloseCircleGray")
+                                            
+                                        }      .padding(.horizontal, 20)
+                                        
+                                    }
+                                    
+                                    HStack{
+                                        Text("Link")
+                                            .montserrat16TextStyle
+                                            .padding(.leading, 20)
+                                            .padding(.vertical, 10)
+                                        Spacer()
+                                        
+                                    }
+                                    
+                                    
+                                    TextField("Insert a link to the clip", text: $downloadLink)
+                                        .padding(10)
+                                        .frame(width: UIScreen.width * 0.92)
+                                        .background(Color.barGrey)
+                                        .clipShape(RoundedRectangle(cornerRadius: 5))
+                                    
+                                    
+                                    Button(action: {
+                                        UIPasteboard.general.string = downloadLink
+                                        withAnimation(.easeInOut) {
+                                          isLoading = true
+                                        }
+                                        
+                                        
+                                    }){
+                                        HStack{
+                                            Image(systemName: "star.fill")
+                                                .frame(width: 20, height: 20, alignment: .center)
+                                                .foregroundColor(.white)
+                                            Text("Add")
+                                                .font(.system(size: 16, weight: .regular, design: .default))
+                                            
+                                        }
+                                    }
+                                    .actionButtonStyle()
+                                    .padding(.vertical, 20)
+//                                    .fullScreenCover(isPresented:  $showDownloadPopUpView) {
+//                                        DownloadPopUpView(isWithPlayer: false, playlist: plist).environmentObject(self.downloader)
+//                                    }
+                                    Spacer()
+                                    
                                 }
-                        
-                          
+                            }
                             .background(Color.barBackgroundGrey).clipShape(RoundedRectangle(cornerRadius: 22))
                             .frame(height: UIScreen.height * 0.3)
                             .frame(maxWidth:.infinity)
@@ -60,14 +124,7 @@ struct DownloadPopUpView: View {
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
                     .ignoresSafeArea()
-                    
-                    .onAppear(){
-                        
-                        downloadVideo(isWithPlayer)
-                        
-                    }
-                  
-                   .background(BackgroundCleanerView())
+                    .background(BackgroundCleanerView())
               
             }
            
@@ -101,9 +158,9 @@ struct DownloadPopUpView: View {
                 succesNotif.execute()
                    
                     if isWithPlayer{
-                        
-                    downloader.isDownloadedSucsess = true
-                        
+//                        DispatchQueue.main.async {
+//                    downloader.isDownloadedSucsess = true
+//                        }
                     } else {
                         
                             let newItem = self.downloader.TikDataTemp.last!
@@ -114,10 +171,7 @@ struct DownloadPopUpView: View {
          
                     }
                     closeView()
-                   // self.viewControllerHolder?.dismiss(animated: true, completion: nil)
-     //               } else {
-      //                  self.viewControllerHolder?.dismiss(animated: true, completion: nil)
-      //              }
+ 
                 }
                    // showModalView.isActivePlayer = true
           
@@ -157,7 +211,7 @@ struct DownloadPopUpView: View {
     
     func closeView(){
         
-        presentationMode.wrappedValue.dismiss()
+        self.presentationMode.wrappedValue.dismiss()
     }
         }
     

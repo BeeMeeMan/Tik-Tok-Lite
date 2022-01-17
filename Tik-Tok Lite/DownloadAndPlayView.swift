@@ -1,9 +1,8 @@
 //
-//  ContentView.swift
-//  Custom Video Player
+//  ModalPopUpView.swift
+//  Tik-Tok Lite
 //
-//  Created by Kavsoft on 14/01/20.
-//  Copyright © 2020 Kavsoft. All rights reserved.(Stolen)
+//  Created by Fantom on 29.12.2021.
 //
 
 import SwiftUI
@@ -143,7 +142,7 @@ struct DownloadAndPlayView: View {
             .padding(.bottom, 10)
             Button(action: {
                 
-                closeVideoPlayerView()
+                closeView()
                 
             })  {
                 HStack{
@@ -175,6 +174,7 @@ struct DownloadAndPlayView: View {
         
         .background(Color.clear.edgesIgnoringSafeArea(.all))
         .onAppear {
+           
             isSaved = false
             observer = self.player.addPeriodicTimeObserver(forInterval: CMTime(seconds: 1, preferredTimescale: 2), queue: .main) { (_) in
                 self.sliderValue = Double(self.player.currentTime().seconds / (self.player.currentItem?.duration.seconds)!)
@@ -205,7 +205,7 @@ struct DownloadAndPlayView: View {
     
    
     
-    func closeVideoPlayerView(){
+    func closeView(){
         presentationMode.wrappedValue.dismiss()
         
     }

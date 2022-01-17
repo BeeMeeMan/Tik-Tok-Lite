@@ -18,7 +18,7 @@ struct PlayListVideoListView: View {
     @State private var showingPlayerView = false
     @State private var player = AVPlayer(url: URL(string: "https://www.rmp-streaming.com/media/big-buck-bunny-360p.mp4")!)
     @State var plist: Playlist
-    @Binding var showDownloadFromPlaylistPopUpView: Bool
+    @State var showDownloadPopUpView = false
     
     
     
@@ -78,13 +78,13 @@ struct PlayListVideoListView: View {
         
         Button(action: {
             withAnimation(.easeInOut) {
-                showDownloadFromPlaylistPopUpView = true
+                showDownloadPopUpView = true
             }
         }){
             Image("Plus").foregroundColor(.roseColor)
         }
-        .fullScreenCover(isPresented: $showDownloadFromPlaylistPopUpView) {
-            DownloadFromPlaylistView(plist: $plist)
+        .fullScreenCover(isPresented: $showDownloadPopUpView) {
+            DownloadPopUpView( isWithPlayer: false, playlist: plist)
    
         }
     }

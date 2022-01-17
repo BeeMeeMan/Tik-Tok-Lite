@@ -61,7 +61,7 @@ struct PlayListsView : View {
                     ScrollView {
                         LazyVStack() {
                                     ForEach(downloader.plistArr, id: \.self) { plist in
-                                        NavigationLink(destination: PlayListVideoListView(plist: plist, showDownloadFromPlaylistPopUpView: $showDownloadFromPlaylistPopUpView)){
+                                        NavigationLink(destination: PlayListVideoListView(plist: plist)){
                                             PlistRow(plist: plist)
                                         }
                                        

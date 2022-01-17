@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		40036FB42794420D0010E14E /* Downloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40036FB32794420D0010E14E /* Downloader.swift */; };
-		40036FB62794543C0010E14E /* DownloadFromPlaylistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40036FB52794543C0010E14E /* DownloadFromPlaylistView.swift */; };
 		40036FB827945F7D0010E14E /* BackgroundCleanerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40036FB727945F7C0010E14E /* BackgroundCleanerView.swift */; };
 		400CF6062760E515006CCB73 /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 400CF6052760E515006CCB73 /* PlayerView.swift */; };
 		401082E12769F33200712576 /* TestPopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 401082E02769F33200712576 /* TestPopUp.swift */; };
@@ -64,7 +63,6 @@
 
 /* Begin PBXFileReference section */
 		40036FB32794420D0010E14E /* Downloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Downloader.swift; sourceTree = "<group>"; };
-		40036FB52794543C0010E14E /* DownloadFromPlaylistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadFromPlaylistView.swift; sourceTree = "<group>"; };
 		40036FB727945F7C0010E14E /* BackgroundCleanerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundCleanerView.swift; sourceTree = "<group>"; };
 		400CF6052760E515006CCB73 /* PlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerView.swift; sourceTree = "<group>"; };
 		401082E02769F33200712576 /* TestPopUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestPopUp.swift; sourceTree = "<group>"; };
@@ -158,10 +156,9 @@
 				4A99E227272EE76F00247B18 /* PlayListsView.swift */,
 				409AAA77276F6D3400D5BA97 /* PListCreatorView.swift */,
 				40B5E97E2773A7D0003DE438 /* PlayListVideoListView.swift */,
-				40036FB52794543C0010E14E /* DownloadFromPlaylistView.swift */,
 				40F8D987277CF0F7009B575A /* DownloadPopUpView.swift */,
-				4A99E225272EC53500247B18 /* DownloadView.swift */,
 				40ED089F277B58E4008C7294 /* DownloadAndPlayView.swift */,
+				4A99E225272EC53500247B18 /* DownloadView.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -418,7 +415,6 @@
 				4A99E22A272EE78800247B18 /* PublicationsView.swift in Sources */,
 				4A99E236272EE84D00247B18 /* ButtonStyle.swift in Sources */,
 				4A99E228272EE76F00247B18 /* PlayListsView.swift in Sources */,
-				40036FB62794543C0010E14E /* DownloadFromPlaylistView.swift in Sources */,
 				4067F9CA2770D83E00F35BB0 /* SceneDelegate.swift in Sources */,
 				4A50EAE42732E28D00622D8A /* PromocodeView.swift in Sources */,
 				40036FB827945F7D0010E14E /* BackgroundCleanerView.swift in Sources */,

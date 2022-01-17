@@ -11,8 +11,8 @@ struct PListCreatorView: View {
   
     
     //New modalView:
-    @Environment(\.viewController) private var viewControllerHolder: UIViewController?
-    
+  //  @Environment(\.viewController) private var viewControllerHolder: UIViewController?
+    @State private var showModalPopUpView = false
     @State private var plistName: String = ""
     @State private var plistDiscription: String = ""
     
@@ -36,12 +36,11 @@ struct PListCreatorView: View {
             
             ZStack{
                 Button(action: {
-                    withAnimation(.easeInOut) {
-                    self.viewControllerHolder?.present(style: .overCurrentContext, transitionStyle: .crossDissolve) {
-                        ModalPopUpView(showingImagePicker: $showingImagePicker, shouldPresentCamera: $shouldPresentCamera)
-                            .transition(.move(edge: .bottom))
-                    }
-                    }
+                   withAnimation(.easeInOut) {
+                        
+                        showModalPopUpView = true
+                        
+                   }
                 }){
                     image!
                             .resizable()
@@ -52,6 +51,9 @@ struct PListCreatorView: View {
                             .padding(.bottom, 20)
                             
                     }
+                .fullScreenCover(isPresented:  $showModalPopUpView) {
+                    ModalPopUpView(showingImagePicker: $showingImagePicker, shouldPresentCamera: $shouldPresentCamera)
+                }
                  
                     
                 }
@@ -158,16 +160,16 @@ struct PListCreatorView: View {
         @Binding var showingImagePicker: Bool
         @Binding var shouldPresentCamera: Bool
         @State private var value = 0.0
-        @Environment(\.viewController) private var viewControllerHolder: UIViewController?
+        @Environment(\.presentationMode) var presentationMode
         
         var body: some View {
           
                 ZStack{
-                    Color.barBackgroundGrey
-                        .opacity(0.1)
+                    Color.black
+                        .opacity(0.5)
                         .onTapGesture {
                             withAnimation(.easeInOut) {
-                            self.viewControllerHolder?.dismiss(animated: true, completion: nil)
+                                closeView()
                             }
                         }
                     VStack{
@@ -180,7 +182,7 @@ struct PListCreatorView: View {
                                     .padding(20)
                                 Spacer()
                                 Button(action: {
-                                    self.viewControllerHolder?.dismiss(animated: true, completion: nil)
+                                    closeView()
                                 }) {
                                     Image("CloseCircleGray")
                                        
@@ -192,7 +194,7 @@ struct PListCreatorView: View {
                             Button(action: {
                                 showingImagePicker = true
                                 shouldPresentCamera = true
-                                self.viewControllerHolder?.dismiss(animated: true, completion: nil)
+                                closeView()
                             }) {
                                 Text("\(Image("PhotoIconGray"))   Make photo")
                                     .font(.custom("Helvetica", size: 18).weight(.regular))
@@ -205,7 +207,7 @@ struct PListCreatorView: View {
                                 showingImagePicker = true
                                 shouldPresentCamera = false
                                
-                                self.viewControllerHolder?.dismiss(animated: true, completion: nil)
+                                closeView()
                             }) {
                                 Text("\(Image("GalleryIconGray"))   Open gallery")
                                     .font(.custom("Helvetica", size: 18).weight(.regular))
@@ -216,7 +218,7 @@ struct PListCreatorView: View {
                             
                             Button(action: {
                                 
-                                self.viewControllerHolder?.dismiss(animated: true, completion: nil)
+                                closeView()
                             }) {
                                 Text("\(Image("CloseCircleRed"))   Cancel")
                                     .font(.custom("Helvetica", size: 18).weight(.regular))
@@ -234,7 +236,13 @@ struct PListCreatorView: View {
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
                 .ignoresSafeArea()
+                .background(BackgroundCleanerView())
           
+        }
+        
+        func closeView(){
+            
+            self.presentationMode.wrappedValue.dismiss()
         }
             
     }

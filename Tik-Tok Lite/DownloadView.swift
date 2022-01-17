@@ -21,6 +21,7 @@ struct DownloadView: View {
     @EnvironmentObject var downloader: Downloader
     @State private var showingPromoView = false
     @State var showingInfoView = false
+    @State private var showDownloadAndPlayView = false
     @StateObject var notifDelegate = NotificationDelegate()
     @Binding var showDownloadPopUpView: Bool
     
@@ -77,15 +78,14 @@ struct DownloadView: View {
                 
                 
             }
-            
-            //.fullScreenCover(isPresented: $showingPromoView, content: TestPopUp.init)
+
             .fullScreenCover(isPresented: $showingPromoView) {
                 PromotionTabView()
             }
             .fullScreenCover(isPresented: $showingInfoView){
                 IntroTabView()
             }
-            .popover(isPresented: $downloader.isDownloadedSucsess) {
+            .popover(isPresented: $showDownloadAndPlayView) {
                 DownloadAndPlayView(player: AVPlayer(url: (downloader.TikDataTemp.last?.url(forFile: .video))! ))
             }
             
@@ -171,11 +171,11 @@ struct DownloadView: View {
     var downloadClipButton: some View {
         
         Button(action: {
-            withAnimation(.easeInOut) {
+         //   withAnimation(.spring()) {
+                
                 showDownloadPopUpView = true
-//                        .transition(.move(edge: .bottom))
                     
-                }
+            //    }
                 
             
             
@@ -192,134 +192,17 @@ struct DownloadView: View {
         }
         .roseButtonStyle()
         .padding(.bottom, 50)
-        .fullScreenCover(isPresented:  $showDownloadPopUpView) {
-            DownloadPopUpView().environmentObject(self.downloader)
+        .fullScreenCover(isPresented:  $showDownloadPopUpView, onDismiss: ({
+            if !downloader.TikDataTemp.isEmpty {
+            showDownloadAndPlayView = true
+            }
+        })){
+            
+            DownloadPopUpView(isLoading: true).environmentObject(self.downloader)
         }
     
     }
-        
-    
-    //    struct ModalPopUpView: View {
-    //
-    //        @Binding var showModalPopUpView: Bool
-    //        @State private var value = 0.0
-    //
-    //        @Environment(\.viewController) private var viewControllerHolder: UIViewController?
-    //
-    //        var body: some View {
-    //
-    //                ZStack{
-    //                    Color.barBackgroundGrey
-    //                        .opacity(0.1)
-    //                        .onTapGesture {
-    //                            withAnimation(.easeInOut) {
-    //                                showModalPopUpView = false
-    //                            self.viewControllerHolder?.dismiss(animated: true, completion: nil)
-    //                            }
-    //                        }
-    //                    VStack{
-    //                        Spacer()
-    //                            VStack {
-    //                                Spacer()
-    //                                HStack{
-    //                                    Spacer()
-    //                                    ProgressView()
-    //                                        .scaleEffect(1.5)
-    //                                    Spacer()
-    //                                }
-    //                                .padding(.bottom, 10)
-    //                                Text("Clip is downloading")
-    //                                Spacer()
-    //
-    //                            }
-    //
-    //
-    //                        .background(Color.barBackgroundGrey).clipShape(RoundedRectangle(cornerRadius: 22))
-    //                        .frame(height: UIScreen.height * 0.3)
-    //                        .frame(maxWidth:.infinity)
-    //
-    //                    }
-    //
-    //                }
-    //                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
-    //                .ignoresSafeArea()
-    //                .onAppear(){
-    //                    showModalPopUpView = true
-    //                }
-    //
-    //        }
-    //
-    //    }
-    
-    
-    //    func downloadVideo(){
-    //
-    //        guard let clip = UIPasteboard.general.string else {
-    //
-    //
-    //            let errsNotif = Notification(text: "No URL Provided", title: "Error")
-    //            errsNotif.execute()
-    //            DispatchQueue.main.async {
-    //            self.viewControllerHolder?.dismiss(animated: true, completion: nil)
-    //            }
-    //            return
-    //
-    //        }
-    //        print(clip)
-    //        let dlr = TiktokDownloader(withUrl: clip)
-    //
-    //        try! dlr.download() { result in
-    //            switch result {
-    //            case .success(let r):
-    //                DispatchQueue.main.async {
-    //                    if showModalPopUpView{
-    //                self.downloader.TikDataTemp = []
-    //                self.downloader.TikDataTemp.append(r)
-    ////                    halfSheet.TikData.last?.vImg!.openSheet()
-    //                let succesNotif = Notification(text: "Successfully downloaded", title: "Info")
-    //                succesNotif.execute()
-    //                update = true
-    //
-    //          //      showModalView.isActive = true
-    //                player = AVPlayer(url: (downloader.TikDataTemp.last?.url(forFile: .video))! )
-    //                showingPlayerView = true
-    //                self.viewControllerHolder?.dismiss(animated: true, completion: nil)
-    //                    } else {
-    //                        self.viewControllerHolder?.dismiss(animated: true, completion: nil)
-    //                    }
-    //                }
-    //                   // showModalView.isActivePlayer = true
-    //
-    //            case .failure(let err):
-    //             //   showModalView.isActive = false
-    //                DispatchQueue.main.async {
-    //                self.viewControllerHolder?.dismiss(animated: true, completion: nil)
-    //                }
-    //                switch err {
-    //
-    //                case .InvalidUrlGiven:
-    //                    let errsNotif = Notification(text: "The url you gave is incorrect", title: "Error")
-    //                    errsNotif.execute()
-    //
-    //                case .VideoSaveFailed, .DownloadVideoForbiden, .VideoDownloadFailed:
-    //                    let errsNotif = Notification(text: "Failed to download video", title: "Error")
-    //                    errsNotif.execute()
-    //
-    //
-    //                default:
-    //                    let errsNotif = Notification(text: "Generic error", title: "Error")
-    //                    errsNotif.execute()
-    //
-    //
-    //                }
-    //            }
-    //
-    //        }
-    //        UINotificationFeedbackGenerator().notificationOccurred(.success)
-    //
-    //
-    //
-    //    }
+
     
     
 }
