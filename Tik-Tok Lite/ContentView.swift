@@ -103,8 +103,7 @@ struct ContentView: View {
             }
         }
         .ignoresSafeArea()
-        .fullScreenCover(isPresented: $showingDetail, content: IntroTabView.init)
-        
+        .fullScreenCover(isPresented: $showingDetail){ IntroPopupView(arrayView: introPopupArray)} 
         .preferredColorScheme(.dark) // white tint on status bar
         .onAppear(){
             if !isAppAlreadyLaunchedOnce(){

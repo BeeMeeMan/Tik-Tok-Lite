@@ -8,18 +8,13 @@
 
 import SwiftUI
 
-struct PromotionTabView: View {
+struct PromotionPopupView: View {
     
     @Environment(\.presentationMode) var presentationMode
     
     
     @State private var selectedTab = 0
-    @State private var arrayView = [
-        LayoutTabView(image: "promoStar", numberText: "Rate the app", instructionText: "Rate the app 5 stars and write a review in the AppStore", imageOffsetX: 20, imageScale: 0.7),
-        LayoutTabView(image: "promoPhone", numberText: "Take a screenshot", instructionText: "Take a screenshot of the rating screen", imageOffsetX: 20, imageScale: 1),
-        LayoutTabView(image: "promoLetter", numberText: "Send us a screenshot", instructionText: "In response, we will send you a promotional code that can be activated in Settings", imageOffsetX: 20, imageScale: 0.3),
-        
-    ]
+    var arrayView: [PopupViewModel]
     
     
     var body: some View {
@@ -57,10 +52,34 @@ struct PromotionTabView: View {
              
                 TabView(selection: $selectedTab) {
                     ForEach(0..<arrayView.count, id: \.self) { index in
-                        arrayView[index]
+                        ZStack{
+                            VStack{
+                                Spacer()
+                                VStack{
+                                    Image(arrayView[index].image)
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: arrayView[index].scale / 2)
+
+                                }
+                                Spacer()
+                   
+                                Text(arrayView[index].numberText)
+                                .font(.system(size: 21, weight: .regular, design: .default))
+                                .foregroundColor(Color.white)
+                                .padding(.bottom, 5)
+                                
+                                Text(arrayView[index].instructionText).mainTextStyle
+                                .padding(.bottom, 20)
+                            
+                     }
+                        }
+                        
+                        .frame(width: UIScreen.main.bounds.width )
+                    }
                     }
                     
-                }
+                
                 .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
                 
                 .overlay(ThreeDotsIndexView(numberOfPages: arrayView.count, selectedTab: selectedTab), alignment: .bottom )
@@ -88,14 +107,14 @@ struct PromotionTabView: View {
                 .padding(.bottom, 50)
                 
                 
-                
+            }
                 
             }
             
         }
         
         
-    }
+    
     
     func closeTabView(){
         presentationMode.wrappedValue.dismiss()

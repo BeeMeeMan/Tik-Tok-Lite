@@ -10,10 +10,10 @@
 		40036FB42794420D0010E14E /* Downloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40036FB32794420D0010E14E /* Downloader.swift */; };
 		40036FB827945F7D0010E14E /* BackgroundCleanerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40036FB727945F7C0010E14E /* BackgroundCleanerView.swift */; };
 		400CF6062760E515006CCB73 /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 400CF6052760E515006CCB73 /* PlayerView.swift */; };
-		401082E12769F33200712576 /* TestPopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 401082E02769F33200712576 /* TestPopUp.swift */; };
 		40192068277902E800732FB6 /* VideoDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40192067277902E800732FB6 /* VideoDownloader.swift */; };
 		401E323B277259E100D0AFAC /* PlaylistIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 401E323A277259E100D0AFAC /* PlaylistIconView.swift */; };
 		4072B23B2797022F00FCD178 /* PlaylistData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4072B23A2797022F00FCD178 /* PlaylistData.swift */; };
+		4072B23E279704B800FCD178 /* PopupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4072B23D279704B800FCD178 /* PopupViewModel.swift */; };
 		409AAA78276F6D3400D5BA97 /* PlaylistCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 409AAA77276F6D3400D5BA97 /* PlaylistCreationView.swift */; };
 		409AAA96276FC64700D5BA97 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 409AAA95276FC64700D5BA97 /* ImagePicker.swift */; };
 		40B5E97F2773A7D0003DE438 /* PlaylistVideoListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40B5E97E2773A7D0003DE438 /* PlaylistVideoListView.swift */; };
@@ -34,9 +34,8 @@
 		4A99E228272EE76F00247B18 /* PlaylistsTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A99E227272EE76F00247B18 /* PlaylistsTabView.swift */; };
 		4A99E22A272EE78800247B18 /* PublicationsTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A99E229272EE78800247B18 /* PublicationsTabView.swift */; };
 		4A99E22C272EE79C00247B18 /* SettingsTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A99E22B272EE79C00247B18 /* SettingsTabView.swift */; };
-		4A99E22E272EE7E200247B18 /* IntroTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A99E22D272EE7E200247B18 /* IntroTabView.swift */; };
-		4A99E230272EE7FF00247B18 /* PromotionTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A99E22F272EE7FF00247B18 /* PromotionTabView.swift */; };
-		4A99E232272EE81700247B18 /* LayoutTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A99E231272EE81700247B18 /* LayoutTabView.swift */; };
+		4A99E22E272EE7E200247B18 /* IntroPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A99E22D272EE7E200247B18 /* IntroPopupView.swift */; };
+		4A99E230272EE7FF00247B18 /* PromotionPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A99E22F272EE7FF00247B18 /* PromotionPopupView.swift */; };
 		4A99E236272EE84D00247B18 /* ButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A99E235272EE84D00247B18 /* ButtonStyle.swift */; };
 		4A99E238272EE86200247B18 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A99E237272EE86200247B18 /* Colors.swift */; };
 		4A99E23A272EE87600247B18 /* NavigationBarShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A99E239272EE87600247B18 /* NavigationBarShape.swift */; };
@@ -64,11 +63,11 @@
 		40036FB32794420D0010E14E /* Downloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Downloader.swift; sourceTree = "<group>"; };
 		40036FB727945F7C0010E14E /* BackgroundCleanerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundCleanerView.swift; sourceTree = "<group>"; };
 		400CF6052760E515006CCB73 /* PlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerView.swift; sourceTree = "<group>"; };
-		401082E02769F33200712576 /* TestPopUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestPopUp.swift; sourceTree = "<group>"; };
 		40192067277902E800732FB6 /* VideoDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoDownloader.swift; sourceTree = "<group>"; };
 		401E321F277210A800D0AFAC /* Tik-Tok-Lite-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Tik-Tok-Lite-Info.plist"; sourceTree = SOURCE_ROOT; };
 		401E323A277259E100D0AFAC /* PlaylistIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistIconView.swift; sourceTree = "<group>"; };
 		4072B23A2797022F00FCD178 /* PlaylistData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistData.swift; sourceTree = "<group>"; };
+		4072B23D279704B800FCD178 /* PopupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupViewModel.swift; sourceTree = "<group>"; };
 		409AAA77276F6D3400D5BA97 /* PlaylistCreationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistCreationView.swift; sourceTree = "<group>"; };
 		409AAA95276FC64700D5BA97 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		40B5E97E2773A7D0003DE438 /* PlaylistVideoListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistVideoListView.swift; sourceTree = "<group>"; };
@@ -92,9 +91,8 @@
 		4A99E227272EE76F00247B18 /* PlaylistsTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistsTabView.swift; sourceTree = "<group>"; };
 		4A99E229272EE78800247B18 /* PublicationsTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicationsTabView.swift; sourceTree = "<group>"; };
 		4A99E22B272EE79C00247B18 /* SettingsTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTabView.swift; sourceTree = "<group>"; };
-		4A99E22D272EE7E200247B18 /* IntroTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroTabView.swift; sourceTree = "<group>"; };
-		4A99E22F272EE7FF00247B18 /* PromotionTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromotionTabView.swift; sourceTree = "<group>"; };
-		4A99E231272EE81700247B18 /* LayoutTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutTabView.swift; sourceTree = "<group>"; };
+		4A99E22D272EE7E200247B18 /* IntroPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroPopupView.swift; sourceTree = "<group>"; };
+		4A99E22F272EE7FF00247B18 /* PromotionPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromotionPopupView.swift; sourceTree = "<group>"; };
 		4A99E235272EE84D00247B18 /* ButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStyle.swift; sourceTree = "<group>"; };
 		4A99E237272EE86200247B18 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		4A99E239272EE87600247B18 /* NavigationBarShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarShape.swift; sourceTree = "<group>"; };
@@ -129,6 +127,7 @@
 		40036FB2279441EA0010E14E /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				4072B23D279704B800FCD178 /* PopupViewModel.swift */,
 				40036FB32794420D0010E14E /* Downloader.swift */,
 				4072B23A2797022F00FCD178 /* PlaylistData.swift */,
 			);
@@ -245,11 +244,8 @@
 		4A99E233272EE82500247B18 /* Popup */ = {
 			isa = PBXGroup;
 			children = (
-				4A99E231272EE81700247B18 /* LayoutTabView.swift */,
-				4A6669E3273018EC006827F1 /* SettingsButtonView.swift */,
-				4A99E22F272EE7FF00247B18 /* PromotionTabView.swift */,
-				4A99E22D272EE7E200247B18 /* IntroTabView.swift */,
-				401082E02769F33200712576 /* TestPopUp.swift */,
+				4A99E22F272EE7FF00247B18 /* PromotionPopupView.swift */,
+				4A99E22D272EE7E200247B18 /* IntroPopupView.swift */,
 			);
 			name = Popup;
 			sourceTree = "<group>";
@@ -257,6 +253,7 @@
 		4A99E234272EE83600247B18 /* Style */ = {
 			isa = PBXGroup;
 			children = (
+				4A6669E3273018EC006827F1 /* SettingsButtonView.swift */,
 				4A99E221272EC4F900247B18 /* ThreeDotsIndexView.swift */,
 				4A99E235272EE84D00247B18 /* ButtonStyle.swift */,
 				4A6669E1272FF48B006827F1 /* TextStyle.swift */,
@@ -398,10 +395,9 @@
 			files = (
 				4A6669E2272FF48B006827F1 /* TextStyle.swift in Sources */,
 				409AAA78276F6D3400D5BA97 /* PlaylistCreationView.swift in Sources */,
-				4A99E22E272EE7E200247B18 /* IntroTabView.swift in Sources */,
+				4A99E22E272EE7E200247B18 /* IntroPopupView.swift in Sources */,
 				4A99E1FA272EC4AF00247B18 /* ContentView.swift in Sources */,
-				401082E12769F33200712576 /* TestPopUp.swift in Sources */,
-				4A99E230272EE7FF00247B18 /* PromotionTabView.swift in Sources */,
+				4A99E230272EE7FF00247B18 /* PromotionPopupView.swift in Sources */,
 				4ABBC2B727395105005B2E02 /* DownloaderNitifications.swift in Sources */,
 				40ED08A0277B58E4008C7294 /* DownloadAndPlayView.swift in Sources */,
 				4A99E1F8272EC4AF00247B18 /* Tik_Tok_LiteApp.swift in Sources */,
@@ -411,11 +407,11 @@
 				4A99E22C272EE79C00247B18 /* SettingsTabView.swift in Sources */,
 				4A99E222272EC4F900247B18 /* ThreeDotsIndexView.swift in Sources */,
 				409AAA96276FC64700D5BA97 /* ImagePicker.swift in Sources */,
-				4A99E232272EE81700247B18 /* LayoutTabView.swift in Sources */,
 				4072B23B2797022F00FCD178 /* PlaylistData.swift in Sources */,
 				40192068277902E800732FB6 /* VideoDownloader.swift in Sources */,
 				40B5E97F2773A7D0003DE438 /* PlaylistVideoListView.swift in Sources */,
 				4A99E238272EE86200247B18 /* Colors.swift in Sources */,
+				4072B23E279704B800FCD178 /* PopupViewModel.swift in Sources */,
 				40036FB42794420D0010E14E /* Downloader.swift in Sources */,
 				4A99E22A272EE78800247B18 /* PublicationsTabView.swift in Sources */,
 				4A99E236272EE84D00247B18 /* ButtonStyle.swift in Sources */,

@@ -80,10 +80,10 @@ struct DownloadTabView: View {
             }
 
             .fullScreenCover(isPresented: $showingPromoView) {
-                PromotionTabView()
+                PromotionPopupView(arrayView: promotionPopupArray)
             }
             .fullScreenCover(isPresented: $showingInfoView){
-                IntroTabView()
+                IntroPopupView(arrayView: introPopupArray)
             }
             .popover(isPresented: $showDownloadAndPlayView) {
                 DownloadAndPlayView(player: AVPlayer(url: (downloader.TikDataTemp.last?.url(forFile: .video))! ))

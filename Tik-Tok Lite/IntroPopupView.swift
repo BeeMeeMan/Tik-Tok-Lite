@@ -7,18 +7,13 @@
 
 import SwiftUI
 
-struct IntroTabView: View {
+struct IntroPopupView: View {
     
     @Environment(\.presentationMode) var presentationMode
     
     
     @State private var selectedTab = 0
-    @State private var arrayView = [
-        LayoutTabView(image: "IntroPhone1", numberText: "Step #1", instructionText: "In the Tik-Tok application, click “Share” button on the video you like", imageOffsetX: 20, imageScale: 0.3),
-        LayoutTabView(image: "IntroPhone2", numberText: "Step #2", instructionText: "In the drop-down menu - click the \"Link\" button", imageOffsetX: 20, imageScale: 0.1),
-        LayoutTabView(image: "IntroPhone3", numberText: "Step #3", instructionText: "Return to our application and click \"Download Clip\"", imageOffsetX: 20, imageScale: 0.3),
-        
-    ]
+    var arrayView: [PopupViewModel]
     
     // var of first start of the app
    
@@ -26,10 +21,7 @@ struct IntroTabView: View {
     
     
     var body: some View {
-        
-        
-//        ZStack { // 1
-//            Color.black.ignoresSafeArea() // 2
+
             
             VStack {
                 HStack(){
@@ -55,8 +47,32 @@ struct IntroTabView: View {
                
                 TabView(selection: $selectedTab) {
                     ForEach(0..<arrayView.count, id: \.self) { index in
-                        arrayView[index]
+                        ZStack{
+                            VStack{
+                                Spacer()
+                                VStack{
+                                    Image(arrayView[index].image)
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: arrayView[index].scale / 2)
+
+                                }
+                                Spacer()
+                   
+                                Text(arrayView[index].numberText)
+                                .font(.system(size: 21, weight: .regular, design: .default))
+                                .foregroundColor(Color.white)
+                                .padding(.bottom, 5)
+                                
+                                Text(arrayView[index].instructionText).mainTextStyle
+                                .padding(.bottom, 20)
+                            
+                     }
+                        }
+                        
+                        .frame(width: UIScreen.main.bounds.width )
                     }
+                    
                     
                 }
                 .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
