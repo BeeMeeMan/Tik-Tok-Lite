@@ -16,7 +16,7 @@ var size: CGFloat = 160
 let baseDocUrl = try! FileManager.default.url(for: .documentDirectory, in: .allDomainsMask, appropriateFor: nil, create: true)
 
 
-struct DownloadView: View {
+struct DownloadTabView: View {
     
     @EnvironmentObject var downloader: Downloader
     @State private var showingPromoView = false
@@ -26,7 +26,7 @@ struct DownloadView: View {
     @Binding var showDownloadPopUpView: Bool
     
     //New modalView:
-    @Environment(\.viewController) private var viewControllerHolder: UIViewController?
+        //   @Environment(\.viewController) private var viewControllerHolder: UIViewController?
     
     
     @State var showingPlayerView = false

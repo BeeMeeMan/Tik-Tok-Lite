@@ -19,29 +19,6 @@ struct Welcome: Codable {
         let downloadAddr: String
         let cover: String
     }
-    
-//    struct Author: Codable {
-//        let nickname: String
-//    }
-//
-//    struct ItemStruct: Codable {
-//        let video: Video
-//        let author: Author
-//        let  id: String
-//        let createTime: Int
-//    }
-//
-//    struct ItemInfo: Codable {
-//        let itemStruct: ItemStruct
-//    }
-//
-//    struct PageProps: Codable {
-//        let itemInfo: ItemInfo
-//    }
-//
-//    struct Props: Codable {
-//        let pageProps: PageProps
-//    }
 }
 
 enum downloaderErrors: Error {

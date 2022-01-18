@@ -64,7 +64,7 @@ struct PromotionTabView: View {
                 .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
                 
                 .overlay(ThreeDotsIndexView(numberOfPages: arrayView.count, selectedTab: selectedTab), alignment: .bottom )
-              //  .animation(.default)
+              
                 .padding(.bottom, 45)
                 
                 Button(action: {
@@ -85,7 +85,6 @@ struct PromotionTabView: View {
                     }
                 }
                 .roseButtonStyle()
-                // .buttonStyle(ActionButtonStyle())
                 .padding(.bottom, 50)
                 
                 

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct SettingsView : View {
+struct SettingsTabView : View {
     
     let backItem = BackItem()
     var menuButtons = [

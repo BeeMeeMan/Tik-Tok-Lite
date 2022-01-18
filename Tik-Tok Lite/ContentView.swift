@@ -9,45 +9,12 @@ import SwiftUI
 import AVKit
 
 
-//  MARK: - For ModalView -------------------------------------------------
-struct ViewControllerHolder {
-    weak var value: UIViewController?
-}
-
-struct ViewControllerKey: EnvironmentKey {
-    static var defaultValue: ViewControllerHolder {
-        return ViewControllerHolder(value: UIApplication.shared.windows.first?.rootViewController)
-    }
-}
-
-extension EnvironmentValues {
-    var viewController: UIViewController? {
-        get { return self[ViewControllerKey.self].value }
-        set { self[ViewControllerKey.self].value = newValue }
-    }
-}
-
-extension UIViewController {
-    func present<Content: View>(style: UIModalPresentationStyle = .automatic, transitionStyle: UIModalTransitionStyle = .coverVertical, @ViewBuilder builder: () -> Content) {
-        let toPresent = UIHostingController(rootView: AnyView(EmptyView()))
-        toPresent.modalPresentationStyle = style
-        toPresent.modalTransitionStyle = transitionStyle
-        toPresent.view.backgroundColor = UIColor.init(red: 0, green: 0, blue: 0, alpha: 0.5)
-        toPresent.rootView = AnyView(
-            builder()
-                .environment(\.viewController, toPresent)
-        )
-        self.present(toPresent, animated: true, completion: nil)
-    }
-}
-
-///-------------------------------------------------
-
 extension UIScreen{
     static let width = UIScreen.main.bounds.size.width
     static let height = UIScreen.main.bounds.size.height
     static let size = UIScreen.main.bounds.size
 }
+
 struct ContentView: View {
     
     init() {
@@ -83,7 +50,7 @@ struct ContentView: View {
             
             TabView(selection: $selectedTab) {
                 
-                DownloadView(showDownloadPopUpView: $showDownloadPopUpView)
+                DownloadTabView(showDownloadPopUpView: $showDownloadPopUpView)
 
                     .tabItem {
                         
@@ -93,7 +60,7 @@ struct ContentView: View {
                     }
                     .tag(Tabs.One)
                 
-                PlayListsView(showDownloadFromPlaylistPopUpView: $showDownloadFromPlaylistPopUpView)
+                PlaylistsTabView(showDownloadFromPlaylistPopUpView: $showDownloadFromPlaylistPopUpView)
                     .tabItem {
                         
                         Image(systemName: "star")
@@ -102,7 +69,7 @@ struct ContentView: View {
                     }
                     .tag(Tabs.Two)
                 
-                PublicationsView()
+                PublicationsTabView()
                     .tabItem {
                         
                         Image(systemName: "clock.arrow.circlepath")
@@ -111,7 +78,7 @@ struct ContentView: View {
                     }
                     .tag(Tabs.three)
                 
-                SettingsView()
+                SettingsTabView()
                     .tabItem {
                         
                         Image(systemName: "gear")

@@ -11,19 +11,10 @@ struct SettingsButtonView: View, Hashable{
        
     let buttonImage: String
     let buttonText: String
-    
-   
-    
-   // @State private var showingView = false
-    
-    
+
     var body: some View {
         
-//        Button(action: {
-//
-//            showingView = true
-//
-//        })  {
+
             VStack{
                 HStack{
                     
@@ -46,11 +37,11 @@ struct SettingsButtonView: View, Hashable{
                     
                     Spacer()
                     Color.white.frame(width: UIScreen.width * 0.80, height:CGFloat(1) / UIScreen.main.scale, alignment: .trailing)
-                    // .padding(.trailing, 16)
+                
                 }
             }
             .frame(width: UIScreen.width * 0.931, height: 30, alignment: .top)
-      //  }
+    
         
         
     }

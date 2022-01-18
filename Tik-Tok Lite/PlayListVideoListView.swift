@@ -9,7 +9,7 @@ import SwiftUI
 import AVKit
 import AVFoundation
 
-struct PlayListVideoListView: View {
+struct PlaylistVideoListView: View {
     
     //New modalView:
    // @Environment(\.viewController) private var viewControllerHolder: UIViewController?
@@ -17,9 +17,9 @@ struct PlayListVideoListView: View {
     @EnvironmentObject var downloader: Downloader
     @State private var showingPlayerView = false
     @State private var player = AVPlayer(url: URL(string: "https://www.rmp-streaming.com/media/big-buck-bunny-360p.mp4")!)
-    @State var plist: Playlist
+    @State var plist: PlaylistData
     @State var showDownloadPopUpView = false
-    
+    @State var playlistArray: [AVPlayer] = []
     
     
     var body: some View {
@@ -46,6 +46,9 @@ struct PlayListVideoListView: View {
                             
                             //VideoFileRow(tiktok: arr[index])
                             arr[index].vImg
+                                .onAppear(){
+                                    playlistArray.append(AVPlayer(url: arr[index].url(forFile: .video)))
+                                }
                                 .onTapGesture {
                                     
                                     player = AVPlayer(url: arr[index].url(forFile: .video))
@@ -66,7 +69,8 @@ struct PlayListVideoListView: View {
         }
         
         .fullScreenCover(isPresented: $showingPlayerView) {
-            PlayerView(player: $player)
+            
+            PlayerView(player: $player, playlistArray: $playlistArray)
    
         }
         
@@ -88,9 +92,5 @@ struct PlayListVideoListView: View {
    
         }
     }
-    
-    
-    
-   
-    
+  
 }

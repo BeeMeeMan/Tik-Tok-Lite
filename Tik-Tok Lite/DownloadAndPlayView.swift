@@ -111,7 +111,7 @@ struct DownloadAndPlayView: View {
                 presentAlert = true
                 var newItem = self.downloader.TikDataTemp.last!
                 if downloader.plistArr.isEmpty{
-                    downloader.plistArr.append(Playlist(name:"Default"))
+                    downloader.plistArr.append(PlaylistData(name:"Default"))
                     downloader.plistArr[0].videoArr.append(newItem.fileName)
                     savePlaylistArray(downloader.plistArr)
                     print("Create")

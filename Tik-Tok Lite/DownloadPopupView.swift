@@ -14,23 +14,33 @@ struct DownloadPopUpView: View {
     
            // @Binding var showModalPopUpView: Bool
             @State private var downloadLink = ""
+            @State private var backOpacity = 0.000001
             @State var isLoading = false
             @State var showingPlayerView = false
             
             @Environment(\.presentationMode) var presentationMode
     
             var isWithPlayer: Bool = true
-            var playlist: Playlist?
+            var playlist: PlaylistData?
+            
+  
     
             var body: some View {
               
                     ZStack{
                         Color.black
-                            .opacity(0.3)
+                            .opacity(backOpacity)
                             .onTapGesture {
-                                withAnimation(.easeInOut) {
+                               
+                                    backOpacity = 0.000001
                                     closeView()
+                               
+                            }
+                            .onAppear {
+                                withAnimation(.linear(duration: 0.6).delay(0.2)){
+                                    backOpacity = 0.5
                                 }
+                                
                             }
                         VStack{
                             Spacer()
@@ -108,9 +118,7 @@ struct DownloadPopUpView: View {
                                     }
                                     .actionButtonStyle()
                                     .padding(.vertical, 20)
-//                                    .fullScreenCover(isPresented:  $showDownloadPopUpView) {
-//                                        DownloadPopUpView(isWithPlayer: false, playlist: plist).environmentObject(self.downloader)
-//                                    }
+                                    
                                     Spacer()
                                     
                                 }
@@ -150,19 +158,13 @@ struct DownloadPopUpView: View {
             switch result {
             case .success(let r):
                 DispatchQueue.main.async {
-   //                 if showModalPopUpView{
+ 
                     self.downloader.TikDataTemp = []
                     self.downloader.TikDataTemp.append(r)
-//                    halfSheet.TikData.last?.vImg!.openSheet()
                 let succesNotif = Notification(text: "Successfully downloaded", title: "Info")
                 succesNotif.execute()
                    
-                    if isWithPlayer{
-//                        DispatchQueue.main.async {
-//                    downloader.isDownloadedSucsess = true
-//                        }
-                    } else {
-                        
+                    if !isWithPlayer{
                             let newItem = self.downloader.TikDataTemp.last!
                             let index = downloader.plistArr.firstIndex(of: playlist!)
                             downloader.plistArr[index!].videoArr.append(newItem.fileName)
@@ -173,13 +175,13 @@ struct DownloadPopUpView: View {
                     closeView()
  
                 }
-                   // showModalView.isActivePlayer = true
-          
+
             case .failure(let err):
-             //   showModalView.isActive = false
+  
                 DispatchQueue.main.async {
+                    
                     closeView()
-//                self.viewControllerHolder?.dismiss(animated: true, completion: nil)
+
                 }
                 switch err {
                     
@@ -202,9 +204,7 @@ struct DownloadPopUpView: View {
             
         }
         UINotificationFeedbackGenerator().notificationOccurred(.success)
-        
  
-        
     }
               
     

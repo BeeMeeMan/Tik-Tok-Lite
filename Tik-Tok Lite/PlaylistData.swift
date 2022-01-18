@@ -1,22 +1,23 @@
 //
-//  Playlist.swift
+//  PlaylistData.swift
 //  Tik-Tok Lite
 //
-//  Created by Fantom on 21.12.2021.
+//  Created by Fantom on 18.01.2022.
 //
 
 import SwiftUI
 
-struct Playlist: Codable, Hashable{
+
+struct PlaylistData: Codable, Hashable{
     
     var name: String = ""
     var description: String? = ""
     var videoArr: [String] = []
-   // var image: Image? = Image("CirclePhoto")
-
+    
+    // var image: Image? = Image("CirclePhoto")
 }
 
-func savePlaylistArray(_ array: [Playlist]){
+func savePlaylistArray(_ array: [PlaylistData]){
     let encoder = JSONEncoder()
     if let encoded = try? encoder.encode(array) {
         let defaults = UserDefaults.standard

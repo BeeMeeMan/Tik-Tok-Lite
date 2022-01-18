@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct PListCreatorView: View {
+struct PlaylistCreationView: View {
   
     
     //New modalView:
@@ -116,7 +116,7 @@ struct PListCreatorView: View {
                     // Save lpist in arr of plist in UserDefault:
                     if plistName != "" {
                         
-                        downloader.plistArr.append(Playlist(name: plistName, description: plistDiscription ))
+                        downloader.plistArr.append(PlaylistData(name: plistName, description: plistDiscription ))
                         savePlaylistArray(downloader.plistArr)
                         self.presentationMode.wrappedValue.dismiss()
                         
@@ -159,18 +159,23 @@ struct PListCreatorView: View {
         
         @Binding var showingImagePicker: Bool
         @Binding var shouldPresentCamera: Bool
-        @State private var value = 0.0
+        @State private var backOpacity = 0.000001
         @Environment(\.presentationMode) var presentationMode
         
         var body: some View {
           
                 ZStack{
                     Color.black
-                        .opacity(0.5)
+                        .opacity(backOpacity)
                         .onTapGesture {
-                            withAnimation(.easeInOut) {
+                                backOpacity = 0.000001
                                 closeView()
+                        }
+                        .onAppear {
+                            withAnimation(.linear(duration: 0.6).delay(0.2)){
+                                backOpacity = 0.5
                             }
+                            
                         }
                     VStack{
                         Spacer()
@@ -233,6 +238,7 @@ struct PListCreatorView: View {
                         .frame(height: UIScreen.height * 0.3)
                         .frame(maxWidth:.infinity)
                     }
+                    
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
                 .ignoresSafeArea()
@@ -250,6 +256,6 @@ struct PListCreatorView: View {
 
 struct PListCreator_Previews: PreviewProvider {
     static var previews: some View {
-        PListCreatorView()
+        PlaylistCreationView()
     }
 }

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct PublicationsView : View {
+struct PublicationsTabView : View {
     var body: some View {
         
         NavigationView{

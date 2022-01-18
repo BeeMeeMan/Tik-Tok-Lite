@@ -9,9 +9,7 @@ import SwiftUI
 
 
 struct LayoutTabView: View {
-    
-    //(intro image: String, step numberText: String, instruction text: String) {
-    
+ 
     let image: String
     let numberText: String
     let instructionText: String
@@ -29,19 +27,10 @@ struct LayoutTabView: View {
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: scale / 2)
-//             .resizable()
-////              .offset(x: imageOffsetX, y: 0)
-//                              .scaledToFill() // <=== Saves aspect ratio
-//                            .frame(width: scale * imageScale,  alignment: .bottom)
-//                               .scaleEffect(imageScale, anchor: .center)
-////
-              
+
                 }
                 Spacer()
-       //     }
-               
-    //    VStack{
-            
+   
             Text(numberText)
                 .font(.system(size: 21, weight: .regular, design: .default))
                 .foregroundColor(Color.white)
@@ -55,13 +44,7 @@ struct LayoutTabView: View {
         
         .frame(width: UIScreen.main.bounds.width )
     }
-//    
-//    func moveToScreen(screen id: String,_ proxyReader: ScrollViewProxy){
-//        withAnimation(.spring()) {
-//            proxyReader.scrollTo(id, anchor: .top)
-//        }
-//    }
-    
+
 }
 
 

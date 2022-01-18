@@ -11,19 +11,19 @@ import AVFoundation
 
 class Downloader: ObservableObject {
     
-    @Published var isPopup = false
+   
     @Published var isActiveDownload = false
     @Published var isActivePlayer = false
-    @Published var isDownloadedSucsess = false
     @Published var TikDataTemp: Array<Tiktok> = []
     @Published var TikData: Array<Tiktok> = []
-    @Published var plistArr: Array<Playlist> = []
+    @Published var plistArr: Array<PlaylistData> = []
+    
     
     init(){
         let defaults = UserDefaults.standard
         if let plistArr = defaults.object(forKey: "plistArr") as? Data {
             let decoder = JSONDecoder()
-            if let loadedPlistArr = try? decoder.decode(Array<Playlist>.self, from: plistArr) {
+            if let loadedPlistArr = try? decoder.decode(Array<PlaylistData>.self, from: plistArr) {
                 self.plistArr = loadedPlistArr
             }
         }
