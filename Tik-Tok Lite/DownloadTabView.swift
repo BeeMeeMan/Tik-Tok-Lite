@@ -86,7 +86,7 @@ struct DownloadTabView: View {
                 IntroPopupView(arrayView: introPopupArray)
             }
             .popover(isPresented: $showDownloadAndPlayView) {
-                DownloadAndPlayView(player: AVPlayer(url: (downloader.TikDataTemp.last?.url(forFile: .video))! ))
+                DownloadAndPlayPopupView(player: AVPlayer(url: (downloader.TikDataTemp.last?.url(forFile: .video))! ))
             }
             
             

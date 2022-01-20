@@ -10,8 +10,7 @@ import AVKit
 import AVFoundation
 
 class Downloader: ObservableObject {
-    
-   
+
     @Published var isActiveDownload = false
     @Published var isActivePlayer = false
     @Published var TikDataTemp: Array<Tiktok> = []

@@ -8,7 +8,7 @@
 import SwiftUI
 import AVKit
 
-struct DownloadAndPlayView: View {
+struct DownloadAndPlayPopupView: View {
     
     
     @State var player : AVPlayer

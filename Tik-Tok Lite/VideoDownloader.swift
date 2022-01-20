@@ -191,12 +191,14 @@ class TiktokDownloader {
 }
 
 
-struct Tiktok {
+struct Tiktok: Identifiable {
+    var id = UUID().uuidString
     var data: Welcome? = nil
     var fileName: String
     var coverFile: String
     var dataFile: String
     var vImg: VImageLoader? = nil
+    var player: AVPlayer?
    
     
     enum fileType {
@@ -205,7 +207,7 @@ struct Tiktok {
         case cover
     }
     
-    init(withFileName: String, withData: Welcome? = nil) {
+    init(withFileName: String, withData: Welcome? = nil, player: AVPlayer? = nil) {
         fileName = "\(withFileName).mp4"
         coverFile = "\(withFileName).jpg"
         dataFile = "\(withFileName).json"

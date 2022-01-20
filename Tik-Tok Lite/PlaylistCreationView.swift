@@ -172,7 +172,7 @@ struct PlaylistCreationView: View {
                                 closeView()
                         }
                         .onAppear {
-                            withAnimation(.linear(duration: 0.6).delay(0.2)){
+                            withAnimation(.linear(duration: 0.6).delay(0.3)){
                                 backOpacity = 0.5
                             }
                             
