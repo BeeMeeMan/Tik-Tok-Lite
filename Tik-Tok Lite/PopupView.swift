@@ -5,66 +5,71 @@
 //  Created by Jenya Korsun on 10/31/21.
 //
 
+
 import SwiftUI
 
-struct IntroPopupView: View {
+struct PopupView: View {
     
     @Environment(\.presentationMode) var presentationMode
     
     
     @State private var selectedTab = 0
-    var arrayView: [PopupViewModel]
-    
-    // var of first start of the app
-   
-    
+    var viewData: [PopupViewModel]
     
     
     var body: some View {
-
+        
+        
+        ZStack { // 1
+            Color.black.ignoresSafeArea() // 2
             
             VStack {
-                HStack(){
-                  
+                ZStack(){
+                    Text("Month free")
+                        .fontWeight(.black)
+                        .foregroundColor(.roseColor)
                     
-                    Spacer()
-                    Button(action: {
+                    HStack{
+                        Spacer()
+                        Button(action: {
+                            
+                            closeTabView()
+                            
+                        } ){
+                            
+                            Image("CloseX")
+                                .frame(width: 30, height: 30).background(Color.black)
+                                .padding(.trailing, 28)
+                            
+                        }
+                        .closeButtonStyle()
                         
-                        closeTabView()
-                        
-                    } ){
-                        
-                        Image("CloseX")
-                            .frame(width: 30, height: 30).background(Color.black)
-                            .padding(.trailing, 28)
-                                                
-                            }
-                    .closeButtonStyle()
+                    }
                     
                 }
                 
-                .padding(10)
-               
+                .padding(.top, 10)
+             
                 TabView(selection: $selectedTab) {
-                    ForEach(0..<arrayView.count, id: \.self) { index in
+                    ForEach(0..<viewData.count, id: \.self) { index in
                         ZStack{
                             VStack{
                                 Spacer()
                                 VStack{
-                                    Image(arrayView[index].image)
+                                    Image(viewData[index].image)
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
-                                    .frame(width: arrayView[index].scale / 2)
+                                    .frame(width: viewData[index].scale / 2)
 
                                 }
                                 Spacer()
                    
-                                Text(arrayView[index].numberText)
+                                Text(viewData[index].numberText)
                                 .font(.system(size: 21, weight: .regular, design: .default))
                                 .foregroundColor(Color.white)
                                 .padding(.bottom, 5)
                                 
-                                Text(arrayView[index].instructionText).mainTextStyle
+                                Text(viewData[index].instructionText).mainTextStyle
                                 .padding(.bottom, 20)
                             
                      }
@@ -72,16 +77,14 @@ struct IntroPopupView: View {
                         
                         .frame(width: UIScreen.main.bounds.width )
                     }
+                    }
                     
-                    
-                }
+                
                 .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
                 
-                .overlay(ThreeDotsIndexView(numberOfPages: arrayView.count, selectedTab: selectedTab), alignment: .bottom )
-              //  .animation(.default)
+                .overlay(ThreeDotsIndexView(numberOfPages: viewData.count, selectedTab: selectedTab), alignment: .bottom )
+              
                 .padding(.bottom, 45)
-                
-                Spacer()
                 
                 Button(action: {
                     
@@ -94,26 +97,24 @@ struct IntroPopupView: View {
                     }
                 })  {
                     HStack{
+                        Image("Discount")
                         Text("Next")
                             .font(.system(size: 16, weight: .regular, design: .default))
-                        Image("ArrowRight")
-                            .frame(width: 20, height: 20, alignment: .center)
+                        
                     }
                 }
                 .roseButtonStyle()
-                // .buttonStyle(ActionButtonStyle())
                 .padding(.bottom, 50)
                 
                 
-                
+            }
                 
             }
-           
-      //  }
-      
+            
+        }
         
         
-    }
+    
     
     func closeTabView(){
         presentationMode.wrappedValue.dismiss()
@@ -124,5 +125,4 @@ struct IntroPopupView: View {
 }
     
     
-
 

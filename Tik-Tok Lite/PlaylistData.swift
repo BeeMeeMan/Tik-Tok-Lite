@@ -7,12 +7,13 @@
 
 import SwiftUI
 
-
 struct PlaylistData: Codable, Hashable{
     
     var name: String = ""
     var description: String? = ""
     var videoArr: [String] = []
+    var videoDictionary: [String: String] = [:]
+
     
     // var image: Image? = Image("CirclePhoto")
 }
