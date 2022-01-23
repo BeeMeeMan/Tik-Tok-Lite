@@ -99,11 +99,13 @@ struct DownloadTabView: View {
             let tiktokFolder: URL = baseDocUrl.appendingPathComponent("tiktoks")
             let dataFolder: URL = baseDocUrl.appendingPathComponent("tiktoks/data")
             let coverFolder: URL = baseDocUrl.appendingPathComponent("tiktoks/covers")
+        //    let playlistFolder: URL = baseDocUrl.appendingPathComponent("tiktoks/playlists")
             
             do {
                 try FileManager.default.createDirectory(at: tiktokFolder, withIntermediateDirectories: true)
                 try FileManager.default.createDirectory(at: dataFolder, withIntermediateDirectories: true)
                 try FileManager.default.createDirectory(at: coverFolder, withIntermediateDirectories: true)
+                //try FileManager.default.createDirectory(at: playlistFolder, withIntermediateDirectories: true)
             } catch {}
             
             let strPath = baseDocUrl.appendingPathComponent("tiktoks").relativePath

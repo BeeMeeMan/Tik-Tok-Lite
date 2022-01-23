@@ -27,7 +27,7 @@ struct PlaylistVideoListView: View {
         VStack{
             
             
-            if plist.videoArr.isEmpty {
+            if playlistArray.isEmpty {
                 
                 Image("Play")
                     .padding(5)
@@ -38,27 +38,23 @@ struct PlaylistVideoListView: View {
                     .montserrat16TextStyle
                     .foregroundColor(.white)
                 
-            } else if let arr = downloader.TikData.filter () { plist.videoArr.contains($0.fileName) } {
+            } else {
                 
                 ScrollView {
                     LazyVStack() {
-                        ForEach( 0..<arr.count, id: \.self) { index in
+                        ForEach(playlistArray) { tiktok in
                             
                             //VideoFileRow(tiktok: arr[index])
-                            arr[index].vImg
-                                .onAppear(){
-                                    
-                                    playlistArray.append(arr[index])
-                                    
-                                }
+                            tiktok.vImg
                                 .onTapGesture {
                                     
-                                    videoForPlay = arr[index].fileName
+                                    videoForPlay = tiktok.fileName
                                     
                                     showingPlayerView = true
                                     
                                 }
                         }
+                        
                     }
                 }
                 
@@ -67,7 +63,7 @@ struct PlaylistVideoListView: View {
         }
         .navigationBarItems(trailing: addNewVideoButton)
         .onAppear(){
-            print(plist.videoArr)
+            playlistArray = downloader.TikData.filter () { plist.videoArr.contains($0.fileName) }
         }
         
         .fullScreenCover(isPresented: $showingPlayerView) {

@@ -25,7 +25,7 @@ struct PopupView: View {
             
             VStack {
                 ZStack(){
-                    Text("Month free")
+                    Text(viewData[0].headText)
                         .fontWeight(.black)
                         .foregroundColor(.roseColor)
                     

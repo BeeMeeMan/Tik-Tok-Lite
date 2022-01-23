@@ -192,6 +192,10 @@ class TiktokDownloader {
 
 
 struct Tiktok: Identifiable {
+   
+    
+    
+    
     var id = UUID().uuidString
     var data: Welcome? = nil
     var fileName: String
@@ -225,6 +229,8 @@ struct Tiktok: Identifiable {
         loadCover()
     }
     
+    
+  
     public func url(forFile: fileType) -> URL {
         
         switch forFile {
