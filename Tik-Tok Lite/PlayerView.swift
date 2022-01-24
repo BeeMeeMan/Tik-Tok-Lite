@@ -28,11 +28,11 @@ struct PlayerView: View {
             TabView(selection: $currentVideo) {
                 ForEach($playlistArray) { $tiktok in
                     TiktokPlayerView(tiktok: $tiktok, currentVideo: $currentVideo)
-//                        .frame(width: size.width)
+                    //                        .frame(width: size.width)
                         .padding(.top, 2)
                         .rotationEffect(.degrees(-90))
                         .frame(width: size.width, height: size.height)
-                     //   .ignoresSafeArea(.all, edges: .top)
+                    //   .ignoresSafeArea(.all, edges: .top)
                         .tag(tiktok.fileName)
                         .onAppear(){
                             
@@ -47,10 +47,10 @@ struct PlayerView: View {
             .frame(width: size.height, height: size.width)
             .rotationEffect(.degrees(90), anchor: .topLeading)
             .offset(x: proxy.size.width)
-           // .rotationEffect(.degrees(90))
-//            .frame(width: size.height)
+            // .rotationEffect(.degrees(90))
+            //            .frame(width: size.height)
             .tabViewStyle(.page(indexDisplayMode: .never))
-//            .frame(width: size.width)
+            //            .frame(width: size.width)
             
         }
         .edgesIgnoringSafeArea(.all)
@@ -189,9 +189,13 @@ struct TiktokPlayerView: View {
                             in: 0...1,
                             onEditingChanged: { editing in
                                 player.pause()
-                                player.seek(to: CMTime(seconds: (player.currentItem?.duration.seconds)! * sliderValue, preferredTimescale: 1))
-                                player.play()
+                                self.isplaying = false
+                                player.seek(to: CMTime(seconds: (player.currentItem?.duration.seconds)! * sliderValue, preferredTimescale: 100), toleranceBefore: CMTime.zero, toleranceAfter: CMTime.zero)
+                                if !editing {player.play()
+                                    self.isplaying = true
+                                }
                             }
+                            
                         )
                         
                             .accentColor(.roseColor)
