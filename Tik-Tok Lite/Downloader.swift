@@ -9,7 +9,7 @@ import SwiftUI
 import AVKit
 import AVFoundation
 
-class Downloader: ObservableObject {
+final class Downloader: ObservableObject {
 
     @Published var isActiveDownload = false
     @Published var isActivePlayer = false
