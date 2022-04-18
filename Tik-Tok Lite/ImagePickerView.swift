@@ -9,10 +9,9 @@
 import SwiftUI
 import UIKit
 
-struct SUImagePickerView: UIViewControllerRepresentable {
-    
+struct ImagePickerView: UIViewControllerRepresentable {
     var sourceType: UIImagePickerController.SourceType = .photoLibrary
-    @Binding var image: Image?
+    @Binding var image: UIImage?
     @Binding var isPresented: Bool
     
     func makeCoordinator() -> ImagePickerViewCoordinator {
@@ -26,25 +25,21 @@ struct SUImagePickerView: UIViewControllerRepresentable {
         return pickerController
     }
 
-    func updateUIViewController(_ uiViewController: UIImagePickerController, context: Context) {
-        // Nothing to update here
-    }
-
+    func updateUIViewController(_ uiViewController: UIImagePickerController, context: Context) { }
 }
 
 class ImagePickerViewCoordinator: NSObject, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
-    
-    @Binding var image: Image?
+    @Binding var image: UIImage?
     @Binding var isPresented: Bool
     
-    init(image: Binding<Image?>, isPresented: Binding<Bool>) {
+    init(image: Binding<UIImage?>, isPresented: Binding<Bool>) {
         self._image = image
         self._isPresented = isPresented
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
-            self.image = Image(uiImage: image)
+            self.image = image
         }
         self.isPresented = false
     }
@@ -52,6 +47,4 @@ class ImagePickerViewCoordinator: NSObject, UINavigationControllerDelegate, UIIm
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         self.isPresented = false
     }
-    
 }
-

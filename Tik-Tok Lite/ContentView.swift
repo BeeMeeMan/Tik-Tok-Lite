@@ -6,158 +6,86 @@
 //
 
 import SwiftUI
-import AVKit
-
-
-extension UIScreen{
-    static let width = UIScreen.main.bounds.size.width
-    static let height = UIScreen.main.bounds.size.height
-    static let size = UIScreen.main.bounds.size
-}
+//import AVKit
 
 struct ContentView: View {
+    @EnvironmentObject var downloader: Downloader
     
-    init() {
-        
-        let appearance = UINavigationBarAppearance()
-        appearance.backgroundColor = UIColor(red: 0.18, green: 0.176, blue: 0.176, alpha: 1)
-        UINavigationBar.appearance().scrollEdgeAppearance = appearance
-        UITabBar.appearance().backgroundColor = UIColor(red: 0.18, green: 0.176, blue: 0.176, alpha: 1)
-        UITabBar.appearance().unselectedItemTintColor = UIColor(red: 0.7, green: 0.7, blue: 0.7, alpha: 1)
-        
-    }
-    
-    // Test new modalPopUp:
-    @State private var showModal = false
     @State private var showingDetail = false
-    @State private var selectedTab: Tabs = .One
-    
+    @State private var selectedTab: Tabs = .downloadTab
     @State private var showDownloadPopUpView = false
     @State private var showDownloadFromPlaylistPopUpView = false
     
-    @EnvironmentObject var downloader: Downloader
+    init() {
+        let appearance = UINavigationBarAppearance()
+        appearance.backgroundColor = UIColor(Color.barBackgroundGrey)
+        UINavigationBar.appearance().scrollEdgeAppearance = appearance
+        UITabBar.appearance().backgroundColor = UIColor(Color.barBackgroundGrey)
+        UITabBar.appearance().unselectedItemTintColor = UIColor(Color.lightGray)
+    }
     
     enum Tabs: String {
-        case One
-        case Two
-        case three
-        case four
+        case downloadTab
+        case playlistsTab
+        case publicationsTab
+        case settingsTab
     }
     
     var body: some View {
-        
         ZStack {
-            
             TabView(selection: $selectedTab) {
-                
                 DownloadTabView(showDownloadPopUpView: $showDownloadPopUpView)
-
-                    .tabItem {
-                        
-                        Image(systemName: "arrow.down.doc")
-                        Text("Download")
-                        
-                    }
-                    .tag(Tabs.One)
+                    .tabItem { makeTabItem(image: "arrow.down.doc", text: "Download") }
+                    .tag(Tabs.downloadTab)
                 
                 PlaylistsTabView(showDownloadFromPlaylistPopUpView: $showDownloadFromPlaylistPopUpView)
-                    .tabItem {
-                        
-                        Image(systemName: "star")
-                        Text("Playlists")
-                        
-                    }
-                    .tag(Tabs.Two)
+                    .tabItem { makeTabItem(image: "star", text: "Playlists") }
+                    .tag(Tabs.playlistsTab)
                 
                 PublicationsTabView()
-                    .tabItem {
-                        
-                        Image(systemName: "clock.arrow.circlepath")
-                        Text("Publications")
-                        
-                    }
-                    .tag(Tabs.three)
+                    .tabItem { makeTabItem(image: "clock.arrow.circlepath", text: "Publications") }
+                    .tag(Tabs.publicationsTab)
                 
                 SettingsTabView()
-                    .tabItem {
-                        
-                        Image(systemName: "gear")
-                        Text("Settings")
-                        
-                    }
-                
-                    .tag(Tabs.four)
+                    .tabItem { makeTabItem(image: "gear", text: "Settings") }
+                    .tag(Tabs.settingsTab)
             }
             .accentColor(.roseColor)
-
-           
-            
-                      
-        }
-        .toolbar {
-            ToolbarItem(placement: .principal) {
-                
-                Text(titleText())
-                 .navigationTitleTextStyle
-                
-            }
         }
         .ignoresSafeArea()
         .fullScreenCover(isPresented: $showingDetail){ PopupView(viewData: PopupViewModel.intro)}
-        .preferredColorScheme(.dark) // white tint on status bar
-        .onAppear(){
-            if !isAppAlreadyLaunchedOnce(){
+        .preferredColorScheme(.dark)
+        .onAppear() {
+            if !isAppAlreadyLaunchedOnce() {
                 showingDetail = true
             }
         }
     }
     
-
-    
-    func titleText() -> String{
-        
-        switch selectedTab {
-            
-        case .One:
-            return "Download video"
-        case .Two:
-            return "Playlists"
-        case .three:
-            return "Deferred posts"
-        case .four:
-            return "Settings"
-            
+    func makeTabItem(image: String, text: String) -> some View {
+        Group {
+            Image(systemName: image)
+            Text(text)
         }
-        
     }
     
-    
-    
-    func isAppAlreadyLaunchedOnce()->Bool{
-            let defaults = UserDefaults.standard
-            
-            if defaults.bool(forKey: "isAppAlreadyLaunchedOnce"){
-                print("App already launched : \(isAppAlreadyLaunchedOnce)")
-                return true
-            }else{
-                defaults.set(true, forKey: "isAppAlreadyLaunchedOnce")
-                print("App launched first time")
-                return false
-            }
+    func isAppAlreadyLaunchedOnce() -> Bool {
+        let defaults = UserDefaults.standard
+        
+        if defaults.bool(forKey: "isAppAlreadyLaunchedOnce") {
+            print("App already launched : \(String(describing: isAppAlreadyLaunchedOnce))")
+            return true
+        } else {
+            defaults.set(true, forKey: "isAppAlreadyLaunchedOnce")
+            print("App launched first time")
+            return false
         }
-    
+    }
 }
-
-
-
-
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+            .environmentObject(Downloader())
     }
 }
-
-
-
-

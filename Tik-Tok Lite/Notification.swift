@@ -19,14 +19,11 @@ struct Notification {
     let title: String
     
     public func execute() {
-        
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge]) { success, error in
             if success {
-
                 let content = UNMutableNotificationContent()
                 content.title = title
                 content.sound = UNNotificationSound.default
-
                 content.body = text
                 
                 let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 0.1, repeats: false)
@@ -36,11 +33,20 @@ struct Notification {
                     UIApplication.shared.applicationIconBadgeNumber += 1
                 }
                 UNUserNotificationCenter.current().add(request)
+                
             } else if let error = error {
                 print(error.localizedDescription)
             }
-            
         }
-        
+    }
+    
+    static func noURLProvided() {
+        let errsNotif = Notification(text: "No URL Provided", title: "Error")
+        errsNotif.execute()
+    }
+    
+    static func videoDownloadWasSuccessful() {
+        let succesNotif = Notification(text: "Video download was successful", title: "Info")
+        succesNotif.execute()
     }
 }

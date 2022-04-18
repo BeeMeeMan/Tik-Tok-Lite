@@ -5,7 +5,6 @@
 //  Created by Jenya Korsun on 10/31/21.
 //
 
-
 import SwiftUI
 
 struct ThreeDotsIndexView: View {
@@ -16,16 +15,13 @@ struct ThreeDotsIndexView: View {
     private let rectangularWidth: CGFloat = 18
     private let rectangularRadius: CGFloat = 10
     private let spacing: CGFloat = 4
-    
-    private let primaryColor = roseColor
-    private let secondoryColor = roseColor.opacity(0.4)
-
+    private let primaryColor = Color.roseColor
+    private let secondoryColor = Color.roseColor.opacity(0.4)
     
     var body: some View {
         HStack(spacing: spacing) {
             ForEach(0..<numberOfPages) { index in
-             //   if shouldShowIndex(index) {
-                    if selectedTab == index{
+                    if selectedTab == index {
                     Rectangle()
                         .fill(primaryColor)
                         .frame(width: rectangularWidth, height: rectangularHeight)
@@ -36,7 +32,6 @@ struct ThreeDotsIndexView: View {
                             .frame(width: rectangularHeight, height: rectangularHeight)
                     }
                 }
-           
         }
     }
     func shouldShowIndex(_ index: Int) -> Bool {
@@ -49,4 +44,3 @@ struct ThreeDotsIndexView_Previews: PreviewProvider {
         ThreeDotsIndexView(numberOfPages: 3, selectedTab: 0)
     }
 }
-

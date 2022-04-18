@@ -5,56 +5,34 @@
 //  Created by Jenya Korsun on 10/31/21.
 //
 
-
 import SwiftUI
 import AVKit
 import AVFoundation
 
-
-
-var size: CGFloat = 160
-let baseDocUrl = try! FileManager.default.url(for: .documentDirectory, in: .allDomainsMask, appropriateFor: nil, create: true)
-
-
 struct DownloadTabView: View {
-    
     @EnvironmentObject var downloader: Downloader
+    @EnvironmentObject var storageModel: StorageModel
+    
     @State private var showingPromoView = false
-    @State var showingInfoView = false
+    @State private var showingInfoView = false
     @State private var showDownloadAndPlayView = false
-    @StateObject var notifDelegate = NotificationDelegate()
+    
     @Binding var showDownloadPopUpView: Bool
     
-    //New modalView:
-        //   @Environment(\.viewController) private var viewControllerHolder: UIViewController?
-    
-    
-    @State var showingPlayerView = false
-    
     var body: some View {
-        
         NavigationView {
-            
-            ZStack{
-                
+            ZStack {
                 Color.black
-                
-                VStack{
-                    
-                    HStack{
-                        
+                VStack {
+                    HStack {
                         Text("Instruction")
                             .foregroundColor(.white)
                             .font(.headline)
-                        
                         Spacer()
-                        
                         showingPromoViewButton
                     }
                     .padding(16)
                     
-                    Spacer()
-                    Spacer()
                     Spacer()
                     
                     Image("Download")
@@ -63,96 +41,39 @@ struct DownloadTabView: View {
                     Text("Download clip")
                         .mainTextStyle
                         .padding(.top, 50)
-                    
-                    Spacer()
+                        .padding(.bottom, 100)
                     
                     downloadClipButton
-                    
                 }
-                
                 .navigationBarTitleDisplayMode(.inline)
                 .navigationBarItems(trailing: showingInfoViewButton)
                 .navigationTitle("Download clip")
                 .font(.system(size: 16, weight: .regular, design: .default))
-                
-                
-                
-            }
-
-            .fullScreenCover(isPresented: $showingPromoView) {
-                PopupView(viewData: PopupViewModel.promotion)
-            }
-            .fullScreenCover(isPresented: $showingInfoView){
-                PopupView(viewData: PopupViewModel.intro)
             }
             .popover(isPresented: $showDownloadAndPlayView) {
-                DownloadAndPlayPopupView(player: AVPlayer(url: (downloader.TikDataTemp.last?.url(forFile: .video))! ))
+                DownloadAndPlayPopupView(
+                    player: AVPlayer(url: storageModel.tiktokTemp!.url(forFile: .video)))
+                    .onDisappear { storageModel.tiktokTemp = nil }
             }
-            
-            
-            
-        }
-        
-        .onAppear() {
-            DispatchQueue.global(qos: .userInitiated).async {
-            print("Appear")
-            let tiktokFolder: URL = baseDocUrl.appendingPathComponent("tiktoks")
-            let dataFolder: URL = baseDocUrl.appendingPathComponent("tiktoks/data")
-            let coverFolder: URL = baseDocUrl.appendingPathComponent("tiktoks/covers")
-        //    let playlistFolder: URL = baseDocUrl.appendingPathComponent("tiktoks/playlists")
-            
-            do {
-                try FileManager.default.createDirectory(at: tiktokFolder, withIntermediateDirectories: true)
-                try FileManager.default.createDirectory(at: dataFolder, withIntermediateDirectories: true)
-                try FileManager.default.createDirectory(at: coverFolder, withIntermediateDirectories: true)
-                //try FileManager.default.createDirectory(at: playlistFolder, withIntermediateDirectories: true)
-            } catch {}
-            
-            let strPath = baseDocUrl.appendingPathComponent("tiktoks").relativePath
-            let content = try! FileManager.default.contentsOfDirectory(atPath: strPath)
-           // print(content)
-            let savedList = content.filter{ ["covers", "data"].contains($0) != true }.map { $0.split(separator: ".")[0] }
-           // print(savedList)
-                DispatchQueue.main.async {
-                     downloader.TikData = savedList.map { Tiktok(withFileName: String($0))  }
-                    // print(downloader.TikData)
-                     
-                     UNUserNotificationCenter.current().delegate =  notifDelegate
-                     UIApplication.shared.applicationIconBadgeNumber = 0
-                     
-                }
-           
-          
-        }
         }
     }
-    
     
     //MARK: showingInfoViewButton
     
     var showingInfoViewButton: some View {
-        
-        Button(action:{
-            
-            showingInfoView = true
-            
-        }){
-            
+        Button(action: { showingInfoView = true }){
             Image(systemName: "exclamationmark.circle.fill")
                 .foregroundColor(.roseColor)
-            
+        }
+        .fullScreenCover(isPresented: $showingInfoView) {
+            PopupView(viewData: PopupViewModel.intro)
         }
     }
     
-    
     //MARK: showingPromoViewButton
     
-    var showingPromoViewButton: some View{
-        
-        Button(action: {
-            showingPromoView = true
-        }){
-            
+    var showingPromoViewButton: some View {
+        Button(action: { showingPromoView = true }){
             ZStack{
                 RoundedRectangle(cornerRadius: 4)
                     .stroke(Color.roseColor, lineWidth: 1)
@@ -165,49 +86,32 @@ struct DownloadTabView: View {
                 }
             }
         }
-        
+        .fullScreenCover(isPresented: $showingPromoView) {
+            PopupView(viewData: PopupViewModel.promotion)
+        }
     }
     
     //MARK: downloadClipButton
     
     var downloadClipButton: some View {
-        
-        Button(action: {
-         //   withAnimation(.spring()) {
-                
-                showDownloadPopUpView = true
-                    
-            //    }
-                
-            
-            
-            
-        }){
-            HStack{
-                Image(systemName: "arrow.down.doc.fill")
-                    .frame(width: 20, height: 20, alignment: .center)
-                    .foregroundColor(.white)
-                Text("Download clip")
-                    .font(.system(size: 16, weight: .regular, design: .default))
-                
-            }
+        Button(action: { showDownloadPopUpView = true }){
+            makeMainButtonLabel(image: "arrow.down.doc.fill", text: "Download clip", isReversed: false, color: .rose)
         }
-        .roseButtonStyle()
+        .mainButtonStyle(color: .rose)
         .padding(.bottom, 50)
         .fullScreenCover(isPresented:  $showDownloadPopUpView, onDismiss: ({
-            if !downloader.TikDataTemp.isEmpty {
-            showDownloadAndPlayView = true
+            if storageModel.tiktokTemp != nil {
+                showDownloadAndPlayView = true
             }
         })){
-            
-            DownloadPopUpView(isLoading: true).environmentObject(self.downloader)
+            DownloadPopUpView(isLoading: true)
         }
-    
     }
-
-    
-    
 }
 
-
-
+struct DownloadTabView_Previews: PreviewProvider {
+    static var previews: some View {
+        DownloadTabView(showDownloadPopUpView: .constant(false))
+            .environmentObject(Downloader())
+    }
+}

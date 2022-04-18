@@ -10,25 +10,17 @@ import AVKit
 import AVFoundation
 
 struct PlaylistVideoListView: View {
-    
-    //New modalView:
-   // @Environment(\.viewController) private var viewControllerHolder: UIViewController?
-    
     @EnvironmentObject var downloader: Downloader
     @State private var showingPlayerView = false
     
     @State var plist: PlaylistData
     @State var showDownloadPopUpView = false
-    @State var playlistArray: [Tiktok] = []
+    @State var videolistArray: [Tiktok] = []
     @State var videoForPlay = ""
-    
+   
     var body: some View {
-        //Test
-        VStack{
-            
-            
-            if playlistArray.isEmpty {
-                
+        VStack {
+            if videolistArray.isEmpty {
                 Image("Play")
                     .padding(5)
                 Text("It's empty for now")
@@ -39,45 +31,50 @@ struct PlaylistVideoListView: View {
                     .foregroundColor(.white)
                 
             } else {
-                
-                ScrollView {
-                    LazyVStack() {
-                        ForEach(playlistArray) { tiktok in
-                            
-                            //VideoFileRow(tiktok: arr[index])
-                            tiktok.vImg
-                                .onTapGesture {
-                                    
-                                    videoForPlay = tiktok.fileName
-                                    
-                                    showingPlayerView = true
-                                    
+                List() {
+                    ForEach(videolistArray.indices, id: \.self) { index in
+                            Button {
+                                videoForPlay = videolistArray[index].fileName
+                                showingPlayerView = true
+                            } label: {
+                                videolistArray[index].vImg
+                            }
+                            .foregroundColor(.white)
+                            .buttonStyle(PlainButtonStyle())
+                            .contextMenu(menuItems: {
+                                Button(role: .destructive) {
+                                    withAnimation { delete(index: index) }
+                                } label: { Label("Delete", systemImage: "trash") }
+                            })
+                            .swipeActions(edge: .trailing) {
+                                Button(role: .destructive, action: {
+                                    delete(index: index)
+                                }) {
+                                    Label("Delete", systemImage: "trash")
                                 }
+                            }
+                            .tint(.roseColor)
                         }
-                        
+                        .listRowBackground(Color.black)
+                        .listRowInsets(EdgeInsets())
                     }
-                }
-                
+                .listStyle(.plain)
             }
-            
         }
         .navigationBarItems(trailing: addNewVideoButton)
-        .onAppear(){
-            playlistArray = downloader.TikData.filter () { plist.videoArr.contains($0.fileName) }
+        .navigationTitle(plist.name)
+        .mainTextStyle
+        .onAppear() {
+            videolistArray = downloader.TikData.filter () { plist.videoArr.contains($0.fileName) }
         }
-        
         .fullScreenCover(isPresented: $showingPlayerView) {
-            
-            PlayerView(currentVideo: videoForPlay, playlistArray: $playlistArray, videoToPlay: $videoForPlay)
-   
+            PlayerView(currentVideo: videoForPlay, playlistArray: $videolistArray, videoToPlay: $videoForPlay)
         }
-        
     }
     
     //MARK: addPlistButton
     
     var addNewVideoButton: some View {
-        
         Button(action: {
             withAnimation(.easeInOut) {
                 showDownloadPopUpView = true
@@ -86,9 +83,11 @@ struct PlaylistVideoListView: View {
             Image("Plus").foregroundColor(.roseColor)
         }
         .fullScreenCover(isPresented: $showDownloadPopUpView) {
-            DownloadPopUpView( isWithPlayer: false, playlist: plist)
-   
+            DownloadPopUpView(isWithPlayer: false, playlist: plist)
         }
     }
-  
+    
+    func delete(index: Int) {
+        videolistArray.remove(at: index)
+    }
 }

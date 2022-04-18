@@ -11,10 +11,10 @@ import AVKit
 struct DownloadAndPlayPopupView: View {
     
     
-    @State var player : AVPlayer
+    @State var player: AVPlayer
     @State var isplaying = false
     @State var showcontrols = false
-    @State var value : Float = 0
+    @State var value: Float = 0
     @State private var presentAlert = false
     @State private var sliderValue = 0.0
     @Environment(\.presentationMode) var presentationMode
@@ -22,12 +22,11 @@ struct DownloadAndPlayPopupView: View {
     @State private var isSaved = false
     
     @EnvironmentObject var downloader: Downloader
-
+    @EnvironmentObject var storageModel: StorageModel
     
     var body: some View {
-        
-        VStack{
-            HStack{
+        VStack {
+            HStack {
                 Text("Download video")
                     .bold()
                     .padding(.leading, 10)
@@ -35,7 +34,7 @@ struct DownloadAndPlayPopupView: View {
             }
             .padding(.top, 10)
             
-            ZStack{
+            ZStack {
                 
                 VideoPlayer(player: $player)
                     .frame(width: UIScreen.main.bounds.width * 0.93, height: UIScreen.main.bounds.width * 1.50)
@@ -43,11 +42,8 @@ struct DownloadAndPlayPopupView: View {
                     .shadow(radius: 7)
                 
                     .onTapGesture {
-                        
                         self.showcontrols.toggle()
                     }
-                
-                
                 if self.showcontrols{
                     
                     ZStack{
@@ -109,52 +105,28 @@ struct DownloadAndPlayPopupView: View {
             Button(action: {
                 isSaved = true
                 presentAlert = true
-                var newItem = self.downloader.TikDataTemp.last!
-                if downloader.plistArr.isEmpty{
-                    downloader.plistArr.append(PlaylistData(name:"Default"))
-                    downloader.plistArr[0].videoArr.append(newItem.fileName)
-                    savePlaylistArray(downloader.plistArr)
+                let newItem = self.downloader.TikDataTemp.last!
+                if downloader.playlistArray.isEmpty{
+                    downloader.playlistArray.append(PlaylistData(name:"Default"))
+                    downloader.playlistArray[0].videoArr.append(newItem.fileName)
+                 //   savePlaylistArray(downloader.playlistArray)!!!
                     print("Create")
                 } else {
-                    
-                    downloader.plistArr[0].videoArr.append(newItem.fileName)
-                    savePlaylistArray(downloader.plistArr)
-                    
+                    downloader.playlistArray[0].videoArr.append(newItem.fileName)
+                 //   savePlaylistArray(downloader.playlistArray)!!!
                 }
-                
-                
                 self.downloader.TikData.append(newItem)
-                
-                
-                
-            })  {
-                HStack{
-                    Image(systemName: "arrow.down.doc.fill")
-                        .frame(width: 20, height: 20, alignment: .center)
-                        .foregroundColor(.white)
-                    Text("Download clip")
-                        .font(.system(size: 16, weight: .regular, design: .default))
-                    
-                }
+            }) {
+                makeMainButtonLabel(image: "arrow.down.doc.fill", text: "Download clip", isReversed: false, color: .rose)
             }
-            .roseButtonStyle()
-            .padding(.top, 10)
-            .padding(.bottom, 10)
-            Button(action: {
-                
-                closeView()
-                
-            })  {
-                HStack{
-                    Image(systemName: "star.fill")
-                        .frame(width: 20, height: 20, alignment: .center)
-                        .foregroundColor(.white)
-                    Text("Add to playlist")
-                        .font(.system(size: 16, weight: .regular, design: .default))
-                    
-                }
+            .mainButtonStyle(color: .rose)
+            .padding([.top, .bottom], 10)
+            
+            Button(action: { closeView() }) {
+                makeMainButtonLabel(image: "star.fill", text: "Add to playlist", isReversed: false, color: .rose)
             }
-            .roseButtonStyle()
+            .mainButtonStyle(color: .rose)
+           
             Spacer()
         }
         .alert("Attention", isPresented: $presentAlert, actions: {
@@ -174,7 +146,6 @@ struct DownloadAndPlayPopupView: View {
         
         .background(Color.clear.edgesIgnoringSafeArea(.all))
         .onAppear {
-           
             isSaved = false
             observer = self.player.addPeriodicTimeObserver(forInterval: CMTime(seconds: 1, preferredTimescale: 2), queue: .main) { (_) in
                 self.sliderValue = Double(self.player.currentTime().seconds / (self.player.currentItem?.duration.seconds)!)
@@ -194,6 +165,7 @@ struct DownloadAndPlayPopupView: View {
         .onDisappear(){
             //player.pause()
             if !isSaved {
+                storageModel.tiktokTemp?.delete()
                 removeTempVideo()
                 self.downloader.TikDataTemp = []
             }
@@ -211,15 +183,6 @@ struct DownloadAndPlayPopupView: View {
     }
     
     func removeTempVideo(){
-        
-        self.downloader.TikDataTemp.last!.delete()
-        
-        
+        //self.downloader.TikDataTemp.last!.delete()
     }
-    
-    
-    
-    
-    
 }
-

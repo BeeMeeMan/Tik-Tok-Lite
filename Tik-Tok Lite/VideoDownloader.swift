@@ -1,4 +1,3 @@
-
 //  Stollen by JK 20/11/2021.
 
 import SwiftUI
@@ -6,9 +5,7 @@ import Photos
 import AVKit
 import AVFoundation
 
-
 struct Welcome: Codable {
-    
     let id: String
     let createTime: String
     let desc: String
@@ -21,15 +18,15 @@ struct Welcome: Codable {
     }
 }
 
-enum downloaderErrors: Error {
-    case InvalidUrlGiven
-    case JsonScrapFailed
-    case JsonParseFailed
-    case DownloadVideoForbiden
-    case VideoDownloadFailed
-    case VideoSaveFailed
-    case CoverSaveFailed
-}
+//enum downloaderErrors: Error {
+//    case InvalidUrlGiven
+//    case JsonScrapFailed
+//    case JsonParseFailed
+//    case DownloadVideoForbiden
+//    case VideoDownloadFailed
+//    case VideoSaveFailed
+//    case CoverSaveFailed
+//}
 
 class TiktokDownloader {
     let videoUrl: String
@@ -41,48 +38,31 @@ class TiktokDownloader {
     
     init(withUrl: String) {
         videoUrl = withUrl
-        //try! self.download() { result in }
     }
     
     private func scrapJson(content: String) -> String? {
-    
         var json: String?
         var jsond = content.components(separatedBy: "\"ItemModule\":")
-        //(separatedBy: "id=\"__NEXT_DATA__\"")
-       
-        if jsond.indices.contains(1) {
-            
         
+        if jsond.indices.contains(1) {
             let jsonTemp = jsond[1]
-
+            
             if let i = jsonTemp.firstIndex(of: "i") {
                 jsond[1] = String(jsonTemp.suffix(from: i))
                 jsond[1] = "{\"" +  jsond[1]
-                
             }
             
-//            jsond = jsond[1].components(separatedBy: "crossorigin=\"anonymous\">")
-//            if jsond.indices.contains(1) {
-              jsond = jsond[1].components(separatedBy: "},\"UserModule\"")
-                if jsond.indices.contains(0) {
-                    json = jsond[0]
-//                } else { json = nil
-//                    print("nil1") }
-            } else { json = nil
-                print("nil2") }
-        } else { json = nil
-            print("nil3")  }
-        print(json)
-
+            jsond = jsond[1].components(separatedBy: "},\"UserModule\"")
+            if jsond.indices.contains(0) {
+                json = jsond[0]
+            } else { json = nil }
+            
+        } else { json = nil }
         
-       
         return json
     }
     
-    
-    
     public func download(completion: @escaping (Result<Tiktok, downloaderErrors>) -> Void) throws {
-        
         guard let url = URL(string: videoUrl) else {
             completion(.failure(.InvalidUrlGiven))
             return
@@ -95,39 +75,32 @@ class TiktokDownloader {
         print(request)
         
         let dataTask = URLSession.shared.dataTask(with: request) { data, response, error in
-            
             if let data = data {
                 let html = String(data: data, encoding: .utf8)!
-                print("start json")
                 guard let json = self.scrapJson(content: html) else {
                     completion(.failure(.JsonScrapFailed))
-                    print("err1")
                     return
                 }
-                //print(json)
+            
                 let data = String(json).data(using: .utf8)!
-               
                 let dot: Welcome?
                 do {
-                    
                     dot = try JSONDecoder().decode(Welcome.self, from: data)
                 } catch {
                     completion(.failure(.JsonParseFailed))
-                    print("err2")
                     return
                 }
                 
                 guard let dot = dot else {
                     completion(.failure(.JsonParseFailed))
-                    print("err3")
                     return
                 }
-                print("start json2")
+               
                 let videoId = dot.id
                 let videoCreatedTime = dot.createTime
                 
                 self.dataFile = "\(videoId)-\(videoCreatedTime).json"
-                let UUU: URL = baseDocUrl.appendingPathComponent("tiktoks/data/\(self.dataFile!)")
+                let UUU: URL = FileManager.documentsDirectory().appendingPathComponent("tiktoks/data/\(self.dataFile!)")
                 let jsonData = try! JSONEncoder().encode(dot)
                 let jsonString = String(data: jsonData, encoding: .utf8)!
                 try! jsonString.write(to: UUU, atomically: true, encoding: .utf8)
@@ -142,13 +115,11 @@ class TiktokDownloader {
                     if let response = response as? HTTPURLResponse {
                         if response.statusCode == 206 {
                             if let data = data {
-                                
                                 self.fileName = "\(videoId)-\(videoCreatedTime).mp4"
-                                let UUU: URL = baseDocUrl.appendingPathComponent("tiktoks/\(self.fileName!)")
+                                let UUU: URL = FileManager.documentsDirectory().appendingPathComponent("tiktoks/\(self.fileName!)")
                                 print("downloading \(self.fileName!)")
                                 do {
                                     try data.write(to: UUU)
-                                    //try self.saveToPhotos()
                                 } catch {
                                     completion(.failure(.VideoSaveFailed))
                                     return
@@ -172,7 +143,7 @@ class TiktokDownloader {
                     if let data = data {
                         
                         self.coverFile = "\(videoId)-\(videoCreatedTime).jpg"
-                        let UUU: URL = baseDocUrl.appendingPathComponent("tiktoks/covers/\(self.coverFile!)")
+                        let UUU: URL = FileManager.documentsDirectory().appendingPathComponent("tiktoks/covers/\(self.coverFile!)")
                         print("downloading cover\(self.coverFile!)")
                         do {
                             try data.write(to: UUU)
@@ -190,12 +161,7 @@ class TiktokDownloader {
     }
 }
 
-
 struct Tiktok: Identifiable {
-   
-    
-    
-    
     var id = UUID().uuidString
     var data: Welcome? = nil
     var fileName: String
@@ -203,7 +169,6 @@ struct Tiktok: Identifiable {
     var dataFile: String
     var vImg: VImageLoader? = nil
     var player: AVPlayer?
-   
     
     enum fileType {
         case data
@@ -211,46 +176,41 @@ struct Tiktok: Identifiable {
         case cover
     }
     
+    
     init(withFileName: String, withData: Welcome? = nil, player: AVPlayer? = nil) {
         fileName = "\(withFileName).mp4"
         coverFile = "\(withFileName).jpg"
         dataFile = "\(withFileName).json"
         
-        if withData == nil {
-         
-            let dataFileUrl = baseDocUrl.appendingPathComponent("tiktoks/data/\(dataFile)")
-            let dataFile = try! String(contentsOfFile: dataFileUrl.relativePath)
-            
-            data = try! JSONDecoder().decode(Welcome.self, from: dataFile.data(using: .utf8)!)
-        } else {
-            
-            data = withData
-        }
+//        if withData == nil {
+//            let dataFileUrl = FileManager.baseDocUrl.appendingPathComponent("tiktoks/data/\(dataFile)")
+//            let dataFile = try! String(contentsOfFile: dataFileUrl.relativePath)
+//
+//            data = try! JSONDecoder().decode(Welcome.self, from: dataFile.data(using: .utf8)!)
+//        } else {
+//            data = withData
+//        }
         loadCover()
     }
     
-    
-  
     public func url(forFile: fileType) -> URL {
-        
         switch forFile {
         case .video:
-            return baseDocUrl.appendingPathComponent("tiktoks/\(fileName)")
+            return FileManager.documentsDirectory().appendingPathComponent("tiktoks/\(fileName)")
         case .data:
-            return baseDocUrl.appendingPathComponent("tiktoks/data/\(dataFile)")
+            return FileManager.documentsDirectory().appendingPathComponent("tiktoks/data/\(dataFile)")
         case .cover:
-            return baseDocUrl.appendingPathComponent("tiktoks/covers/\(coverFile)")
+            return FileManager.documentsDirectory().appendingPathComponent("tiktoks/covers/\(coverFile)")
         }
     }
     
-    public mutating func loadCover(){
+    public mutating func loadCover() {
         if let data = data {
             vImg = VImageLoader(withUrl: url(forFile: .cover).relativeString , width: 160, height: 160, data: data, withVideoUrl: url(forFile: .video), bundleNames: ["f": fileName, "d": dataFile, "c": coverFile], sheet: SheetObservable())
         }
     }
     
-    public func delete(){
-        
+    public func delete() {
         do {
             try FileManager.default.removeItem(at: self.url(forFile: .video))
             try FileManager.default.removeItem(at: self.url(forFile: .data))
@@ -258,15 +218,10 @@ struct Tiktok: Identifiable {
         } catch {
             print("Could not delete file: \(error)")
         }
-        
     }
-    
 }
 
-
-
 struct TikTokVideoURL {
-    
     public var withUrl: String
     private var loaded: Bool
     @State private var imgData: UIImage? = nil
@@ -283,7 +238,6 @@ struct TikTokVideoURL {
     public var height: CGFloat
     
     init(withUrl: String, width: CGFloat, height: CGFloat, data: Welcome, withVideoUrl: URL, bundleNames: [String:String], sheet: SheetObservable) {
-        
         self.withUrl = withUrl
         self.loaded = false
         self.width = width
@@ -293,9 +247,7 @@ struct TikTokVideoURL {
         self.videoPlayer = AVPlayer(url:  videoUrl)
         self.Sheet = sheet
         self.bundleNames = bundleNames
-
     }
-    
     
     public func openSheet() {
         print("openSheet fired()")
@@ -322,10 +274,8 @@ struct TikTokVideoURL {
         let data = try! Data(contentsOf: url)
         self.imgData = UIImage(data:data)!
     }
-    
-    
-    
 }
+
 struct VImageLoader: View {
     
     public var withUrl: String
@@ -344,7 +294,6 @@ struct VImageLoader: View {
     public var height: CGFloat
     
     init(withUrl: String, width: CGFloat, height: CGFloat, data: Welcome, withVideoUrl: URL, bundleNames: [String:String], sheet: SheetObservable) {
-        
         self.withUrl = withUrl
         self.loaded = false
         self.width = width
@@ -354,9 +303,7 @@ struct VImageLoader: View {
         self.videoPlayer = AVPlayer(url:  videoUrl)
         self.Sheet = sheet
         self.bundleNames = bundleNames
-
     }
-    
     
     public func openSheet() {
         print("openSheet fired()")
@@ -384,29 +331,22 @@ struct VImageLoader: View {
         self.imgData = UIImage(data:data)!
     }
     
-    
-   
-  
-  
-   
     var body: some View {
-
-            ZStack{
-
-                Color.barBackgroundGrey
+        ZStack{
+            Color.barBackgroundGrey
+            
+            HStack{
                 
-                HStack{
+                if imgData != nil {
+                    Image(uiImage: imgData!)
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: 109, height: 148)
+                        .clipShape(RoundedRectangle(cornerRadius: 15))
+                        .shadow(radius: 7)
                     
-               if imgData != nil {
-                            Image(uiImage: imgData!)
-                                .resizable()
-                                .aspectRatio(contentMode: .fill)
-                                .frame(width: 109, height: 148)
-                                .clipShape(RoundedRectangle(cornerRadius: 15))
-                                .shadow(radius: 7)
-                   
-                    } else {
-                        
+                } else {
+                    
                     ZStack{
                         RoundedRectangle(cornerRadius: 10)
                             .fill(Color.barBackgroundGrey)
@@ -418,61 +358,36 @@ struct VImageLoader: View {
                             .frame(width: 130, height: 130)
                     }
                     .padding(.horizontal, 10)
-                    }
-                   
-                    VStack(alignment: .leading){
-                        
-                        if let name = self.data.desc {
+                }
+                
+                VStack(alignment: .leading) {
+                    if let name = self.data.desc {
                         Text("\(name)")
-                                .font(Font.custom("Montserrat", size: 12.0))
+                            .font(Font.custom("Montserrat", size: 12.0))
                             .padding(.top, 10)
-                            //.frame(maxWidth: .infinity, alignment: .leading)
-                        }
-                      
-                        Spacer()
-                             
+                        //.frame(maxWidth: .infinity, alignment: .leading)
                     }
                     Spacer()
                 }
-                
+                Spacer()
             }
-            .clipShape( RoundedRectangle(cornerRadius: 10))
-            .frame(maxWidth: .infinity)
-            .frame(height: 150)
-            .padding(.horizontal, 10)
-            .padding(.top, 5)
-            
-            .onAppear {
-                if imgData == nil {
-                    DispatchQueue.global(qos: .userInitiated).async {
-                        self.getImage()
-                    }
+        }
+        .clipShape( RoundedRectangle(cornerRadius: 10))
+        .frame(maxWidth: .infinity)
+        .frame(height: 150)
+        .padding(.horizontal, 10)
+        .padding(.top, 5)
+        
+        .onAppear {
+            if imgData == nil {
+                DispatchQueue.global(qos: .userInitiated).async {
+                    self.getImage()
                 }
             }
-        
-
+        }
     }
-    
 }
 
 class SheetObservable: ObservableObject {
     @Published var isActive = false
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

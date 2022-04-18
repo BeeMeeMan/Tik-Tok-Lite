@@ -8,58 +8,59 @@
 import SwiftUI
 
 struct PlaylistIconView: View {
+    @EnvironmentObject var dataStorage: StorageModel
+    @Binding var image: UIImage?
 
     let plist: PlaylistData
     
     var body: some View {
-        
-        //Test
-        ZStack{
+        HStack {
+            makeIcon(image: image)
+                .padding(10)
             
-            Color.barBackgroundGrey
-            HStack{
+            VStack(alignment: .leading) {
+                Text("\(plist.name)")
+                    .navigationTitleTextStyle
+                    .padding(.top, 10)
                 
-                ZStack{
-                    
-                    Image("CirclePhoto")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 130, height: 130)
-                        .shadow(color: Color.white, radius: 1, x: 0.5, y: 0.5)
-                        .shadow(color: Color.white, radius: 1, x: -0.5, y: -0.5)
-                }
-                .padding(.horizontal, 10)
+                Divider()
                 
-                
-                VStack(alignment: .leading){
-                    
-                    Text("\(plist.name)")
-                        .navigationTitleTextStyle
-                        .padding(.top, 10)
-                    //.frame(maxWidth: .infinity, alignment: .leading)
-                    
-                    Divider()
-                    
-                    if let description = plist.description{
-                        Text("\(description)")
-                            .mainTextStyle
-                            .multilineTextAlignment(.leading)
-                        // .frame(maxWidth: .infinity, alignment: .leading)
-                    }
-                    Spacer()
-                    
-                }
-                Spacer()
+                Text("\(plist.description)")
+                    .mainTextStyle
+                    .multilineTextAlignment(.leading)
+               Spacer()
             }
-            
         }
-        .clipShape( RoundedRectangle(cornerRadius: 10))
+        .background(Color.barBackgroundGrey)
         .frame(maxWidth: .infinity)
         .frame(height: 150)
-        .padding(.horizontal, 5)
+        .cornerRadius(Settings.Size.cornerRadius)
         .padding(.top, 5)
-        
     }
     
+    func makeIcon(image: UIImage?) -> some View {
+        getImage(image: image)
+            .resizable()
+            .clipShape(Circle())
+            .frame(width: 130, height: 130)
+            .shadow(color: Color.white, radius: 1, x: 0.5, y: 0.5)
+            .shadow(color: Color.white, radius: 1, x: -0.5, y: -0.5)
+    }
+    
+    func getImage(image: UIImage?) -> Image {
+        if let image = image {
+            return  Image(uiImage: image)
+        } else {
+            return  Image("CirclePhoto")
+        }
+    }
 }
 
+struct PlaylistIconView_Previews: PreviewProvider {
+    static var previews: some View {
+        PlaylistIconView(image: .constant(nil),
+                         plist: PlaylistData(name: "Test name", description: "Test description", videoArr: []))
+            .previewLayout(.sizeThatFits)
+            .padding()
+    }
+}

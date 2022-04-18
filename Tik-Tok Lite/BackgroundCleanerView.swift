@@ -15,6 +15,6 @@ struct BackgroundCleanerView: UIViewRepresentable {
         }
         return view
     }
-
-    func updateUIView(_ uiView: UIView, context: Context) {}
+    
+    func updateUIView(_ uiView: UIView, context: Context) { }
 }

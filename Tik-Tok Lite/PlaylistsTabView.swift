@@ -5,160 +5,54 @@
 //  Created by Jenya Korsun on 10/31/21.
 //
 
-
 import SwiftUI
 
-
 struct PlaylistsTabView : View {
-    
     @Environment(\.presentationMode) var PlayListPresentationMode
-    @EnvironmentObject var downloader: Downloader
+    @EnvironmentObject var dataStorage: StorageModel
+    
+    @State private var selection: Int? = nil
+    @State private var index: Int? = nil
+    @State private var showEditView = false
+    @State private var image: UIImage?
+    @State private var listCovers: [UIImage?] = []
+    
     @Binding var showDownloadFromPlaylistPopUpView: Bool
     
-    
     var body: some View {
-        
-        NavigationView{
-            
-            ZStack{
-                
+        NavigationView {
+            ZStack {
+                NavigationLink(destination: PlaylistCreationView(index: index),
+                               isActive: $showEditView) { EmptyView() }
                 Color.black
-                if downloader.plistArr.isEmpty {
-                VStack{
-                    
-                    Spacer()
-                    Spacer()
-                    Spacer()
-                    
-                    Image("Play")
-                        .scaleEffect(1.6, anchor: .center)
-                    
-                    Text("Make your first playlist")
-                        .mainTextStyle
-                        .padding(.top, 50)
-                    
-                    Spacer()
-                    NavigationLink(destination:
-                        
-                                    PlaylistCreationView()
-                        
-                    ){
-                        HStack{
-                            Image(systemName: "star.fill")
-                                .frame(width: 20, height: 20, alignment: .center)
-                                .foregroundColor(.white)
-                            Text("Create playlist")
-                                .font(.system(size: 16, weight: .regular, design: .default))
-                        }
-                    }
-                    .roseButtonStyle()
-                    .padding(.bottom, 50)
-                    
-                }
-                    
-                } else {
-                    
-                    ScrollView {
-                        LazyVStack() {
-                                    ForEach(downloader.plistArr, id: \.self) { plist in
-                                        NavigationLink(destination: PlaylistVideoListView(plist: plist)){
-                                            PlaylistIconView(plist: plist)
-                                        }
-                                       
-                                }
-                            }
-
-                }
-                    .padding(.top, 10)
+                EmptyPlaylistsTabView(index: $index)
+                    .opacity(dataStorage.playlistArray.isEmpty ? 1 : 0)
                 
-                }
-               
+                FilledPlaylistsTabView(selection: $selection,
+                                       index: $index,
+                                       showEditView: $showEditView)
+                    .opacity(dataStorage.playlistArray.isEmpty ? 0 : 1)
             }
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarItems(trailing: addPlistButton)
             .navigationTitle("Playlists")
-            .font(.system(size: 16, weight: .regular, design: .default))
-            
+            .mainTextStyle
         }
     }
     
-    //MARK: addPlistButton
-    
+    //MARK: AddPlistButton
     var addPlistButton: some View {
-        
-        NavigationLink(destination:
-            
-                        PlaylistCreationView()
-            
-        ){
-            Image("Plus").foregroundColor(.roseColor)
-        }
+        Button {
+            index = nil
+            self.showEditView = true
+        } label: { Image("Plus").foregroundColor(.roseColor) }
     }
-    
-    
-//    struct PlistRow: View {
-//
-//        let plist: PlaylistData
-//
-//        var body: some View {
-//
-//
-//            ZStack{
-//
-//                Color.barBackgroundGrey
-//                HStack{
-//
-//                    ZStack{
-//
-//                        Image("CirclePhoto")
-//                            .resizable()
-//                            .aspectRatio(contentMode: .fit)
-//                            .frame(width: 130, height: 130)
-//                            .shadow(color: Color.white, radius: 1, x: 0.5, y: 0.5)
-//                            .shadow(color: Color.white, radius: 1, x: -0.5, y: -0.5)
-//                    }
-//                    .padding(.horizontal, 10)
-//
-//
-//                    VStack(alignment: .leading){
-//
-//                    Text("\(plist.name)")
-//                            .navigationTitleTextStyle
-//                            .padding(.top, 10)
-//                            //.frame(maxWidth: .infinity, alignment: .leading)
-//
-//                        Divider()
-//
-//                        if let description = plist.description{
-//                            Text("\(description)")
-//                                .mainTextStyle
-//                                .multilineTextAlignment(.leading)
-//                               // .frame(maxWidth: .infinity, alignment: .leading)
-//                        }
-//                        Spacer()
-//
-//                    }
-//                    Spacer()
-//                }
-//
-//            }
-//            .clipShape( RoundedRectangle(cornerRadius: 10))
-//            .frame(maxWidth: .infinity)
-//            .frame(height: 150)
-//            .padding(.horizontal, 5)
-//            .padding(.top, 5)
-//
-//        }
-//
-//    }
-    
 }
 
-
-extension Image {
-    func asThumbnail(withMaxWidth maxWidth: CGFloat = 100) -> some View {
-        resizable()
-            .aspectRatio(contentMode: .fit)
-            .frame(maxWidth: maxWidth)
+struct PlaylistsTabView_Previews: PreviewProvider {
+    static var previews: some View {
+        PlaylistsTabView(showDownloadFromPlaylistPopUpView: .constant(false))
+            .environmentObject(StorageModel())
+            .preferredColorScheme(.dark)
     }
 }

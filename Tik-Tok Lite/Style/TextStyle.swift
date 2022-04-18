@@ -1,11 +1,6 @@
-//
-//  TextStyle.swift
-//  Tik-Tok Lite
-//
-//  Created by user206820 on 11/1/21.
-//
+
 import SwiftUI
-import Foundation
+
 // MARK: - Texts style
 
 struct MainTextStyle: ViewModifier {
@@ -13,9 +8,6 @@ struct MainTextStyle: ViewModifier {
         content
             .font(.system(size: 16, weight: .regular, design: .default))
             .foregroundColor(Color.white)
-            //.frame(width: 275, height: 63, alignment: .center)
-            //.multilineTextAlignment(.center)
-           // .padding(.bottom, 20)
     }
 }
 extension View {
@@ -51,7 +43,6 @@ struct SettingsTextStyle: ViewModifier {
             .foregroundColor(Color.white)
             .multilineTextAlignment(.center)
             .padding(.bottom, 5)
-        
     }
 }
 
@@ -92,3 +83,23 @@ extension View {
         self.modifier(Montserrat12TextStyle())
     }
 }
+
+
+//////
+///
+
+extension View {
+    func helvetica18TextStyle(color: Color) -> some View {
+        self.modifier(Helvetica18TextStyle(color: color))
+    }
+}
+
+struct Helvetica18TextStyle: ViewModifier {
+    var color: Color
+    func body(content: Content) -> some View {
+        content
+            .font(.custom("Helvetica", size: 18).weight(.regular))
+            .foregroundColor(color)
+    }
+}
+    
