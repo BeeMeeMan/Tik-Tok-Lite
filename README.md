@@ -9,6 +9,8 @@ TikTok video downloader is an app that helps you to download TikTok videos.
 
 Design and functionality is not yet complete.
 
+<img src="https://user-images.githubusercontent.com/92873911/164427038-3bb243e3-be6f-4a29-953a-c5ea82622f6f.png" width="100" height="100">
+
 [https://user-images.githubusercontent.com/92873911/164427038-3bb243e3-be6f-4a29-953a-c5ea82622f6f.png|width=400px] 
 
 ![Simulator Screen Shot - iPhone 13 Pro Max - 2022-04-21 at 12 27 24](https://user-images.githubusercontent.com/92873911/164427038-3bb243e3-be6f-4a29-953a-c5ea82622f6f.png)
