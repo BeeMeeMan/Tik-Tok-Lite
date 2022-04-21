@@ -8,21 +8,18 @@
 import SwiftUI
 
 struct PromocodeView: View {
-    
     @Environment(\.presentationMode) var presentationMode
     
     var body: some View {
         
         Text("Hellow promocode!")
-        
-        
             .navigationBarBackButtonHidden(true)
             .navigationBarItems(leading:
                                     Button(action: {
                 presentationMode.wrappedValue.dismiss()
             }){
                 HStack{
-                                    Image("ArrowBack")
+                    Image("ArrowBack")
                         .frame(width: 20, height: 20, alignment: .center)
                     Text("Back")
                         .foregroundColor(.roseColor)

@@ -7,87 +7,60 @@
 
 import SwiftUI
 
-extension View {
-  func roseButtonStyle() -> some View {
-      buttonStyle(ActionButtonStyle())
-  }
+enum ButtonsColor {
+    case rose
+    case gray
 }
 
-extension View {
-  func whiteToRoseButtonStyle() -> some View {
-      buttonStyle(WhiteToRoseButtonStyle())
-  }
-}
-
-extension View {
-  func grayButtonStyle() -> some View {
-      buttonStyle(ActionGrayButtonStyle())
-  }
-}
-
-extension View {
-  func closeButtonStyle() -> some View {
-      buttonStyle(CloseButtonStyle())
-  }
-}
-
-extension View {
-  func actionButtonStyle() -> some View {
-      buttonStyle(ActionButtonStyle())
-  }
-}
-
-
-struct ActionButtonStyle: ButtonStyle {
+struct MainButtonStyle: ButtonStyle {
+    var color: ButtonsColor
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .frame(width: UIScreen.width * 0.92, height: 53, alignment: .center)
-            .foregroundColor(.white)
-           // .font(Font.body.bold())
-          //  .padding(10)
-           // .padding(.horizontal, 20)
-            .background(roseColor.opacity(
-                configuration.isPressed ? 0.5 : 1
-            ))
+            .frame(width: Constant.Size.mainButtonsWidth, height: 50, alignment: .center)
+            .foregroundColor(color.getFontColor)
+            .background(color.getBackgroundColor).opacity( configuration.isPressed ? 0.5 : 1 )
             .cornerRadius(10)
     }
 }
 
-
-struct WhiteToRoseButtonStyle: ButtonStyle {
-    func makeBody(configuration: Configuration) -> some View {
-        configuration.label
-            .foregroundColor(
-                configuration.isPressed ? .roseColor : .white 
-            )
+func makeMainButtonLabel(image: String, text: String, isReversed: Bool, color: ButtonsColor) -> some View {
+    HStack {
+        if isReversed {
+            Text(text)
+                .font(.system(size: 16, weight: .regular, design: .default))
+            Image(systemName: image)
+                .frame(width: 20, height: 20, alignment: .center)
+        } else {
+            Image(systemName: image)
+                .frame(width: 20, height: 20, alignment: .center)
+            Text(text)
+                .font(.system(size: 16, weight: .regular, design: .default))
+        }
     }
 }
 
-
-struct ActionGrayButtonStyle: ButtonStyle {
-    func makeBody(configuration: Configuration) -> some View {
-        configuration.label
-            .frame(width: UIScreen.width * 0.92, height: 53, alignment: .center)
-            .foregroundColor(.white)
-           // .font(Font.body.bold())
-          //  .padding(10)
-           // .padding(.horizontal, 20)
-            .background(barBackgroundGrey.opacity(
-                configuration.isPressed ? 0.5 : 1
-            ))
-            .cornerRadius(10)
+extension ButtonsColor {
+    var getFontColor: Color {
+        get {
+            switch self {
+            case .rose: return Color.white
+            case .gray: return Color.lightGray
+            }
+        }
+    }
+    
+    var getBackgroundColor: Color {
+        get {
+            switch self {
+            case .rose: return Color.roseColor
+            case .gray: return Color.barBackgroundGrey
+            }
+        }
     }
 }
 
-struct CloseButtonStyle: ButtonStyle {
-    func makeBody(configuration: Configuration) -> some View {
-        configuration.label
-          .opacity(
-                configuration.isPressed ? 0.5 : 1
-            )
-            
+extension View {
+    func mainButtonStyle(color: ButtonsColor) -> some View {
+        buttonStyle(MainButtonStyle(color: color))
     }
 }
-
-
-
