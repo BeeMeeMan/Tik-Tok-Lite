@@ -10,13 +10,14 @@ import AVKit
 import AVFoundation
 
 struct PlaylistVideoListView: View {
-    @EnvironmentObject var downloader: Downloader
-    @State private var showingPlayerView = false
+    @EnvironmentObject var storageModel: StorageModel
     
-    @State var plist: PlaylistData
-    @State var showDownloadPopUpView = false
-    @State var videolistArray: [Tiktok] = []
-    @State var videoForPlay = ""
+    @State  var showingPlayerView = false
+    @State  var playlistIndex: Int
+    @State  var showDownloadPopUpView = false
+    @State  var videolistArray: [Tiktok] = []
+    @State  var videoForPlay = ""
+    @State  private var runLoading = false
    
     var body: some View {
         VStack {
@@ -37,7 +38,7 @@ struct PlaylistVideoListView: View {
                                 videoForPlay = videolistArray[index].fileName
                                 showingPlayerView = true
                             } label: {
-                                videolistArray[index].vImg
+                                VideoIconView(tiktok: $videolistArray[index])
                             }
                             .foregroundColor(.white)
                             .buttonStyle(PlainButtonStyle())
@@ -62,10 +63,14 @@ struct PlaylistVideoListView: View {
             }
         }
         .navigationBarItems(trailing: addNewVideoButton)
-        .navigationTitle(plist.name)
+        .navigationTitle(storageModel.playlistArray[playlistIndex].name)
         .mainTextStyle
+        .onChange(of: storageModel.playlistArray[playlistIndex].videoArr, perform: { videos in
+            loadVideo(from: videos)
+        })
         .onAppear() {
-            videolistArray = downloader.TikData.filter () { plist.videoArr.contains($0.fileName) }
+            let videos = storageModel.playlistArray[playlistIndex].videoArr
+            loadVideo(from: videos)
         }
         .fullScreenCover(isPresented: $showingPlayerView) {
             PlayerView(currentVideo: videoForPlay, playlistArray: $videolistArray, videoToPlay: $videoForPlay)
@@ -83,11 +88,23 @@ struct PlaylistVideoListView: View {
             Image("Plus").foregroundColor(.roseColor)
         }
         .fullScreenCover(isPresented: $showDownloadPopUpView) {
-            DownloadPopUpView(isWithPlayer: false, playlist: plist)
+            DownloadAddClipPopupView(runLoading: $runLoading)
+        }
+        .fullScreenCover(isPresented: $runLoading) {
+            DownloadAnimationPopupView(playlistIndex: playlistIndex)
+        }
+    }
+    
+    func loadVideo(from array: [String]) {
+        videolistArray = []
+        for name in array {
+            let tiktok = Tiktok(withFileName: name)
+            videolistArray.append(tiktok)
         }
     }
     
     func delete(index: Int) {
+        storageModel.deleteVideo(by: index, from: playlistIndex, isFromDisk: true)
         videolistArray.remove(at: index)
     }
 }

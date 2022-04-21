@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct FilledPlaylistsTabView: View {
-    @EnvironmentObject var dataStorage: StorageModel
+    @EnvironmentObject var storageModel: StorageModel
     
     @Binding var selection: Int?
     @Binding var index: Int?
@@ -16,18 +16,18 @@ struct FilledPlaylistsTabView: View {
     
     var body: some View {
         List() {
-            ForEach(dataStorage.playlistArray.indices, id: \.self) { index in
+            ForEach(storageModel.playlistArray.indices, id: \.self) { index in
+                if index != 0 {
                 ZStack {
-                    NavigationLink(destination: PlaylistVideoListView(plist: dataStorage.playlistArray[index]),
+                    NavigationLink(destination: PlaylistVideoListView( playlistIndex: index),
                                    tag: index,
                                    selection: $selection) {
                         EmptyView()
                     }
                     .opacity(0.001)
                     Button { selection = index } label: {
-                        PlaylistIconView(image: $dataStorage.listCover[index],
-                                         plist: dataStorage.playlistArray[index])
-                            .frame(width: Settings.Size.iconWidth)
+                        PlaylistIconView(playlist: storageModel.playlistArray[index])
+                            .frame(width: Constant.Size.iconWidth)
                     }
                     .buttonStyle(PlainButtonStyle())
                     .contextMenu { contextmenuButtons(index: index) }
@@ -36,10 +36,11 @@ struct FilledPlaylistsTabView: View {
                 .listRowInsets(EdgeInsets())
                 .swipeActions(edge: .trailing) {
                     Button(role: .destructive, action: {
-                        dataStorage.deletePlaylist(index: index)
+                        deletePlaylistAt(index: index)
                     }) { Label("Delete", systemImage: "trash") }
                 }
                 .tint(.roseColor)
+            }
             }
         }
         .listStyle(.plain)
@@ -58,10 +59,14 @@ struct FilledPlaylistsTabView: View {
             
             Button(role: .destructive) {
                 withAnimation {
-                    dataStorage.deletePlaylist(index: index)
+                    deletePlaylistAt(index: index)
                 }
             } label: { Label("Delete", systemImage: "trash") }
         }
+    }
+    
+    func deletePlaylistAt(index: Int) {
+        storageModel.deletePlaylist(index: index)
     }
 }
 

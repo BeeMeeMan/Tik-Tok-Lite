@@ -16,7 +16,7 @@ struct MainButtonStyle: ButtonStyle {
     var color: ButtonsColor
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .frame(width: Settings.Size.mainButtonsWidth, height: 50, alignment: .center)
+            .frame(width: Constant.Size.mainButtonsWidth, height: 50, alignment: .center)
             .foregroundColor(color.getFontColor)
             .background(color.getBackgroundColor).opacity( configuration.isPressed ? 0.5 : 1 )
             .cornerRadius(10)

@@ -6,11 +6,8 @@
 //
 
 import SwiftUI
-//import AVKit
 
 struct ContentView: View {
-    @EnvironmentObject var downloader: Downloader
-    
     @State private var showingDetail = false
     @State private var selectedTab: Tabs = .downloadTab
     @State private var showDownloadPopUpView = false
@@ -53,7 +50,7 @@ struct ContentView: View {
             .accentColor(.roseColor)
         }
         .ignoresSafeArea()
-        .fullScreenCover(isPresented: $showingDetail){ PopupView(viewData: PopupViewModel.intro)}
+        .fullScreenCover(isPresented: $showingDetail){ InfoPopupView(viewData: PopupViewModel.intro)}
         .preferredColorScheme(.dark)
         .onAppear() {
             if !isAppAlreadyLaunchedOnce() {
@@ -86,6 +83,5 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
-            .environmentObject(Downloader())
     }
 }

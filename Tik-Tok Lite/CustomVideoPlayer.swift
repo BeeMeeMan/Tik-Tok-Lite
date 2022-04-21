@@ -10,7 +10,6 @@ import UIKit
 import AVKit
 
 struct CustomVideoPlayer: UIViewControllerRepresentable {
-    
     var player: AVPlayer
   
     func makeCoordinator() -> Coordinator {
@@ -29,13 +28,10 @@ struct CustomVideoPlayer: UIViewControllerRepresentable {
         return controller
     }
     
-    func updateUIViewController(_ uiView: AVPlayerViewController, context: Context) {
-        
-    }
+    func updateUIViewController(_ uiView: AVPlayerViewController, context: Context) { }
 }
 
-class Coordinator: NSObject{
-    
+class Coordinator: NSObject {
     var parent: CustomVideoPlayer
     
     init(parent: CustomVideoPlayer) {
@@ -48,19 +44,3 @@ class Coordinator: NSObject{
 }
 
 
-// Delete
-struct VideoPlayer : UIViewControllerRepresentable {
-    
-    @Binding var player : AVPlayer
-    
-    func makeUIViewController(context: UIViewControllerRepresentableContext<VideoPlayer>) -> AVPlayerViewController {
-        
-        let controller = AVPlayerViewController()
-        controller.player = player
-        controller.showsPlaybackControls = false
-        controller.videoGravity = .resizeAspectFill
-        return controller
-    }
-    
-    func updateUIViewController(_ uiViewController: AVPlayerViewController, context: UIViewControllerRepresentableContext<VideoPlayer>) {}
-}

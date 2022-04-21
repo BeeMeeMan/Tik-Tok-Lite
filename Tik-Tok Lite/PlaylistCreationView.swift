@@ -9,17 +9,19 @@ import SwiftUI
 
 struct PlaylistCreationView: View {
     @Environment(\.presentationMode) var presentationMode
-    @EnvironmentObject var dataStorage: StorageModel
+    @EnvironmentObject var storageModel: StorageModel
     
     @State private var showModalPopUpView = false
+    @State private var showingAlert = false
     @State private var plistName: String = ""
     @State private var plistDiscription: String = ""
-    var index: Int?
     
     // image picker:
     @State private var image: UIImage?
     @State private var shouldPresentCamera = false
     @State private var showingImagePicker = false
+    
+    var index: Int?
     
     init(index: Int?) {
         self.index = index
@@ -56,15 +58,15 @@ struct PlaylistCreationView: View {
                     ZStack {
                         Rectangle()
                             .foregroundColor(Color.barBackgroundGrey)
-                            .frame(width: Settings.Size.mainButtonsWidth,
-                                   height: Settings.Size.mainButtonsHeight,
+                            .frame(width: Constant.Size.mainButtonsWidth,
+                                   height: Constant.Size.mainButtonsHeight,
                                    alignment: .center)
-                            .cornerRadius(Settings.Size.cornerRadius)
+                            .cornerRadius(Constant.Size.cornerRadius)
                         
                         TextField("Enter playlist name", text: $plistName)
                             .padding(5)
-                            .frame(width: Settings.Size.mainButtonsWidth)
-                            .cornerRadius(Settings.Size.cornerRadius)
+                            .frame(width: Constant.Size.mainButtonsWidth)
+                            .cornerRadius(Constant.Size.cornerRadius)
                             .background(Color.barBackgroundGrey)
                     }
                     Text("Playlist discription")
@@ -75,11 +77,11 @@ struct PlaylistCreationView: View {
                             .padding(2)
                             .multilineTextAlignment(.leading)
                             .lineSpacing(4)
-                            .frame(width: Settings.Size.mainButtonsWidth,
-                                   height: Settings.Size.playlistDescriptionTextEditorHeight,
+                            .frame(width: Constant.Size.mainButtonsWidth,
+                                   height: Constant.Size.playlistDescriptionTextEditorHeight,
                                    alignment: .center)
                             .background(Color.barBackgroundGrey)
-                            .cornerRadius(Settings.Size.cornerRadius)
+                            .cornerRadius(Constant.Size.cornerRadius)
                         
                         if plistDiscription.isEmpty {
                             Text("Not necessary")
@@ -92,11 +94,15 @@ struct PlaylistCreationView: View {
                     Spacer()
                     
                     Button(action: {
-                        dataStorage.savePlaylist(at: index,
-                                                 plistName: plistName,
-                                                 plistDiscription: plistDiscription,
-                                                 image: image)
-                        self.presentationMode.wrappedValue.dismiss()
+                        if storageModel.isExistPlaylistWith(name: plistName) && index == nil {
+                            showingAlert = true
+                            return
+                        }
+                            storageModel.savePlaylist(at: index,
+                                                      plistName: plistName,
+                                                      plistDiscription: plistDiscription,
+                                                      image: image)
+                            self.presentationMode.wrappedValue.dismiss()
                     }) {
                         makeMainButtonLabel(image: index == nil ? "star.fill" : "pencil",
                                             text: index == nil ? "Create" : "Save changes",
@@ -105,6 +111,9 @@ struct PlaylistCreationView: View {
                     }
                     .mainButtonStyle(color: .gray)
                     .padding(.bottom, 50)
+                    .alert("Unable to create playlist, playlist with current name is alredy exist", isPresented: $showingAlert) {
+                        Button("OK", role: .cancel) { }
+                    }
                 }
             }
         }
@@ -122,10 +131,10 @@ struct PlaylistCreationView: View {
     
     func loadData(index: Int?) {
         if let index = index {
-            let playlist = dataStorage.playlistArray[index]
+            let playlist = storageModel.playlistArray[index]
             plistName = playlist.name
             plistDiscription = playlist.description
-            if let uiImage = UIImage.load(filename: playlist.name) {
+            if let uiImage = UIImage.load(filename: playlist.name, directory: .playlistData) {
                 image = uiImage
             }
         }

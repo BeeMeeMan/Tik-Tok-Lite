@@ -9,16 +9,14 @@ import SwiftUI
 
 @main
 struct Tik_Tok_LiteApp: App {
-    @StateObject var downloader = Downloader()
-    @StateObject var dataStorage = StorageModel()
+    @StateObject var storageModel = StorageModel()
     @StateObject var notifDelegate = NotificationDelegate()
     
     var body: some Scene {
         WindowGroup {
            SplashScreen()
-                .environmentObject(downloader)
                 .environmentObject(notifDelegate)
-                .environmentObject(dataStorage)
+                .environmentObject(storageModel)
                 .onAppear {
                     UserDefaults.standard.set(false, forKey: "_UIConstraintBasedLayoutLogUnsatisfiable")
                 }

@@ -2,16 +2,14 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>UILaunchScreen</key>
-	<dict>
-		<key>UIImageName</key>
-		<string>SplashLogoSmall</string>
-		<key>UIColorName</key>
-		<string>SplashBg</string>
-	</dict>
-	<key>CFBundleIdentifier</key>
-	<string>jk.Tik-Tok-Lite</string>
 	<key>CFBundleGetInfoString</key>
 	<string></string>
+	<key>UILaunchScreen</key>
+	<dict>
+		<key>UIColorName</key>
+		<string>SplashBg</string>
+		<key>UIImageName</key>
+		<string>SplashLogoSmall</string>
+	</dict>
 </dict>
 </plist>

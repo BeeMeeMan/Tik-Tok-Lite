@@ -9,9 +9,9 @@ import SwiftUI
 
 struct PlaylistIconView: View {
     @EnvironmentObject var dataStorage: StorageModel
-    @Binding var image: UIImage?
-
-    let plist: PlaylistData
+    @State var image: UIImage? = nil
+    
+    let playlist: PlaylistData
     
     var body: some View {
         HStack {
@@ -19,13 +19,13 @@ struct PlaylistIconView: View {
                 .padding(10)
             
             VStack(alignment: .leading) {
-                Text("\(plist.name)")
+                Text("\(playlist.name)")
                     .navigationTitleTextStyle
                     .padding(.top, 10)
                 
                 Divider()
                 
-                Text("\(plist.description)")
+                Text("\(playlist.description)")
                     .mainTextStyle
                     .multilineTextAlignment(.leading)
                Spacer()
@@ -34,8 +34,14 @@ struct PlaylistIconView: View {
         .background(Color.barBackgroundGrey)
         .frame(maxWidth: .infinity)
         .frame(height: 150)
-        .cornerRadius(Settings.Size.cornerRadius)
+        .cornerRadius(Constant.Size.cornerRadius)
         .padding(.top, 5)
+        .onChange(of: playlist, perform: { playlist in
+            image = playlist.loadCover()
+            print("name: \(playlist.name)")
+        })
+        .onAppear { image = playlist.loadCover() }
+        .onDisappear { image = nil }
     }
     
     func makeIcon(image: UIImage?) -> some View {
@@ -58,8 +64,7 @@ struct PlaylistIconView: View {
 
 struct PlaylistIconView_Previews: PreviewProvider {
     static var previews: some View {
-        PlaylistIconView(image: .constant(nil),
-                         plist: PlaylistData(name: "Test name", description: "Test description", videoArr: []))
+        PlaylistIconView(playlist: PlaylistData(name: "Test name", description: "Test description", videoArr: []))
             .previewLayout(.sizeThatFits)
             .padding()
     }

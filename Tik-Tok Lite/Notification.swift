@@ -29,9 +29,7 @@ struct Notification {
                 let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 0.1, repeats: false)
 
                 let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
-                DispatchQueue.main.async {
-                    UIApplication.shared.applicationIconBadgeNumber += 1
-                }
+
                 UNUserNotificationCenter.current().add(request)
                 
             } else if let error = error {

@@ -11,12 +11,16 @@ struct PlaylistData: Codable, Hashable {
     var name: String = ""
     var description: String = ""
     var videoArr: [String] = []
+    
+    public func loadCover() -> UIImage? {
+        let coverFile = "\(name).jpg"
+        let path = Constant.createURL(to: coverFile, in: .playlistData)
+            do {
+                let imageData = try Data(contentsOf: path)
+                return UIImage(data: imageData)
+            } catch {
+                print("Error loading image : \(error)")
+            }
+            return nil
+    }
 }
-
-//func savePlaylistArray(_ array: [PlaylistData]) {
-//    let encoder = JSONEncoder()
-//    if let encoded = try? encoder.encode(array) {
-//        let defaults = UserDefaults.standard
-//        defaults.set(encoded, forKey: "plistArr")
-//    }
-//}

@@ -14,7 +14,7 @@ struct EmptyPlaylistsTabView: View {
             Spacer()
             
             Image("Play")
-                .iconModifier(width: Settings.Size.promoImagesWidth)
+                .iconModifier(width: Constant.Size.promoImagesWidth)
             Text("Make your first playlist")
                 .mainTextStyle
                 .padding(.top, 50)

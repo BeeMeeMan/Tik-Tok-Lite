@@ -16,36 +16,55 @@ struct PlaylistsTabView : View {
     @State private var showEditView = false
     @State private var image: UIImage?
     @State private var listCovers: [UIImage?] = []
+    @State private var showPlaylists: String = "playlists"
     
     @Binding var showDownloadFromPlaylistPopUpView: Bool
     
     var body: some View {
         NavigationView {
             ZStack {
-                NavigationLink(destination: PlaylistCreationView(index: index),
-                               isActive: $showEditView) { EmptyView() }
+                if showPlaylists == "videos" {
+                    PlaylistVideoListView( playlistIndex: 0)
+                } else {
+                NavigationLink(destination: PlaylistCreationView(index: index), isActive: $showEditView)
+                { EmptyView() }
                 Color.black
                 EmptyPlaylistsTabView(index: $index)
-                    .opacity(dataStorage.playlistArray.isEmpty ? 1 : 0)
+                    .opacity(dataStorage.playlistArray.count == 1 ? 1 : 0)
                 
                 FilledPlaylistsTabView(selection: $selection,
                                        index: $index,
                                        showEditView: $showEditView)
-                    .opacity(dataStorage.playlistArray.isEmpty ? 0 : 1)
+                    .opacity(dataStorage.playlistArray.count == 1 ? 0 : 1)
+            }
             }
             .navigationBarTitleDisplayMode(.inline)
-            .navigationBarItems(trailing: addPlistButton)
+            .toolbar(content: {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    addPlistButton
+                        .opacity(showPlaylists == "videos" ? 0 : 1)
+                }
+                ToolbarItem(placement: .navigationBarLeading) { picker }
+            })
             .navigationTitle("Playlists")
             .mainTextStyle
         }
     }
     
-    //MARK: AddPlistButton
     var addPlistButton: some View {
         Button {
             index = nil
             self.showEditView = true
         } label: { Image("Plus").foregroundColor(.roseColor) }
+    }
+    
+    var picker: some View {
+        Picker(selection: $showPlaylists) {
+            Text("Videos").tag("videos")
+            Text("Playlists").tag("playlists")
+        } label: { }
+        .pickerStyle(.inline)
+        .frame(maxWidth: 130)
     }
 }
 

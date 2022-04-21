@@ -30,21 +30,22 @@ extension UIImage {
     static var minsize = CGSize(width: 300, height: 200)
     static var maxSize = CGSize(width: 1000, height: 1500)
     
-    func save(to filename: String) {
+    
+    func save(to filename: String, directory: Directory) {
         // first resize large images
         let image = resizeLargeImage()
-        let url = FileManager.documentsDirectory().appendingPathComponent(filename)
+        let url = Constant.getURL(for: directory).appendingPathComponent("\(filename)")
+      
         do {
             try image.pngData()?.write(to: url)
             print("Save image")
-            print(url)
         } catch {
             print(error.localizedDescription)
         }
     }
     
-    static func load(filename: String) -> UIImage? {
-        let url = FileManager.documentsDirectory().appendingPathComponent(filename)
+    static func load(filename: String, directory: Directory) -> UIImage? {
+        let url = Constant.getURL(for: directory).appendingPathComponent("\(filename)")
         if let imageData = try? Data(contentsOf: url) {
             return UIImage(data: imageData)
         } else {
@@ -52,8 +53,8 @@ extension UIImage {
         }
     }
     
-    static func remove(filename: String) {
-        let url = FileManager.documentsDirectory().appendingPathComponent(filename)
+    static func remove(filename: String, directory: Directory) {
+        let url = Constant.getURL(for: directory).appendingPathComponent("\(filename)")
             try? FileManager.default.removeItem(at: url)
     }
 }
@@ -61,8 +62,8 @@ extension UIImage {
 // MARK: - GET IMAGE SIZE
 extension UIImage {
     func initialSize() -> CGSize {
-        var width = Settings.Size.defaultElementSize.width
-        var height = Settings.Size.defaultElementSize.height
+        var width = Constant.Size.defaultElementSize.width
+        var height = Constant.Size.defaultElementSize.height
         
         if self.size.width >= self.size.height {
             width = max(Self.minsize.width, width)
@@ -87,7 +88,7 @@ extension UIImage {
 // MARK: - RESIZE IMAGE
 extension UIImage {
     func resizeLargeImage() -> UIImage {
-        let defaultSize: CGFloat = 200
+        let defaultSize: CGFloat = 160
         if size.width <= defaultSize ||
             size.height <= defaultSize { return self }
         

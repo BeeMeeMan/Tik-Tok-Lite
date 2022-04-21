@@ -11,8 +11,6 @@ import AVKit
 
 struct PlayerView: View {
     @Environment(\.presentationMode) var presentationMode
-    @EnvironmentObject var downloader: Downloader
-    
     @State var currentVideo: String
     
     @Binding var playlistArray: [Tiktok]
@@ -30,12 +28,8 @@ struct PlayerView: View {
                         .rotationEffect(.degrees(-90))
                         .frame(width: size.width, height: size.height)
                         .tag(tiktok.fileName)
-                        .onAppear() {
-                            tiktok.player = AVPlayer(url: tiktok.url(forFile: .video))
-                        }
-                        .onDisappear {
-                            tiktok.player = nil
-                        }
+                        .onAppear() { tiktok.player = AVPlayer(url: tiktok.url(forFile: .video)) }
+                        .onDisappear { tiktok.player = nil }
                 }
             }
             .frame(width: size.height, height: size.width)
@@ -58,21 +52,19 @@ struct PlayerView: View {
 struct TiktokPlayerView: View {
     @Environment(\.presentationMode) var presentationMode
     
-    @State var showcontrols = false
-    @State var isplaying = true
-    @State var observer: Any?
+    @State private var showcontrols = false
+    @State private var isplaying = true
+    @State private var observer: Any?
     @State private var sliderValue = 0.0
     
     @Binding var tiktok : Tiktok
     @Binding var currentVideo: String
     
     var body: some View {
-        ZStack{
+        ZStack {
             if let player = tiktok.player {
                 CustomVideoPlayer(player: player)
-                    .onTapGesture {
-                        showcontrols.toggle()
-                    }
+                    .onTapGesture { showcontrols.toggle() }
                     .onAppear {
                         showcontrols = false
                         observer = player.addPeriodicTimeObserver(forInterval: CMTime(seconds: 1, preferredTimescale: 1), queue: .main) { (_) in
@@ -87,89 +79,68 @@ struct TiktokPlayerView: View {
                         player.play()
                         isplaying = true
                     }
-                    .onDisappear(){
+                    .onDisappear() {
                         player.removeTimeObserver(observer!)
                         player.replaceCurrentItem(with: nil)
                     }
                 
-                if showcontrols{
-                    
+                if showcontrols {
                     Button(action: {
                         closeView()
-                    })  {
-                        
-                        HStack{
+                    }) { HStack {
                             Image("CloseSquare")
-                                .padding(.vertical, 10)
                             Text("Close")
-                                .padding(.vertical, 10)
                                 .foregroundColor(.roseColor)
                         }
+                        .padding(.vertical, 10)
                         .scaleEffect(1.3)
                     }
                     .position(x: 70, y: 50)
                     
-                    VStack{
+                    VStack {
                         Spacer()
                         Button(action: {
-                            if self.isplaying {
+                            if isplaying {
                                 player.pause()
-                                self.isplaying = false
+                                isplaying = false
                             } else {
                                 player.play()
-                                self.isplaying = true
+                                isplaying = true
                             }
-                        }){
-                            
-                            if self.isplaying {
-                                
-                                Image("PauseCircle")
-                                    .opacity(0.7)
-                                
-                            } else {
-                                Image("PlayCircle")
-                            }
-                        }
+                        }) { Image(isplaying ? "PauseCircle" : "PlayCircle").scaleEffect(0.6) }
                         Spacer()
                     }
                     
-                    VStack{
+                    VStack {
                         Spacer()
                         Slider(
                             value: $sliderValue,
                             in: 0...1,
                             onEditingChanged: { editing in
                                 player.pause()
-                                self.isplaying = false
+                                isplaying = false
                                 player.seek(to: CMTime(seconds: (player.currentItem?.duration.seconds)! * sliderValue, preferredTimescale: 100), toleranceBefore: CMTime.zero, toleranceAfter: CMTime.zero)
                                 if !editing {player.play()
-                                    self.isplaying = true
+                                    isplaying = true
                                 }
                             }
                         )
                             .accentColor(.roseColor)
                             .padding(.bottom, 30)
                             .padding(.horizontal, 20)
-                        
                     }
                 }
                 
-                GeometryReader{ proxy -> Color in
-                    
+                GeometryReader { proxy -> Color in
                     let minY = proxy.frame(in: .global).minY
                     let size = proxy.size
                     
                     DispatchQueue.main.async {
                         if -minY < (size.height/2) && minY < (size.height/2) && currentVideo == tiktok.fileName {
-                            
-                            if isplaying {
-                                player.play()
-                            }
-                            
+                            if isplaying { player.play() }
                         } else {
                             isplaying = true
                             player.pause()
-                            
                         }
                     }
                     return Color.clear
@@ -178,8 +149,7 @@ struct TiktokPlayerView: View {
         }
     }
     
-    
-    func closeView(){
+    func closeView() {
         presentationMode.wrappedValue.dismiss()
     }
 }

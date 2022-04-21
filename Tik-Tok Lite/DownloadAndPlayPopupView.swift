@@ -9,20 +9,18 @@ import SwiftUI
 import AVKit
 
 struct DownloadAndPlayPopupView: View {
+    @Environment(\.presentationMode) var presentationMode
+    @EnvironmentObject var storageModel: StorageModel
     
+    @State private var isplaying = false
+    @State private var isSaved = false
+    @State private var presentAlert = false
+    @State private var showcontrols = false
+    @State private var sliderValue = 0.0
+    @State private var value: Float = 0
+    @State private var observer: Any?
     
     @State var player: AVPlayer
-    @State var isplaying = false
-    @State var showcontrols = false
-    @State var value: Float = 0
-    @State private var presentAlert = false
-    @State private var sliderValue = 0.0
-    @Environment(\.presentationMode) var presentationMode
-    @State var observer: Any?
-    @State private var isSaved = false
-    
-    @EnvironmentObject var downloader: Downloader
-    @EnvironmentObject var storageModel: StorageModel
     
     var body: some View {
         VStack {
@@ -35,87 +33,51 @@ struct DownloadAndPlayPopupView: View {
             .padding(.top, 10)
             
             ZStack {
-                
                 VideoPlayer(player: $player)
-                    .frame(width: UIScreen.main.bounds.width * 0.93, height: UIScreen.main.bounds.width * 1.50)
+                    .frame(width: Constant.Size.videoPlayerWidth, height: Constant.Size.videoPlayerHeight)
                     .clipShape(RoundedRectangle(cornerRadius: 14))
                     .shadow(radius: 7)
+                    .onTapGesture { showcontrols.toggle() }
                 
-                    .onTapGesture {
-                        self.showcontrols.toggle()
-                    }
-                if self.showcontrols{
-                    
-                    ZStack{
-
-                        VStack{
-
+                if showcontrols {
+                    ZStack {
+                        VStack {
                             Spacer()
                             Button(action: {
-                                
-                                if self.isplaying{
-                                    
-                                    self.player.pause()
-                                    self.isplaying = false
-                                    
-                                }
-                                else{
-                                    
-                                    self.player.play()
-                                    self.isplaying = true
-                                    
-                                }
-                                
-                            }) {
-                                if self.isplaying{
-                                    
-                                    Image("PauseCircle")
-                                    
+                                if isplaying {
+                                    player.pause()
+                                    isplaying = false
                                 } else {
-                                    
-                                    Image("PlayCircle")
-                                    
+                                    player.play()
+                                    isplaying = true
                                 }
-                                
-                            }
+                            }) { Image(isplaying ? "PauseCircle" : "PlayCircle").scaleEffect(0.6) }
                             
                             Spacer()
-             
+                            
                             Slider(
                                 value: $sliderValue,
                                 in: 0...1,
                                 onEditingChanged: { editing in
-                                    self.player.pause()
-                                    self.player.seek(to: CMTime(seconds: (self.player.currentItem?.duration.seconds)! * self.sliderValue, preferredTimescale: 1))
-                                    self.player.play()
+                                    player.pause()
+                                    player.seek(to: CMTime(seconds: (player.currentItem?.duration.seconds)! * sliderValue, preferredTimescale: 1))
+                                    player.play()
                                 }
                             )
-                            
                                 .accentColor(.roseColor)
                                 .padding(.bottom, 30)
                                 .padding(.horizontal, 20)
-                            
                         }
                     }
-                    
                 }
-                
             }
             
             Button(action: {
                 isSaved = true
-                presentAlert = true
-                let newItem = self.downloader.TikDataTemp.last!
-                if downloader.playlistArray.isEmpty{
-                    downloader.playlistArray.append(PlaylistData(name:"Default"))
-                    downloader.playlistArray[0].videoArr.append(newItem.fileName)
-                 //   savePlaylistArray(downloader.playlistArray)!!!
-                    print("Create")
-                } else {
-                    downloader.playlistArray[0].videoArr.append(newItem.fileName)
-                 //   savePlaylistArray(downloader.playlistArray)!!!
+                if !storageModel.playlistArray.isEmpty {
+                    storageModel.add(video: storageModel.tiktokTemp!, to: 0)
                 }
-                self.downloader.TikData.append(newItem)
+                presentAlert = true
             }) {
                 makeMainButtonLabel(image: "arrow.down.doc.fill", text: "Download clip", isReversed: false, color: .rose)
             }
@@ -123,66 +85,40 @@ struct DownloadAndPlayPopupView: View {
             .padding([.top, .bottom], 10)
             
             Button(action: { closeView() }) {
-                makeMainButtonLabel(image: "star.fill", text: "Add to playlist", isReversed: false, color: .rose)
-            }
-            .mainButtonStyle(color: .rose)
-           
+                    makeMainButtonLabel(image: "star.fill", text: "Add to playlist", isReversed: false, color: .rose)
+                }
+                .mainButtonStyle(color: .rose)
             Spacer()
         }
-        .alert("Attention", isPresented: $presentAlert, actions: {
-            
-            Button("Ok") {
-                
-                presentationMode.wrappedValue.dismiss()
-                
-            }
-        }, message: {
-            
-            Text("Video saved in your gallery")
-            
-            
-        }) // 4
-        
-        
+        .alert("Attention",
+               isPresented: $presentAlert,
+               actions: { Button("Ok") { closeView() }},
+               message: { Text("Video saved in your gallery") })
         .background(Color.clear.edgesIgnoringSafeArea(.all))
         .onAppear {
             isSaved = false
-            observer = self.player.addPeriodicTimeObserver(forInterval: CMTime(seconds: 1, preferredTimescale: 2), queue: .main) { (_) in
-                self.sliderValue = Double(self.player.currentTime().seconds / (self.player.currentItem?.duration.seconds)!)
-                print(self.sliderValue)
-                if self.sliderValue >= 0.99{
-                    self.player.seek(to: CMTime(seconds: 0, preferredTimescale: 1))
-                    self.player.play()
-                    self.player.play()
+            observer = player.addPeriodicTimeObserver(forInterval: CMTime(seconds: 1, preferredTimescale: 2), queue: .main) { (_) in
+                sliderValue = Double(player.currentTime().seconds / (player.currentItem?.duration.seconds)!)
+                if sliderValue >= 0.99{
+                    player.seek(to: CMTime(seconds: 0, preferredTimescale: 1))
+                    player.play()
+                    player.play()
                 }
             }
-            
-            //  self.showcontrols = true
-            self.player.play()
-            self.isplaying = true
-            
+            player.play()
+            isplaying = true
         }
-        .onDisappear(){
-            //player.pause()
+        .onDisappear() {
             if !isSaved {
-                storageModel.tiktokTemp?.delete()
-                removeTempVideo()
-                self.downloader.TikDataTemp = []
+                if let tiktokTemp = storageModel.tiktokTemp { tiktokTemp.delete() }
             }
-            self.player.removeTimeObserver(observer!)
-            self.player.replaceCurrentItem(with: nil)
-            presentationMode.wrappedValue.dismiss()
+            player.removeTimeObserver(observer!)
+            player.replaceCurrentItem(with: nil)
+            closeView()
         }
     }
     
-   
-    
-    func closeView(){
+    func closeView() {
         presentationMode.wrappedValue.dismiss()
-        
-    }
-    
-    func removeTempVideo(){
-        //self.downloader.TikDataTemp.last!.delete()
     }
 }

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SplashScreen: View {
-    @EnvironmentObject var downloader: Downloader
+    @EnvironmentObject var storageModel: StorageModel
     @EnvironmentObject var notifDelegate: NotificationDelegate
     
     @State private var splashAnimation: Bool = false
@@ -19,26 +19,20 @@ struct SplashScreen: View {
                 .opacity(splashAnimation ? 1 : 0)
                 .statusBar(hidden: true)
                 .ignoresSafeArea()
-            
             Group {
                 AnimatedBackground().edgesIgnoringSafeArea(.all)
                 Image("SplashLogoBig")
-                    .iconModifier(width: Settings.Size.splashImageSize)
+                    .iconModifier(width: Constant.Size.splashImageSize)
             }
             .opacity(splashAnimation ? 0 : 1)
         }
+        .edgesIgnoringSafeArea(.all)
+        .statusBar(hidden: false)
         .onAppear() {
-            DispatchQueue.global(qos: .userInitiated).async {
-                defer {
-                    DispatchQueue.main.async {
-                        withAnimation(.easeInOut(duration: 2)) {
-                            splashAnimation.toggle()
-                        }
-                    }
+            UNUserNotificationCenter.current().delegate =  notifDelegate
+                withAnimation(.easeInOut(duration: 2)) {
+                    splashAnimation.toggle()
                 }
-                downloader.loadTikTokData()
-                UNUserNotificationCenter.current().delegate =  notifDelegate
-            }
         }
     }
 }
@@ -46,7 +40,6 @@ struct SplashScreen: View {
 struct SplashScreen_Previews: PreviewProvider {
     static var previews: some View {
         SplashScreen()
-            .environmentObject(Downloader())
             .environmentObject(NotificationDelegate())
     }
 }

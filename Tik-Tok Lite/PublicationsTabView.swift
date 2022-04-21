@@ -14,7 +14,6 @@ struct PublicationsTabView : View {
                 Color.black
                 VStack {
                     Spacer()
-                    
                     Image("Publications")
                         .scaleEffect(2, anchor: .center)
                         .padding(.bottom, 100)

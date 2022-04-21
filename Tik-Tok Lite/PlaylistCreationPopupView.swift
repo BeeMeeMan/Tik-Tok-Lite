@@ -16,26 +16,6 @@ struct PlaylistCreationPopupView: View {
     @Binding var shouldPresentCamera: Bool
     
     var body: some View {
-        ZStack {
-            Color.black
-                .opacity(backOpacity)
-                .onTapGesture {
-                    backOpacity = .zero
-                    closeView()
-                }
-                .onAppear {
-                    withAnimation(.linear(duration: 0.6).delay(0.3)) {
-                        backOpacity = 0.5
-                    }
-                }
-            popupWindow
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
-        .ignoresSafeArea()
-        .background(BackgroundCleanerView())
-    }
-    
-    var popupWindow: some View {
         VStack {
             Spacer()
             VStack(alignment:.leading) {
@@ -79,9 +59,10 @@ struct PlaylistCreationPopupView: View {
                 Spacer()
             }
             .background(Color.barBackgroundGrey).clipShape(RoundedRectangle(cornerRadius: 22))
-            .frame(height: Settings.Size.popupViewHeight)
+            .frame(height: Constant.Size.popupViewHeight)
             .frame(maxWidth:.infinity)
         }
+        .modifier( PopupOverlayViewModifier() { closeView() } )
     }
     
     func closeView() {

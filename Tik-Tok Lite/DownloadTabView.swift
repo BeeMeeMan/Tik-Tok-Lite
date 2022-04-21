@@ -10,7 +10,6 @@ import AVKit
 import AVFoundation
 
 struct DownloadTabView: View {
-    @EnvironmentObject var downloader: Downloader
     @EnvironmentObject var storageModel: StorageModel
     
     @State private var showingPromoView = false
@@ -56,6 +55,8 @@ struct DownloadTabView: View {
                     .onDisappear { storageModel.tiktokTemp = nil }
             }
         }
+        .edgesIgnoringSafeArea(.all)
+        .statusBar(hidden: false)
     }
     
     //MARK: showingInfoViewButton
@@ -66,7 +67,7 @@ struct DownloadTabView: View {
                 .foregroundColor(.roseColor)
         }
         .fullScreenCover(isPresented: $showingInfoView) {
-            PopupView(viewData: PopupViewModel.intro)
+            InfoPopupView(viewData: PopupViewModel.intro)
         }
     }
     
@@ -87,7 +88,7 @@ struct DownloadTabView: View {
             }
         }
         .fullScreenCover(isPresented: $showingPromoView) {
-            PopupView(viewData: PopupViewModel.promotion)
+            InfoPopupView(viewData: PopupViewModel.promotion)
         }
     }
     
@@ -104,7 +105,7 @@ struct DownloadTabView: View {
                 showDownloadAndPlayView = true
             }
         })){
-            DownloadPopUpView(isLoading: true)
+            DownloadAnimationPopupView()
         }
     }
 }
@@ -112,6 +113,5 @@ struct DownloadTabView: View {
 struct DownloadTabView_Previews: PreviewProvider {
     static var previews: some View {
         DownloadTabView(showDownloadPopUpView: .constant(false))
-            .environmentObject(Downloader())
     }
 }
