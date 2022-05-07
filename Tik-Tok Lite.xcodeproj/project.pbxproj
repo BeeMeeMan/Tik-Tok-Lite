@@ -7,10 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4002552227971223000849F5 /* CustomVideoPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4002552127971223000849F5 /* CustomVideoPlayer.swift */; };
+		4002552227971223000849F5 /* UIVideoPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4002552127971223000849F5 /* UIVideoPlayer.swift */; };
 		40036FB42794420D0010E14E /* Downloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40036FB32794420D0010E14E /* Downloader.swift */; };
 		40036FB827945F7D0010E14E /* BackgroundCleanerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40036FB727945F7C0010E14E /* BackgroundCleanerView.swift */; };
-		400CF6062760E515006CCB73 /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 400CF6052760E515006CCB73 /* PlayerView.swift */; };
+		400CF6062760E515006CCB73 /* ReelsPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 400CF6052760E515006CCB73 /* ReelsPlayerView.swift */; };
 		400EC07B27FEF7540088E933 /* PlaylistCreationPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 400EC07A27FEF7540088E933 /* PlaylistCreationPopupView.swift */; };
 		400EC07F27FEFA780088E933 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 400EC07E27FEFA780088E933 /* Image.swift */; };
 		400EC08127FEFB310088E933 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 400EC08027FEFB310088E933 /* Constant.swift */; };
@@ -20,13 +20,11 @@
 		4039D0C128033753009969F6 /* EmptyPlaylistsTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4039D0C028033753009969F6 /* EmptyPlaylistsTabView.swift */; };
 		4039D0C328033910009969F6 /* FilledPlaylistsTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4039D0C228033910009969F6 /* FilledPlaylistsTabView.swift */; };
 		405D6B0D280212D600ABFFFA /* StorageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 405D6B0C280212D600ABFFFA /* StorageModel.swift */; };
-		4069F325280D746100C4B742 /* VideoPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4069F324280D746100C4B742 /* VideoPlayer.swift */; };
 		4069F327280D7E2E00C4B742 /* VideoIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4069F326280D7E2E00C4B742 /* VideoIconView.swift */; };
 		407080FD280F290A002B2436 /* PopupOverlayViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 407080FC280F290A002B2436 /* PopupOverlayViewModifier.swift */; };
 		40708100280F2FED002B2436 /* DownloadAnimationPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 407080FF280F2FED002B2436 /* DownloadAnimationPopupView.swift */; };
 		40708104281016CE002B2436 /* DownloadAddClipPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40708103281016CE002B2436 /* DownloadAddClipPopupView.swift */; };
 		4070810628101BE4002B2436 /* KeyboardAwareModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4070810528101BE4002B2436 /* KeyboardAwareModifier.swift */; };
-		4070810828108DAE002B2436 /* KeyboardResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4070810728108DAE002B2436 /* KeyboardResponse.swift */; };
 		4072B23B2797022F00FCD178 /* PlaylistData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4072B23A2797022F00FCD178 /* PlaylistData.swift */; };
 		4072B23E279704B800FCD178 /* PopupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4072B23D279704B800FCD178 /* PopupViewModel.swift */; };
 		409AAA78276F6D3400D5BA97 /* PlaylistCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 409AAA77276F6D3400D5BA97 /* PlaylistCreationView.swift */; };
@@ -36,6 +34,8 @@
 		40BA809627FD919300396839 /* SplashScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40BA809527FD919300396839 /* SplashScreen.swift */; };
 		40BA809827FEDF2C00396839 /* Filemanager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40BA809727FEDF2C00396839 /* Filemanager.swift */; };
 		40BA809A27FEE16000396839 /* UIScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40BA809927FEE16000396839 /* UIScreen.swift */; };
+		40E2C46128250C730029A56F /* PlaylistPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40E2C46028250C730029A56F /* PlaylistPickerView.swift */; };
+		40E2C4652825A0CA0029A56F /* TiktokPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40E2C4642825A0CA0029A56F /* TiktokPlayerView.swift */; };
 		40ED08A0277B58E4008C7294 /* DownloadAndPlayPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40ED089F277B58E4008C7294 /* DownloadAndPlayPopupView.swift */; };
 		4A50EAE42732E28D00622D8A /* PromocodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A50EAE32732E28D00622D8A /* PromocodeView.swift */; };
 		4A6669E2272FF48B006827F1 /* TextStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A6669E1272FF48B006827F1 /* TextStyle.swift */; };
@@ -76,10 +76,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		4002552127971223000849F5 /* CustomVideoPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomVideoPlayer.swift; sourceTree = "<group>"; };
+		4002552127971223000849F5 /* UIVideoPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIVideoPlayer.swift; sourceTree = "<group>"; };
 		40036FB32794420D0010E14E /* Downloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Downloader.swift; sourceTree = "<group>"; };
 		40036FB727945F7C0010E14E /* BackgroundCleanerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundCleanerView.swift; sourceTree = "<group>"; };
-		400CF6052760E515006CCB73 /* PlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerView.swift; sourceTree = "<group>"; };
+		400CF6052760E515006CCB73 /* ReelsPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReelsPlayerView.swift; sourceTree = "<group>"; };
 		400EC07A27FEF7540088E933 /* PlaylistCreationPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistCreationPopupView.swift; sourceTree = "<group>"; };
 		400EC07E27FEFA780088E933 /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		400EC08027FEFB310088E933 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
@@ -89,13 +89,11 @@
 		4039D0C028033753009969F6 /* EmptyPlaylistsTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyPlaylistsTabView.swift; sourceTree = "<group>"; };
 		4039D0C228033910009969F6 /* FilledPlaylistsTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilledPlaylistsTabView.swift; sourceTree = "<group>"; };
 		405D6B0C280212D600ABFFFA /* StorageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageModel.swift; sourceTree = "<group>"; };
-		4069F324280D746100C4B742 /* VideoPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayer.swift; sourceTree = "<group>"; };
 		4069F326280D7E2E00C4B742 /* VideoIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoIconView.swift; sourceTree = "<group>"; };
 		407080FC280F290A002B2436 /* PopupOverlayViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupOverlayViewModifier.swift; sourceTree = "<group>"; };
 		407080FF280F2FED002B2436 /* DownloadAnimationPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadAnimationPopupView.swift; sourceTree = "<group>"; };
 		40708103281016CE002B2436 /* DownloadAddClipPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadAddClipPopupView.swift; sourceTree = "<group>"; };
 		4070810528101BE4002B2436 /* KeyboardAwareModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardAwareModifier.swift; sourceTree = "<group>"; };
-		4070810728108DAE002B2436 /* KeyboardResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardResponse.swift; sourceTree = "<group>"; };
 		4072B23A2797022F00FCD178 /* PlaylistData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistData.swift; sourceTree = "<group>"; };
 		4072B23D279704B800FCD178 /* PopupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupViewModel.swift; sourceTree = "<group>"; };
 		409AAA77276F6D3400D5BA97 /* PlaylistCreationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistCreationView.swift; sourceTree = "<group>"; };
@@ -105,6 +103,8 @@
 		40BA809527FD919300396839 /* SplashScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreen.swift; sourceTree = "<group>"; };
 		40BA809727FEDF2C00396839 /* Filemanager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filemanager.swift; sourceTree = "<group>"; };
 		40BA809927FEE16000396839 /* UIScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIScreen.swift; sourceTree = "<group>"; };
+		40E2C46028250C730029A56F /* PlaylistPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistPickerView.swift; sourceTree = "<group>"; };
+		40E2C4642825A0CA0029A56F /* TiktokPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TiktokPlayerView.swift; sourceTree = "<group>"; };
 		40ED089F277B58E4008C7294 /* DownloadAndPlayPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadAndPlayPopupView.swift; sourceTree = "<group>"; };
 		4A50EAE32732E28D00622D8A /* PromocodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromocodeView.swift; sourceTree = "<group>"; };
 		4A6669E1272FF48B006827F1 /* TextStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextStyle.swift; sourceTree = "<group>"; };
@@ -174,7 +174,6 @@
 			children = (
 				4070810528101BE4002B2436 /* KeyboardAwareModifier.swift */,
 				40036FB727945F7C0010E14E /* BackgroundCleanerView.swift */,
-				4070810728108DAE002B2436 /* KeyboardResponse.swift */,
 			);
 			name = "Supporting Code";
 			sourceTree = "<group>";
@@ -219,9 +218,9 @@
 		4069F31D280BFF4800C4B742 /* VideoPlayer */ = {
 			isa = PBXGroup;
 			children = (
-				400CF6052760E515006CCB73 /* PlayerView.swift */,
-				4002552127971223000849F5 /* CustomVideoPlayer.swift */,
-				4069F324280D746100C4B742 /* VideoPlayer.swift */,
+				400CF6052760E515006CCB73 /* ReelsPlayerView.swift */,
+				40E2C4642825A0CA0029A56F /* TiktokPlayerView.swift */,
+				4002552127971223000849F5 /* UIVideoPlayer.swift */,
 			);
 			name = VideoPlayer;
 			sourceTree = "<group>";
@@ -342,6 +341,7 @@
 				407080FF280F2FED002B2436 /* DownloadAnimationPopupView.swift */,
 				40708103281016CE002B2436 /* DownloadAddClipPopupView.swift */,
 				40ED089F277B58E4008C7294 /* DownloadAndPlayPopupView.swift */,
+				40E2C46028250C730029A56F /* PlaylistPickerView.swift */,
 			);
 			name = DownloadTabView;
 			sourceTree = "<group>";
@@ -511,9 +511,10 @@
 				4039D0BE2802ED95009969F6 /* Tiktok.swift in Sources */,
 				409AAA96276FC64700D5BA97 /* ImagePickerView.swift in Sources */,
 				4072B23B2797022F00FCD178 /* PlaylistData.swift in Sources */,
+				40E2C4652825A0CA0029A56F /* TiktokPlayerView.swift in Sources */,
 				40192068277902E800732FB6 /* OldLoader.swift in Sources */,
 				40B5E97F2773A7D0003DE438 /* PlaylistVideoListView.swift in Sources */,
-				4002552227971223000849F5 /* CustomVideoPlayer.swift in Sources */,
+				4002552227971223000849F5 /* UIVideoPlayer.swift in Sources */,
 				40BA809A27FEE16000396839 /* UIScreen.swift in Sources */,
 				4A99E238272EE86200247B18 /* Color.swift in Sources */,
 				405D6B0D280212D600ABFFFA /* StorageModel.swift in Sources */,
@@ -521,16 +522,15 @@
 				4072B23E279704B800FCD178 /* PopupViewModel.swift in Sources */,
 				40036FB42794420D0010E14E /* Downloader.swift in Sources */,
 				4A99E22A272EE78800247B18 /* PublicationsTabView.swift in Sources */,
+				40E2C46128250C730029A56F /* PlaylistPickerView.swift in Sources */,
 				40708104281016CE002B2436 /* DownloadAddClipPopupView.swift in Sources */,
 				407080FD280F290A002B2436 /* PopupOverlayViewModifier.swift in Sources */,
-				4069F325280D746100C4B742 /* VideoPlayer.swift in Sources */,
-				4070810828108DAE002B2436 /* KeyboardResponse.swift in Sources */,
 				4A99E236272EE84D00247B18 /* ButtonStyle.swift in Sources */,
 				4A99E228272EE76F00247B18 /* PlaylistsTabView.swift in Sources */,
 				4A50EAE42732E28D00622D8A /* PromocodeView.swift in Sources */,
 				40036FB827945F7D0010E14E /* BackgroundCleanerView.swift in Sources */,
 				4A99E226272EC53500247B18 /* DownloadTabView.swift in Sources */,
-				400CF6062760E515006CCB73 /* PlayerView.swift in Sources */,
+				400CF6062760E515006CCB73 /* ReelsPlayerView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

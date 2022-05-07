@@ -22,15 +22,28 @@ struct PlaylistCreationView: View {
     @State private var showingImagePicker = false
     
     var index: Int?
+    var isInNavigationStack: Bool
     
-    init(index: Int?) {
+    init(index: Int?, isInNavigationStack: Bool) {
         self.index = index
+        self.isInNavigationStack = isInNavigationStack
         UITextView.appearance().backgroundColor = .clear
     }
     
     var body: some View {
         ZStack {
             VStack(alignment: .center) {
+                if !isInNavigationStack {
+                HStack {
+                    Spacer()
+                    Button {
+                        presentationMode.wrappedValue.dismiss()
+                    } label: {
+                        Image("CloseCircleGray")
+                    }
+                    .padding()
+                }
+                }
                 ZStack {
                     Button(action: {
                         withAnimation(.easeInOut) {
@@ -143,7 +156,7 @@ struct PlaylistCreationView: View {
 
 struct PListCreator_Previews: PreviewProvider {
     static var previews: some View {
-        PlaylistCreationView(index: nil)
+        PlaylistCreationView(index: nil, isInNavigationStack: false)
             .preferredColorScheme(.dark)
     }
 }

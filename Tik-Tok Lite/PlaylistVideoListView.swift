@@ -73,7 +73,7 @@ struct PlaylistVideoListView: View {
             loadVideo(from: videos)
         }
         .fullScreenCover(isPresented: $showingPlayerView) {
-            PlayerView(currentVideo: videoForPlay, playlistArray: $videolistArray, videoToPlay: $videoForPlay)
+            ReelsPlayerView(currentVideo: videoForPlay, playlistArray: $videolistArray, videoToPlay: $videoForPlay)
         }
     }
     

@@ -26,12 +26,17 @@ struct Constant {
         static let iconWidth: CGFloat = UIScreen.width * 0.96
         static let defaultElementSize = CGSize(width: 800, height: 800)
         
-        static let popupViewHeight: CGFloat = UIScreen.height * 0.33
+        static var popupViewHeight: CGFloat {
+           return  UIScreen.isSmallScreen ? UIScreen.height * 0.37 : UIScreen.height * 0.33
+        }
         static let popupViewCornerRadius: CGFloat = 22
         
         static let videoPlayerWidth: CGFloat = UIScreen.width * 0.93
         static let videoPlayerHeight: CGFloat = UIScreen.height * 0.8 - 2 * mainButtonsHeight
         static let videoPlayerPlayButtomSize: CGFloat = 30
+        
+        static let iconPlaylistCompressionSize = CGSize(width: 100, height: 100)
+        static let iconVideoCompressionSize = CGSize(width: 110, height: 190)
     }
     
     struct Name {

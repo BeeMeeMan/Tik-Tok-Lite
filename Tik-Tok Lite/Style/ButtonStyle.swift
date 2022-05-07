@@ -39,6 +39,16 @@ func makeMainButtonLabel(image: String, text: String, isReversed: Bool, color: B
     }
 }
 
+struct GrayPickerButton: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .frame(width: Constant.Size.mainButtonsWidth, height: 50, alignment: .center)
+            .foregroundColor(.white)
+            .background(Color.buttonDarkGray).opacity( configuration.isPressed ? 0.5 : 1 )
+            .cornerRadius(10)
+    }
+}
+
 extension ButtonsColor {
     var getFontColor: Color {
         get {
@@ -62,5 +72,9 @@ extension ButtonsColor {
 extension View {
     func mainButtonStyle(color: ButtonsColor) -> some View {
         buttonStyle(MainButtonStyle(color: color))
+    }
+    
+    func grayPickerButtonStyle() -> some View {
+        buttonStyle(GrayPickerButton())
     }
 }

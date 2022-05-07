@@ -26,7 +26,7 @@ struct PlaylistsTabView : View {
                 if showPlaylists == "videos" {
                     PlaylistVideoListView( playlistIndex: 0)
                 } else {
-                NavigationLink(destination: PlaylistCreationView(index: index), isActive: $showEditView)
+                    NavigationLink(destination: PlaylistCreationView(index: index, isInNavigationStack: true), isActive: $showEditView)
                 { EmptyView() }
                 Color.black
                 EmptyPlaylistsTabView(index: $index)
@@ -41,8 +41,7 @@ struct PlaylistsTabView : View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar(content: {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    addPlistButton
-                        .opacity(showPlaylists == "videos" ? 0 : 1)
+                    addPlistButton.opacity(showPlaylists != "playlists" ? 0 : 1)
                 }
                 ToolbarItem(placement: .navigationBarLeading) { picker }
             })
@@ -60,8 +59,9 @@ struct PlaylistsTabView : View {
     
     var picker: some View {
         Picker(selection: $showPlaylists) {
-            Text("Videos").tag("videos")
+            Text("List").tag("videos")
             Text("Playlists").tag("playlists")
+            
         } label: { }
         .pickerStyle(.inline)
         .frame(maxWidth: 130)

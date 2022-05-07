@@ -50,9 +50,8 @@ struct DownloadTabView: View {
                 .font(.system(size: 16, weight: .regular, design: .default))
             }
             .popover(isPresented: $showDownloadAndPlayView) {
-                DownloadAndPlayPopupView(
-                    player: AVPlayer(url: storageModel.tiktokTemp!.url(forFile: .video)))
-                    .onDisappear { storageModel.tiktokTemp = nil }
+                DownloadAndPlayPopupView()
+//                    player: AVPlayer(url: storageModel.tiktokTemp!.url(forFile: .video)))
             }
         }
         .edgesIgnoringSafeArea(.all)
@@ -101,9 +100,7 @@ struct DownloadTabView: View {
         .mainButtonStyle(color: .rose)
         .padding(.bottom, 50)
         .fullScreenCover(isPresented:  $showDownloadPopUpView, onDismiss: ({
-            if storageModel.tiktokTemp != nil {
-                showDownloadAndPlayView = true
-            }
+            if storageModel.tiktokTemp != nil { showDownloadAndPlayView = true }
         })){
             DownloadAnimationPopupView()
         }

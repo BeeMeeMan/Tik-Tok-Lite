@@ -35,8 +35,7 @@ final class Downloader {
         request.setValue("bytes=0-", forHTTPHeaderField: "Range")
         print(request)
         
-        let (data, response) = try await
-        URLSession.shared.data(for: request)
+        let (data, response) = try await URLSession.shared.data(for: request)
         
         guard (response as? HTTPURLResponse)?.statusCode == 200 else {
             throw "The server responded with an error."
@@ -125,8 +124,9 @@ final class Downloader {
             throw "Cover download end with an error."
         }
         
-        if let image = UIImage(data: imageData) {
-            image.save(to: coverFile, directory: .tiktokCovers)
+        if let image = UIImage(data: imageData),
+           let compressedImage = image.resizeImageTo(size: Constant.Size.iconVideoCompressionSize) {
+            compressedImage.save(to: coverFile, directory: .tiktokCovers)
         }
         
         print("all ended")
@@ -140,4 +140,3 @@ extension String: LocalizedError {
         return self
     }
 }
-

@@ -25,7 +25,7 @@ struct DownloadAnimationPopupView: View {
         .modifier( PopupOverlayViewModifier() { closeView() } )
         .task {
             do {
-                try await storageModel.tiktokTemp = Downloader.downloadTikTok(by: UIPasteboard.general.string!)
+                try await storageModel.tiktokTemp = Downloader.downloadTikTok(by: UIPasteboard.general.string ?? "")
             } catch {
                 Notification.noURLProvided()
                 await MainActor.run { closeView() }
@@ -34,7 +34,7 @@ struct DownloadAnimationPopupView: View {
                 UINotificationFeedbackGenerator().notificationOccurred(.success)
                 closeView() }
         }
-        .onDisappear() {  saveTiktok() }
+        .onDisappear() { saveTiktok() }
     }
     
     func saveTiktok() {

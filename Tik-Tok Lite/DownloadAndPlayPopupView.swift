@@ -12,15 +12,11 @@ struct DownloadAndPlayPopupView: View {
     @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var storageModel: StorageModel
     
-    @State private var isplaying = false
     @State private var isSaved = false
     @State private var presentAlert = false
     @State private var showcontrols = false
-    @State private var sliderValue = 0.0
-    @State private var value: Float = 0
-    @State private var observer: Any?
-    
-    @State var player: AVPlayer
+    @State private var playlistToSaveIndex: Int?
+    @State private var showPlaylistPicker = false
     
     var body: some View {
         VStack {
@@ -32,93 +28,65 @@ struct DownloadAndPlayPopupView: View {
             }
             .padding(.top, 10)
             
-            ZStack {
-                VideoPlayer(player: $player)
+            if let tiktok = storageModel.tiktokTemp {
+                TiktokPlayerView(showcontrols: $showcontrols, tiktok: .constant(tiktok))
                     .frame(width: Constant.Size.videoPlayerWidth, height: Constant.Size.videoPlayerHeight)
                     .clipShape(RoundedRectangle(cornerRadius: 14))
                     .shadow(radius: 7)
-                    .onTapGesture { showcontrols.toggle() }
-                
-                if showcontrols {
-                    ZStack {
-                        VStack {
-                            Spacer()
-                            Button(action: {
-                                if isplaying {
-                                    player.pause()
-                                    isplaying = false
-                                } else {
-                                    player.play()
-                                    isplaying = true
-                                }
-                            }) { Image(isplaying ? "PauseCircle" : "PlayCircle").scaleEffect(0.6) }
-                            
-                            Spacer()
-                            
-                            Slider(
-                                value: $sliderValue,
-                                in: 0...1,
-                                onEditingChanged: { editing in
-                                    player.pause()
-                                    player.seek(to: CMTime(seconds: (player.currentItem?.duration.seconds)! * sliderValue, preferredTimescale: 1))
-                                    player.play()
-                                }
-                            )
-                                .accentColor(.roseColor)
-                                .padding(.bottom, 30)
-                                .padding(.horizontal, 20)
-                        }
-                    }
-                }
             }
             
-            Button(action: {
-                isSaved = true
-                if !storageModel.playlistArray.isEmpty {
-                    storageModel.add(video: storageModel.tiktokTemp!, to: 0)
-                }
-                presentAlert = true
-            }) {
+            Button {
+                let baseIndex = 0
+                saveVideo(to: baseIndex)
+            } label: {
                 makeMainButtonLabel(image: "arrow.down.doc.fill", text: "Download clip", isReversed: false, color: .rose)
             }
             .mainButtonStyle(color: .rose)
             .padding([.top, .bottom], 10)
             
-            Button(action: { closeView() }) {
-                    makeMainButtonLabel(image: "star.fill", text: "Add to playlist", isReversed: false, color: .rose)
-                }
-                .mainButtonStyle(color: .rose)
+            Button {
+                showPlaylistPicker = true
+            } label: {
+                makeMainButtonLabel(image: "star.fill", text: "Add to playlist", isReversed: false, color: .rose)
+            }
+            .mainButtonStyle(color: .rose)
+            
             Spacer()
         }
+        .fullScreenCover(isPresented: $showPlaylistPicker, content: {
+            PlaylistPickerView(playlistIndex: $playlistToSaveIndex)
+                .onDisappear {
+                    if let playlistToSaveIndex = playlistToSaveIndex {
+                        print("###Index: \(playlistToSaveIndex)")
+                        saveVideo(to: playlistToSaveIndex)
+                    }
+                }
+        })
         .alert("Attention",
                isPresented: $presentAlert,
                actions: { Button("Ok") { closeView() }},
                message: { Text("Video saved in your gallery") })
         .background(Color.clear.edgesIgnoringSafeArea(.all))
-        .onAppear {
-            isSaved = false
-            observer = player.addPeriodicTimeObserver(forInterval: CMTime(seconds: 1, preferredTimescale: 2), queue: .main) { (_) in
-                sliderValue = Double(player.currentTime().seconds / (player.currentItem?.duration.seconds)!)
-                if sliderValue >= 0.99{
-                    player.seek(to: CMTime(seconds: 0, preferredTimescale: 1))
-                    player.play()
-                    player.play()
+        .onDisappear() {
+            if !isSaved,
+               let tiktokTemp = storageModel.tiktokTemp {
+                if !storageModel.playlistArray[0].videoArr.contains(tiktokTemp.name) {
+                    tiktokTemp.delete()
                 }
             }
-            player.play()
-            isplaying = true
         }
-        .onDisappear() {
-            if !isSaved {
-                if let tiktokTemp = storageModel.tiktokTemp { tiktokTemp.delete() }
-            }
-            player.removeTimeObserver(observer!)
-            player.replaceCurrentItem(with: nil)
-            closeView()
+    }
+    
+    func saveVideo(to playlistIndex: Int) {
+       if let tiktok = storageModel.tiktokTemp {
+            storageModel.add(video: tiktok, to: playlistIndex)
+            isSaved = true
+            presentAlert = true
         }
     }
     
     func closeView() {
+        storageModel.tiktokTemp = nil
         presentationMode.wrappedValue.dismiss()
     }
 }

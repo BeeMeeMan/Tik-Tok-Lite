@@ -20,7 +20,7 @@ struct EmptyPlaylistsTabView: View {
                 .padding(.top, 50)
                 .padding(.bottom, 100)
             
-            NavigationLink(destination: PlaylistCreationView(index: index)) {
+            NavigationLink(destination: PlaylistCreationView(index: index, isInNavigationStack: true)) {
                 makeMainButtonLabel(image: "star.fill",
                                     text: "Create playlist",
                                     isReversed: false,

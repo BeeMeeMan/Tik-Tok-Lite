@@ -50,7 +50,7 @@ final class StorageModel: ObservableObject {
     
     public func deletePlaylist(index: Int) {
         if index != 0 {
-            UIImage.remove(filename: playlistArray[index].name, directory: .playlistData)
+            UIImage.remove(filename: "\(playlistArray[index].name).jpg", directory: .playlistData)
             playlistArray.remove(at: index)
             savePlaylistData()
         }
@@ -70,37 +70,26 @@ final class StorageModel: ObservableObject {
                                                        videoArr: videoArr)
             }
             
-            if let image = image {
-                image.save(to: "\(plistName).jpg", directory: .playlistData)
+            if let image = image,
+               let newImage = image.resizeImageTo(size: Constant.Size.iconPlaylistCompressionSize) {
+                newImage.save(to: "\(plistName).jpg", directory: .playlistData)
             }
             savePlaylistData()
         }
     }
     
-    public func add(video: Tiktok, to playlistIndex: Int?) {
-        if let playlistIndex = playlistIndex {
-            if playlistIndex == 0 {
-                self.playlistArray[playlistIndex].videoArr.append(video.name)
-            } else {
-                self.playlistArray[playlistIndex].videoArr.append(video.name)
-                self.playlistArray[0].videoArr.append(video.name)
+    public func add(video: Tiktok, to playlistIndex: Int) {
+        if playlistIndex >= self.playlistArray.count { return }
+        
+        for index in [0, playlistIndex] {
+            if !self.playlistArray[index].videoArr.contains(video.name) {
+                self.playlistArray[index].videoArr.append(video.name)
             }
-            savePlaylistData()
         }
+            savePlaylistData()
     }
     
-//        func addTikTok(_ video: , to playlist: String) {
-//            let newItem = self.downloader.TikDataTemp.last!
-//
-//            let index = playlistArray.firstIndex(of: playlist)
-//            playlistArray[index].append(newItem.fileName)
-//            dataStorage
-//            savePlaylistArray(downloader.playlistArray)
-//            self.downloader.TikData.append(newItem)
-//        }
-    
-    
-    public func createDir() {
+    private func createDir() {
         do {
             try FileManager.default.createDirectory(at: Constant.getURL(for: .tiktokVideo), withIntermediateDirectories: true)
             try FileManager.default.createDirectory(at: Constant.getURL(for: .tiktokData), withIntermediateDirectories: true)
@@ -110,7 +99,7 @@ final class StorageModel: ObservableObject {
         } catch { }
     }
     
-    func loadPlaylistData() {
+    private func loadPlaylistData() {
         if let data = try? Data(contentsOf: Constant.URLconstant.dataJsonPath) {
             let decoder = JSONDecoder()
             do {
@@ -138,7 +127,6 @@ final class StorageModel: ObservableObject {
         let defaultPlaylist = PlaylistData(name: Constant.Name.defaultPlaylistName)
         if playlistArray.isEmpty || playlistArray[0].name != defaultPlaylist.name {
             playlistArray.insert(defaultPlaylist, at: 0)
-            //  listCover.insert(nil, at: 0)
             savePlaylistData()
         }
         loadDefaultPlaylist()

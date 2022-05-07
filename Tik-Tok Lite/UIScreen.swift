@@ -18,4 +18,8 @@ extension UIScreen {
         let window = windowScene?.windows.first
         return window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
     }
+    
+    static var isSmallScreen: Bool {
+        UIDevice().userInterfaceIdiom == .phone &&  UIScreen.main.nativeBounds.height <= 1334
+    }
 }

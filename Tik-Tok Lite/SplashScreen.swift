@@ -58,5 +58,8 @@ struct AnimatedBackground: View {
                     self.start = UnitPoint(x: 0.35, y: 0.65)
                 }
             })
+            .onDisappear {
+                timer.upstream.connect().cancel()
+            }
     }
 }
